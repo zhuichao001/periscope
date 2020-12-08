@@ -1,0 +1,6 @@
+default: #[string,hash,list,set,zset]
+  - DEL: 'DEL key'
+  - EXPIRE: 'EXPIRE key'
+  - PERSIST: 'PERSIST key'
+hash:
+  - HDEL: 'HDEL key val'
