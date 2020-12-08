@@ -1,0 +1,5 @@
+- LPUSH: 'LPUSH key val'
+- LPOP: 'LPOP key val'
+- RPUSH: 'RPUSH key'
+- RPOP: 'RPOP key'
+- LSET: 'LSET key index value'

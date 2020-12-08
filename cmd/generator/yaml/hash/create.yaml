@@ -1,0 +1,2 @@
+- HSET: 'HSET key val'
+- HMSET: 'HMSET [key val]'
