@@ -3,3 +3,7 @@
 - SETEX: 'SETNX key val'
 - SETNX: 'SETEX key timeout val'
 - SETRANGE: 'SETRANGE key int value'
+- INCR: 'INCR key'
+- DECR: 'DECR key'
+- INCRBY: 'INCRBY key int'
+- INCRBY: 'INCRBY key int'
