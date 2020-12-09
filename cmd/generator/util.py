@@ -1,4 +1,5 @@
 import random
+import string
 
 def cross(la, lb):
     res = []
@@ -7,23 +8,12 @@ def cross(la, lb):
             res.append((a,b))
     return res
 
-
-'''
-def rand_len(s):
-    res = re.findall(r'\$RAND\((\s*\d+\s*)\)', s.strip())
-    return int(res[0]) if res else 10
-
-def value_num(s):
-    res = re.findall(r'\[\$RAND\((\s*\d+\s*)\)\s*,\s*\$RAND\((\s*\d+\s*)\)\]\s*\*\s*(\s*\d+\s*)', s.strip())
-    return (int(res[0][0]), int(res[0][1]), int(res[0][2])) if res else (10,30,1)
-'''
-
 def RAND(n):
     chars = string.ascii_letters + string.digits
     return ''.join(random.sample(chars, n))
 
 def RAND_INT(n):
-    chars = string.digits
+    chars = string.digits*8
     return ''.join(random.sample(chars, n))
 
 def get_key(key):

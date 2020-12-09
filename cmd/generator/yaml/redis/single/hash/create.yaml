@@ -1,0 +1,2 @@
+- HSET: 'HSET {key} {field} {val}'
+- HMSET: 'HMSET {key} ({field} {val})+'

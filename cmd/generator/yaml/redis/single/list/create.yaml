@@ -1,0 +1,7 @@
+- LPUSH: 'LPUSH {key} {val}'
+- LPOP: 'LPOP {key} {val}'
+- RPUSH: 'RPUSH {key}'
+- RPOP: 'RPOP {key}'
+- LLEN: 'LLEN {key}'
+- LSET: 'LSET {key} {index} {val}'
+- LINDEX: 'LINDEX {key} {index}'

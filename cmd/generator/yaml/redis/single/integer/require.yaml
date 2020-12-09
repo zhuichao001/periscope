@@ -1,0 +1,2 @@
+- GET: 'GET {key}'
+- MGET: 'MGET {key}'

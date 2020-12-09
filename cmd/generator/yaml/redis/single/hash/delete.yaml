@@ -1,0 +1,4 @@
+- DEL: 'DEL {key}'
+- EXPIRE: 'EXPIRE {key}'
+- PERSIST: 'PERSIST {key}'
+- HDEL: 'HDEL {key} {val}'

@@ -1,0 +1,2 @@
+- HGET: 'HGET {key}'
+- HMGET: 'HMGET {key}'

@@ -1,5 +1,0 @@
-- SET: 'SET key val'
-- MSET: 'SET key val'
-- SETEX: 'SETNX key val'
-- SETNX: 'SETEX key timeout val'
-- SETRANGE: 'SETRANGE key int value'
