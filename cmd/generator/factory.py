@@ -1,5 +1,5 @@
 from entity import *
-from proto import *
+from cmdproto import *
 
 
 class Options:

@@ -1,7 +1,7 @@
 import random
 import util
-from basetype import RedisProto
-from formater import *
+from proto.redis.basetype import RedisProto
+from proto.redis.formater import *
 
 
 class String(RedisProto):

@@ -1,4 +1,4 @@
-from stype import *
+from proto.redis.redtype import *
 
 class Entities:
     def __init__(self):
