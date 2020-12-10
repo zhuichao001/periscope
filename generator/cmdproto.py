@@ -17,6 +17,3 @@ class CmdProto:
         if not redtype:
             redtype = random.choice(list(self.hub.keys()))
         return redtype, self.hub[redtype]
-
-    def get_cmd(self, redtype, oper):
-        return random.choice(self.hub[redtype][oper])

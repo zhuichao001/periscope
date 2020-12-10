@@ -84,3 +84,4 @@ class Dispatcher:
         print (">>>", cmd)
         print ("<<<", resa, resb)
         print ()
+        return (resa, resb)
