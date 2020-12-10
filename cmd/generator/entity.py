@@ -2,22 +2,34 @@ from stype import *
 
 class Entities:
     def __init__(self):
-        self.allkv = {}
+        self.objs = {}
 
-    def add(self, redtype, cmdproto):
+    def add(self, redtype, cmdsmap):
         if redtype is 'string':
-            obj = String()
+            obj = String(cmdsmap)
         elif redtype is 'integer':
-            obj = Integer()
+            obj = Integer(cmdsmap)
         elif redtype is 'hash':
-            obj = Hash()
+            obj = Hash(cmdsmap)
         elif redtype is 'list':
-            obj = List()
+            obj = List(cmdsmap)
         elif redtype is 'set':
-            obj = Set()
+            obj = Set(cmdsmap)
         elif redtype is 'zset':
-            obj = Zset()
-        if cmdproto.endswith('+'):
-            return
-        self.allkv[obj.key] = obj
-        return obj.format(cmdproto)
+            obj = Zset(cmdsmap)
+        obj.create()
+        self.objs[obj.key] = obj
+
+    def gen(self):
+        for key in self.objs:
+            obj = self.objs[key]
+            obj.require()
+            obj.update()
+            obj.require()
+            obj.delete()
+            obj.require()
+
+    def display(self):
+        for key in self.objs:
+            obj = self.objs[key]
+            print(obj.key, ":::", obj.sequence)

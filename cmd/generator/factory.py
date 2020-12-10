@@ -1,6 +1,7 @@
 from entity import *
 from proto import *
 
+
 class Options:
     def __init__(self, count, keylen, vallen, maxduration):
         self.count = count
@@ -14,12 +15,11 @@ class Factory:
         self.opts = options
         mode = 'multiple' if mode is 'multiple' else 'single'
         self.proto = CmdProto('./yaml/redis/%s/' % (mode))
-        self.proto.load()
         self.entities = Entities()
 
     def produce(self):
-        for i in range(10):
+        for i in range(self.opts.count):
             redtype, cmdsmap = self.proto.get()
-            oper = random.choice(['create','require','update','delete'])
-            cmdproto = random.choice(cmdsmap[oper]).values()[0]
-            print(self.entities.add(redtype, cmdproto))
+            self.entities.add(redtype, cmdsmap)
+        self.entities.gen()
+        self.entities.display()

@@ -1,6 +1,6 @@
 import random
 import util
-from redistype import *
+from basetype import RedisType
 
 class String(RedisType):
     def make(self):

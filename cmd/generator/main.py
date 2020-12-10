@@ -7,7 +7,7 @@ from factory import *
 
 
 def main():
-    opts = Options(count=1, keylen=10, vallen=20, maxduration=60)
+    opts = Options(count=16, keylen=10, vallen=20, maxduration=60)
     fac = Factory(opts, 'single')
     fac.produce()
 
