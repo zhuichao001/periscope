@@ -1,5 +1,5 @@
-from entity import *
-from cmdproto import *
+from batch import Batch
+from cmdproto import CmdProto
 
 
 class Options:
@@ -15,11 +15,14 @@ class Factory:
         self.opts = options
         mode = 'multiple' if mode is 'multiple' else 'single'
         self.proto = CmdProto('./yaml/redis/%s/' % (mode))
-        self.entities = Entities()
+        self.products = []
 
     def produce(self):
+        batch = Batch()
         for i in range(self.opts.count):
             redtype, cmdsmap = self.proto.get()
-            self.entities.add(redtype, cmdsmap)
-        self.entities.gen()
-        self.entities.display()
+            batch.add(redtype, cmdsmap)
+        batch.gen()
+        batch.display() #TODO CLOSE
+        self.products.append(batch)
+        return batch.commands()
