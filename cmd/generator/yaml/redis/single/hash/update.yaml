@@ -1,3 +1,0 @@
-- HSET: 'HSET {key} {val}'
-- HMSET: 'HMSET {key} {val}'
-- HINCRBY: 'HINCRBY {key} {val}'

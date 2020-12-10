@@ -1,2 +1,0 @@
-- LPUSH: 'LPUSH {key} {val}'
-- RPUSH: 'RPUSH {key}'
