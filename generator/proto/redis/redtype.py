@@ -271,6 +271,7 @@ class Zset(RedisProto):
     def create(self):
         tmpl = super().update()
         member = util.RAND(30)
+        self.members.append(member)
         score = random.randint(0,1000)
         cmd = fmt_string(tmpl, self.key, score=score, member=member)
         self.sequence.append(cmd)
@@ -278,7 +279,10 @@ class Zset(RedisProto):
 
     def update(self):
         tmpl = super().update()
-        member = util.RAND(30)
+        if tmpl.startswith('ZADD'):
+            member = util.RAND(30)
+        else:
+            member = random.choice(self.members) if self.members else ""
         score = random.randint(0,1000)
         cmd = fmt_string(tmpl, self.key, score=score, member=member)
         self.sequence.append(cmd)

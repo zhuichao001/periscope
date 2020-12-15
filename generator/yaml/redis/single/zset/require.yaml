@@ -1,4 +1,4 @@
-- ZSCORE: 'ZRANGE {key} {member}'
+- ZSCORE: 'ZSCORE {key} {member}'
 - ZCOUNT: 'ZCOUNT {key} 0 -1'
 - ZRANGE: 'ZRANGE {key} 0 -1 WITHSCORES'
 - ZREVRANGE: 'ZREVRANGE {key} 0 -1 WITHSCORES'

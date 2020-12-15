@@ -1,4 +1,5 @@
 import redis
+import sys
 
 
 def redis_exec(red, cmd):
@@ -62,15 +63,89 @@ def redis_exec(red, cmd):
         return red.lrange(*params)
     elif head == b'SADD':  #set
         return red.sadd(*params)
+    elif head == b'SCARD':
+        return red.scard(*params)
     elif head == b'SMEMBERS':
         return red.smembers(*params)
     elif head == b'ZADD':  #zset
-        return red.zadd(params)
-    return ""
+        members = params[2::2]
+        scores = [int(v) for v in params[1::2]]
+        smap = dict(zip(members, scores))
+        return red.zadd(params[0], smap)
+    elif head == b'ZRANGE':
+        return red.zrange(*params)
+    elif head == b'APPEND':
+        return red.append(*params)
+    elif head == b'BLPOP':
+        return red.blpop(*params)
+    elif head == b'BRPOP':
+        return red.brpop(*params)
+    elif head == b'EXISTS':
+        return red.exists(*params)
+    elif head == b'GETRANGE':
+        return red.getrange(*params)
+    elif head == b'GETSET':
+        return red.getset(*params)
+    elif head == b'HEXISTS':
+        return red.hexists(*params)
+    elif head == b'HGET':
+        return red.hget(*params)
+    elif head == b'HGETALL':
+        return red.hgetall(*params)
+    elif head == b'HKEYS':
+        return red.hkeys(*params)
+    elif head == b'HLEN':
+        return red.hlen(*params)
+    elif head == b'HSCAN':
+        return red.hscan(*params)
+    elif head == b'HSETNX':
+        return red.hsetnx(*params)
+    elif head == b'HVALS':
+        return red.hvals(*params)
+    elif head == b'LPUSHX':
+        return red.lpushx(*params)
+    elif head == b'RPOPLPUSH':
+        return red.rpoplpush(*params)
+    elif head == b'RPUSHX':
+        return red.rpushx(*params)
+    elif head == b'SDIFF':
+        return red.sdiff(*params)
+    elif head == b'SDIFFSTORE':
+        return red.sdiffstore(*params)
+    elif head == b'SINTER':
+        return red.sinter(*params)
+    elif head == b'SINTERSTORE':
+        return red.sinterstore(*params)
+    elif head == b'SISMEMBER':
+        return red.sismember(*params)
+    elif head == b'SPOP':
+        return red.spop(*params)
+    elif head == b'SRANDMEMBER':
+        return red.srandmember(*params)
+    elif head == b'SREM':
+        return red.srem(*params)
+    elif head == b'SUNION':
+        return red.sunion(*params)
+    elif head == b'SUNIONSTORE':
+        return red.sunionstore(*params)
+    elif head == b'ZCOUNT':
+        return red.zcount(*params)
+    elif head == b'ZRANK':
+        return red.zrank(*params)
+    elif head == b'ZREM':
+        return red.zrem(*params)
+    elif head == b'ZREVRANGE':
+        return red.zrevrange(*params)
+    elif head == b'ZREVRANK':
+        return red.zrevrank(*params)
+    elif head == b'ZSCORE':
+        return red.zscore(*params)
+    return "!"
 
 
 class RedisExecuter:
     def __init__(self, host, port):
+        self.addr = (host,port)
         self.red = redis.Redis(host=host, port=port)
 
     def execute(self, cmd):
@@ -78,6 +153,7 @@ class RedisExecuter:
 
 class JimkvExecuter:
     def __init__(self, host, port):
+        self.addr = (host,port)
         self.red = redis.Redis(host=host, port=port, password='jimdb://2915327424068553895/1')
 
     def execute(self, cmd):
@@ -90,9 +166,15 @@ class Dispatcher:
         self.dst = JimkvExecuter(host=dst[0], port=dst[1])
 
     def emit(self, cmd):
-        resa = self.src.execute(cmd)
-        resb = self.dst.execute(cmd)
-        print (">>>", cmd)
-        print ("<<<", resa, resb)
-        print ()
+        try:
+            resa = self.src.execute(cmd)
+        except:
+            resa = None
+            print("[WARNING]:", self.src.addr, cmd, sys.exc_info())
+        try:
+            resb = self.dst.execute(cmd)
+        except:
+            resb = None
+            print("[WARNING]:", self.dst.addr, cmd, sys.exc_info())
+        print (">>>", cmd, "<<<", resa, resb, "\n")
         return (resa, resb)
