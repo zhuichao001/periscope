@@ -1,2 +1,4 @@
 - GET: 'GET {key}'
 - STRLEN: 'STRLEN {key}'
+- EXISTS: 'EXISTS {key}'
+- GETRANGE: 'GETRANGE {key} {start} {end} {val}'

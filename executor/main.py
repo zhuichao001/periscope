@@ -1,3 +1,4 @@
+import sys
 from dispatcher import Dispatcher
 from receiver import Receiver
 from comparer import Comparer
@@ -15,8 +16,7 @@ def main():
                 resa, resb = disp.emit(cmd)
                 cmper.send(cmd, resa, resb)
             except:
-                print("[WARNING]:", cmd)
-                pass
+                print("[WARNING]:", cmd, sys.exc_info())
         cmper.sendctl("<<<DISPLAY>>>")
 
 
