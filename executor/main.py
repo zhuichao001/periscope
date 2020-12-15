@@ -5,7 +5,9 @@ from transmitter import Transmitter
 
 
 def main():
-    disp = Dispatcher(('127.0.0.1', 6378), ('11.3.90.194', 6379))
+    src_addr = ('127.0.0.1', 6379)
+    dst_addr = ('11.3.90.194', 6379)
+    disp = Dispatcher(src_addr, dst_addr)
     recver = Receiver()
     trans = Transmitter()
     while True:

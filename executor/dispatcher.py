@@ -69,7 +69,6 @@ def redis_exec(red, cmd):
     return ""
 
 
-
 class RedisExecuter:
     def __init__(self, host, port):
         self.red = redis.Redis(host=host, port=port)
