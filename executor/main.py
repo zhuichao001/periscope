@@ -1,23 +1,23 @@
 import sys
 from dispatcher import Dispatcher
 from receiver import Receiver
-from comparer import Comparer
+from transmitter import Transmitter
 
 
 def main():
-    disp = Dispatcher(('127.0.0.1', 6378), ('127.0.0.1', 6379))
+    disp = Dispatcher(('127.0.0.1', 6378), ('11.3.90.194', 6379))
     recver = Receiver()
-    cmper = Comparer()
+    trans = Transmitter()
     while True:
         data = recver.recv()
         cmds = data.split(b'\n')
         for cmd in cmds:
             try:
                 resa, resb = disp.emit(cmd)
-                cmper.send(cmd, resa, resb)
+                trans.send(cmd, resa, resb)
             except:
                 print("[WARNING]:", cmd, sys.exc_info())
-        cmper.sendctl("<<<DISPLAY>>>")
+        trans.sendctl("<<<DISPLAY>>>")
 
 
 if __name__ == '__main__':

@@ -1,2 +1,2 @@
-- HGET: 'HGET key'
-- HMGET: 'HMGET key'
+- HGET: 'HGET {key}'
+- HMGET: 'HMGET {key}'

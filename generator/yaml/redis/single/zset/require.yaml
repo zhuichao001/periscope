@@ -1,1 +1,6 @@
-- ZADD: 'ZRANGE {key} {val}'
+- ZSCORE: 'ZRANGE {key} {member}'
+- ZCOUNT: 'ZCOUNT {key} 0 -1'
+- ZRANGE: 'ZRANGE {key} 0 -1 WITHSCORES'
+- ZREVRANGE: 'ZREVRANGE {key} 0 -1 WITHSCORES'
+- ZRANK: 'ZRANK {key} {member}'
+- ZREVRANK: 'ZREVRANK {key} {member}'

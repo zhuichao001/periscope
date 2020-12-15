@@ -4,7 +4,7 @@ from proto.redis.basetype import RedisProto
 from proto.redis.formater import *
 
 
-class String(RedisProto):
+class MString(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
@@ -41,7 +41,7 @@ class String(RedisProto):
         self.live = False
 
 
-class Integer(RedisProto):
+class MInteger(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
@@ -77,7 +77,7 @@ class Integer(RedisProto):
         self.live = False
 
 
-class Hash(RedisProto):
+class MHash(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
@@ -123,7 +123,7 @@ class Hash(RedisProto):
         self.__multi_field_cmd(tmpl)
 
 
-class List(RedisProto):
+class MList(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
@@ -159,7 +159,7 @@ class List(RedisProto):
         self.live = False
 
 
-class Set(RedisProto):
+class MSet(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
@@ -195,7 +195,7 @@ class Set(RedisProto):
         self.live = False
 
 
-class Zset(RedisProto):
+class MZset(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind

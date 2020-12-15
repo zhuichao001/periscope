@@ -1,3 +1,4 @@
 - DEL: 'DEL key'
 - EXPIRE: 'EXPIRE key'
 - PERSIST: 'PERSIST key'
+- SREM: 'SREM {key} ({member})+'

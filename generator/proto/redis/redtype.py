@@ -213,76 +213,87 @@ class List(RedisProto):
         self.sequence.append(cmd)
         self.live = False
 
-
 class Set(RedisProto):
+    keys = []
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
-        self.val = []
+        self.members = []
         self.sequence = []
         self.live = False
+        Set.keys.append(self.key)
 
     def create(self):
-        self.val = util.RAND(30)
         tmpl = super().create()
-        cmd = fmt_string(tmpl, self.key, val=self.val)
+        member = util.RAND(30)
+        cmd = fmt_string(tmpl, self.key, member=member)
         self.sequence.append(cmd)
         self.live = True
 
     def update(self):
-        self.val = util.RAND(30)
         tmpl = super().update()
-        cmd = fmt_string(tmpl, self.key, val=self.val)
+        member = util.RAND(30)
+        key1 = random.choice(Set.keys)
+        key2 = random.choice(Set.keys)
+        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2)
         self.sequence.append(cmd)
         self.live = True
 
     def require(self):
         tmpl = super().require()
-        cmd = fmt_string(tmpl, self.key, val=self.val)
+        member = random.choice(self.members) if self.members else ""
+        key1 = random.choice(Set.keys)
+        key2 = random.choice(Set.keys)
+        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2)
         self.sequence.append(cmd)
 
     def delete(self):
         tmpl = super().delete()
+        member = random.choice(self.members) if self.members else ""
         timeout = random.randint(60, 600)
-        cmd = fmt_string(tmpl, self.key, timeout=timeout)
+        cmd = fmt_string(tmpl, self.key, member=member, timeout=timeout)
         self.sequence.append(cmd)
         self.live = False
 
 
 class Zset(RedisProto):
+    keys = []
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
-        self.val = []
+        self.members = []
         self.sequence = []
         self.live = False
+        Zset.keys.append(self.key)
 
     def create(self):
-        self.score = random.randint(0,100)
-        self.val = util.RAND(30)
-        tmpl = super().create()
-        cmd = fmt_string(tmpl, self.key, score=self.score, val=self.val)
+        tmpl = super().update()
+        member = util.RAND(30)
+        score = random.randint(0,1000)
+        cmd = fmt_string(tmpl, self.key, score=score, member=member)
         self.sequence.append(cmd)
         self.live = True
 
     def update(self):
-        self.score = random.randint(0,100)
-        self.val = util.RAND(30)
         tmpl = super().update()
-        cmd = fmt_string(tmpl, self.key, score=self.score, val=self.val)
+        member = util.RAND(30)
+        score = random.randint(0,1000)
+        cmd = fmt_string(tmpl, self.key, score=score, member=member)
         self.sequence.append(cmd)
         self.live = True
 
     def require(self):
         tmpl = super().require()
-        cmd = fmt_string(tmpl, self.key, val=self.val)
+        member = random.choice(self.members) if self.members else ""
+        cmd = fmt_string(tmpl, self.key, member=member)
         self.sequence.append(cmd)
 
     def delete(self):
         tmpl = super().delete()
-        timeout = random.randint(60,600)
-        cmd = fmt_string(tmpl, self.key, timeout=timeout)
+        member = random.choice(self.members) if self.members else ""
+        timeout = random.randint(60, 600)
+        cmd = fmt_string(tmpl, self.key, member=member, timeout=timeout)
         self.sequence.append(cmd)
         self.live = False

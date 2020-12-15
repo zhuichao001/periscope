@@ -1,6 +1,6 @@
 from socket import *
 
-class Comparer:
+class Transmitter:
     def __init__(self):
         self.addr = ("localhost", 7983)
         self.sock = socket(AF_INET, SOCK_DGRAM)
