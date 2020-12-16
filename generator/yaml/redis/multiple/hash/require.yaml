@@ -1,2 +1,4 @@
-- HGET: 'HGET {key}'
-- HMGET: 'HMGET {key}'
+- HGETALL: 'HGETALL {key}'
+- HKEYS: 'HKEYS {key}'
+- HVALS: 'HVALS {key}'
+- HMGET: 'HMGET {key} ({field})+'

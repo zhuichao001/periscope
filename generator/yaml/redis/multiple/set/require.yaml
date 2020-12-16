@@ -1,1 +1,1 @@
-- SMEMBERS: 'SMEMBERS key'
+- SMEMBERS: 'SMEMBERS {key}'

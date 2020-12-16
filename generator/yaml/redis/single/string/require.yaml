@@ -2,3 +2,5 @@
 - STRLEN: 'STRLEN {key}'
 - EXISTS: 'EXISTS {key}'
 - GETRANGE: 'GETRANGE {key} {start} {end}'
+- GETBIT: 'GETBIT {key} {index}'
+- STRLEN: 'STRLEN {key}'

@@ -1,1 +1,2 @@
-- ZADD: 'ZRANGE key val'
+- ZCARD: 'ZCARD {key}'
+- ZSCORE: 'ZSCORE {key} {member}'

@@ -4,3 +4,4 @@
 - SETRANGE: 'SETRANGE {key} {index} {val}'
 - GETSET: 'GETSET {key} {val}'
 - APPEND: 'APPEND {key} {val}'
+- SETBIT: 'SETBIT {key} {index} {val}'

@@ -1,2 +1,1 @@
-- GET: 'GET key'
-- MGET: 'MGET key'
+- MGET: 'MGET ({key})+'
