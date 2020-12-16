@@ -59,14 +59,14 @@ class Integer(RedisProto):
         self.live = False
 
     def create(self):
-        self.val = str(util.RAND_INT(10))
+        self.val = str(util.RAND_INT(8)).strip('0')
         tmpl = super().create()
         cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
         self.sequence.append(cmd)
         self.live = True
 
     def update(self):
-        val = str(util.RAND_INT(10))
+        val = str(util.RAND_INT(8)).strip('0')
         tmpl = super().update()
         start = random.randint(0, len(self.val))
         end = random.randint(start, len(self.val))
