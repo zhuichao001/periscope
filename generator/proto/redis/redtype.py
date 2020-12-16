@@ -228,6 +228,7 @@ class Set(RedisProto):
         tmpl = super().create()
         member = util.RAND(30)
         cmd = fmt_string(tmpl, self.key, member=member)
+        self.members.append(member)
         self.sequence.append(cmd)
         self.live = True
 
@@ -237,6 +238,7 @@ class Set(RedisProto):
         key1 = random.choice(Set.keys)
         key2 = random.choice(Set.keys)
         cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2)
+        self.members.append(member)
         self.sequence.append(cmd)
         self.live = True
 
@@ -245,7 +247,7 @@ class Set(RedisProto):
         member = random.choice(self.members) if self.members else ""
         key1 = random.choice(Set.keys)
         key2 = random.choice(Set.keys)
-        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2)
+        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2, count=3)
         self.sequence.append(cmd)
 
     def delete(self):
