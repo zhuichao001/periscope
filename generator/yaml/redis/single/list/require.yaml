@@ -1,4 +1,4 @@
-- LPOP: 'LPOP {key} {val}'
+- LPOP: 'LPOP {key}'
 - RPOP: 'RPOP {key}'
 - LLEN: 'LLEN {key}'
 - LINDEX: 'LINDEX {key} {index}'
