@@ -68,13 +68,19 @@ class Integer(RedisProto):
     def update(self):
         val = str(util.RAND_INT(10))
         tmpl = super().update()
-        cmd = fmt_string(tmpl, self.key, val=val, timeout=self.timeout)
+        start = random.randint(0, len(self.val))
+        end = random.randint(start, len(self.val))
+        index = start
+        cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end)
         self.sequence.append(cmd)
         self.live = True
 
     def require(self):
         tmpl = super().require()
-        cmd = fmt_string(tmpl, self.key)
+        start = random.randint(0, len(self.val))
+        end = random.randint(start, len(self.val))
+        index = start
+        cmd = fmt_string(tmpl, self.key, val=self.val, index=index, start=start, end=end)
         self.sequence.append(cmd)
 
     def delete(self):

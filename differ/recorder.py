@@ -17,6 +17,9 @@ class Recorder:
 
     def display(self):
         print("TOTAL:::", self.total)
+        print()
         print("SAME:::", self.same)
+        print()
         print("DIFF:::", self.diff)
+        print()
 

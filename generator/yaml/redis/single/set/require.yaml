@@ -4,7 +4,7 @@
 - SPOP: 'SPOP {key}'
 - SRANDMEMBER: 'SRANDMEMBER {key} {count}'
 - SINTER: 'SINTER {key1} {key2}'
-- SINTERSTORE: 'SINTERSTORE {key1} {key2}'
+  #- SINTERSTORE: 'SINTERSTORE {key1} {key2}'
 - SUNION: 'SUNION {key1} {key2}'
 - SUNIONSTORE: 'SUNIONSTORE {key1} {key2}'
 - SDIFF: 'SDIFF {key1} {key2}'

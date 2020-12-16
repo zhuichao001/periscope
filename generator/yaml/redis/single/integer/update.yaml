@@ -2,7 +2,7 @@
 - MSET: 'SET {key} {val}'
 - SETEX: 'SETNX {key} {val}'
 - SETNX: 'SETEX {key} {timeout} {val}'
-- SETRANGE: 'SETRANGE {key} int {val}'
+- SETRANGE: 'SETRANGE {key} {index} {val}'
 - INCR: 'INCR {key}'
 - DECR: 'DECR {key}'
 - INCRBY: 'INCRBY {key} {val}'
