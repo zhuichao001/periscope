@@ -14,16 +14,16 @@ class Factory:
     def __init__(self, options):
         self.opts = options
         self.multi_proto = CmdProto('./yaml/redis/multiple/')
-        self.single_proto = CmdProto('./yaml/redis/single/')
+        #self.single_proto = CmdProto('./yaml/redis/single/')
         self.products = []
 
     def produce(self):
         batch = Batch()
         for i in range(self.opts.count):
             redtype, cmdsmap = self.multi_proto.get()
-            batch.add(redtype, cmdsmap)
-            redtype, cmdsmap = self.single_proto.get()
-            batch.add(redtype, cmdsmap)
+            batch.add_multiple(redtype, cmdsmap)
+            #redtype, cmdsmap = self.single_proto.get()
+            #batch.add_single(redtype, cmdsmap)
         batch.gen()
         batch.display() #TODO CLOSE
         self.products.append(batch)

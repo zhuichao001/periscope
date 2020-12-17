@@ -7,9 +7,9 @@ def fmt_string(tmpl, key, **kwargs):
 
 def flat_dict(kvs):
     items = []
-    for k in kvs:
+    for k,v in kvs.items():
         items.append(str(k))
-        items.append(str(kvs[k]))
+        items.append(str(v))
     return ' '.join(items)
 
 def flat_list(la, lb):
@@ -19,7 +19,7 @@ def flat_list(la, lb):
         items.append(str(lb[i]))
     return ' '.join(items)
 
-def fmt_mstring(tmpl, key, **kwargs):
+def fmt_mstring(tmpl, **kwargs):
     if 'keys' in kwargs:
         tmpl = tmpl.replace('({key})+', ' '.join(kwargs['keys']))
     if 'vals' in kwargs:
@@ -29,7 +29,9 @@ def fmt_mstring(tmpl, key, **kwargs):
     if 'fvs' in kwargs:
         tmpl = tmpl.replace('({field} {key})+', flat_dict(kwargs['fvs']))
     if 'sms' in kwargs:
-        tmpl = tmpl.replace('({score} {member})+', flat_dict(kwargs['sms']))
+        tmpl = tmpl.replace('({score} {member})+', kwargs['sms'])
+    if 'members' in kwargs:
+        tmpl = tmpl.replace('({member})+', ' '.join(kwargs['members']))
     for var in kwargs:
         tmpl = tmpl.replace('{'+str(var)+'}', str(kwargs[var]))
     return tmpl
