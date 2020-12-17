@@ -1,5 +1,6 @@
 import random
 import util
+import time
 from proto.redis.basetype import RedisProto
 from proto.redis.formater import *
 
