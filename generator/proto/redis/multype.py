@@ -185,10 +185,11 @@ class MSet(RedisProto):
         members = []
         for _ in range(1, len(self.members)):
             members.append(random.choice(list(self.members))) 
+        member = random.choice(members)
         tmpl = super().update()
         key1 = self.key
         key2 = random.choice(MSet.keys[:-1])
-        cmd = fmt_mstring(tmpl, key=self.key, members=members, key1=key1, key2=key2)
+        cmd = fmt_mstring(tmpl, key=self.key, members=members, member=member, key1=key1, key2=key2)
         self.sequence.append(cmd)
 
     def require(self):
@@ -223,9 +224,12 @@ class MZset(RedisProto):
 
     def update(self):
         score = random.randint(0,100)
-        member = util.RAND(30)
+        members = []
+        for _ in range(1, 3):
+            members.append(util.RAND(30))
+        self.members.extend(members)
         tmpl = super().update()
-        cmd = fmt_mstring(tmpl, key=self.key, member=member)
+        cmd = fmt_mstring(tmpl, key=self.key, members=members)
         self.sequence.append(cmd)
 
     def require(self):

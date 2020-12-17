@@ -2,5 +2,4 @@
 - LPOP: 'LPOP {key}'
 - RPUSH: 'RPUSH {key} ({val})+'
 - RPOP: 'RPOP {key}'
-- LSET: 'LSET {key} {index} {val}'
 - LTRIM: 'LTRIM {key} {start} {end}'

@@ -24,10 +24,12 @@ def fmt_mstring(tmpl, **kwargs):
         tmpl = tmpl.replace('({key})+', ' '.join(kwargs['keys']))
     if 'vals' in kwargs:
         tmpl = tmpl.replace('({val})+', ' '.join(kwargs['vals']))
+    if 'fields' in kwargs:
+        tmpl = tmpl.replace('({field})+', ' '.join(kwargs['fields']))
     if 'kvs' in kwargs:
         tmpl = tmpl.replace('({key} {val})+', flat_dict(kwargs['kvs']))
     if 'fvs' in kwargs:
-        tmpl = tmpl.replace('({field} {key})+', flat_dict(kwargs['fvs']))
+        tmpl = tmpl.replace('({field} {val})+', flat_dict(kwargs['fvs']))
     if 'sms' in kwargs:
         tmpl = tmpl.replace('({score} {member})+', kwargs['sms'])
     if 'members' in kwargs:

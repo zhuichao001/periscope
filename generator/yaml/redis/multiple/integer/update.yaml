@@ -1,6 +1,1 @@
 - MSET: 'SET ({key} {val})+'
-- SETRANGE: 'SETRANGE {key} {index} {val}'
-- INCR: 'INCR {key}'
-- DECR: 'DECR {key}'
-- INCRBY: 'INCRBY {key} {val}'
-- DECRBY: 'DECRBY {key} {val}'
