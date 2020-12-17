@@ -1,2 +1,2 @@
-- ZADD: 'ZADD {key} {score} {member}'
 - ZREM: 'ZREM {key} {member}'
+- ZINCRBY: 'ZINCRBY {key} {score} {member}'

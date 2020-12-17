@@ -8,20 +8,20 @@ def get_head(cmd):
 
 
 class String(RedisProto):
+    keys = []
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
+        String.keys.append(self.key)
         self.timeout = random.randint(60,600)
         self.sequence = []
-        self.live = False
 
     def create(self):
         self.val = util.RAND(30)
         tmpl = super().create()
-        cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
+        cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout, mtimeout=1000*self.timeout)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
         self.val = util.RAND(30)
@@ -29,9 +29,10 @@ class String(RedisProto):
         start = random.randint(0, len(self.val))
         end = random.randint(start, len(self.val))
         index = start
-        cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end)
+        key1 = random.choice(String.keys)
+        key2 = random.choice(String.keys)
+        cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end, key1=key1, key2=key2)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
@@ -46,7 +47,6 @@ class String(RedisProto):
         timeout = random.randint(60,600)
         cmd = fmt_string(tmpl, self.key, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class Integer(RedisProto):
@@ -56,14 +56,12 @@ class Integer(RedisProto):
         self.key = util.RAND(10)
         self.timeout = random.randint(60,600)
         self.sequence = []
-        self.live = False
 
     def create(self):
         self.val = str(util.RAND_INT(8)).strip('0')
         tmpl = super().create()
         cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
         val = str(util.RAND_INT(8)).strip('0')
@@ -73,7 +71,6 @@ class Integer(RedisProto):
         index = start
         cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
@@ -88,7 +85,6 @@ class Integer(RedisProto):
         timeout = random.randint(60,600)
         cmd = fmt_string(tmpl, self.key, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class Hash(RedisProto):
@@ -156,7 +152,6 @@ class List(RedisProto):
         self.key = util.RAND(10)
         self.items = []
         self.sequence = []
-        self.live = False
 
     def __upmodel(self, cmd, val):
         head = get_head(cmd)
@@ -189,7 +184,6 @@ class List(RedisProto):
         self.__upmodel(tmpl, val)
         cmd = fmt_string(tmpl, self.key, val=val)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
         tmpl = super().update()
@@ -198,7 +192,6 @@ class List(RedisProto):
         index = random.randint(0, len(self.items))
         cmd = fmt_string(tmpl, self.key, val=val, index=index)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
@@ -217,7 +210,6 @@ class List(RedisProto):
         index = start
         cmd = fmt_string(tmpl, self.key, timeout=timeout, index=index, start=start, end=end)
         self.sequence.append(cmd)
-        self.live = False
 
 class Set(RedisProto):
     keys = []
@@ -227,7 +219,6 @@ class Set(RedisProto):
         self.key = util.RAND(10)
         self.members = []
         self.sequence = []
-        self.live = False
         Set.keys.append(self.key)
 
     def create(self):
@@ -236,7 +227,6 @@ class Set(RedisProto):
         cmd = fmt_string(tmpl, self.key, member=member)
         self.members.append(member)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
         tmpl = super().update()
@@ -246,7 +236,6 @@ class Set(RedisProto):
         cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2)
         self.members.append(member)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
@@ -262,7 +251,6 @@ class Set(RedisProto):
         timeout = random.randint(60, 600)
         cmd = fmt_string(tmpl, self.key, member=member, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class Zset(RedisProto):
@@ -273,7 +261,6 @@ class Zset(RedisProto):
         self.key = util.RAND(10)
         self.members = []
         self.sequence = []
-        self.live = False
         Zset.keys.append(self.key)
 
     def create(self):
@@ -283,23 +270,20 @@ class Zset(RedisProto):
         score = random.randint(0,1000)
         cmd = fmt_string(tmpl, self.key, score=score, member=member)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
         tmpl = super().update()
-        if tmpl.startswith('ZADD'):
-            member = util.RAND(30)
-        else:
-            member = random.choice(self.members) if self.members else ""
+        member = random.choice(self.members)
         score = random.randint(0,1000)
         cmd = fmt_string(tmpl, self.key, score=score, member=member)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
         member = random.choice(self.members) if self.members else ""
-        cmd = fmt_string(tmpl, self.key, member=member)
+        key1 = random.choice(Zset.keys)
+        key2 = random.choice(Zset.keys)
+        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2, count=3)
         self.sequence.append(cmd)
 
     def delete(self):
@@ -308,4 +292,3 @@ class Zset(RedisProto):
         timeout = random.randint(60, 600)
         cmd = fmt_string(tmpl, self.key, member=member, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False

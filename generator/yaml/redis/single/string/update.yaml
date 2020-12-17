@@ -13,3 +13,4 @@
 - PERSIST: 'PERSIST {key}'
 - RENAME: 'RENAME {key} {newkey}'
 - RENAMENX: 'RENAMENX {key} {newkey}'
+- BITOP: 'BITOP AND {key} {key1} {key2}'

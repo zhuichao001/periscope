@@ -11,4 +11,7 @@
 - TTL: 'TTL {key}'
 - PTTL: 'PTTL {key}'
 - RANDOMKEY: 'RANDOMKEY'
+- BITCOUNT: 'BITCOUNT {key}'
+- BITPOS: 'BITPOS {key} {start} {end}'
+- PING: 'PING'
 #- SCAN: 'SCAN {key} 0 {pattern} 10'
