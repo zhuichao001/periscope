@@ -1,4 +1,4 @@
-- MSET: 'SET {key} {val}'
+- MSET: 'SET ({key} {val})+'
 - SETRANGE: 'SETRANGE {key} {index} {val}'
 - INCR: 'INCR {key}'
 - DECR: 'DECR {key}'

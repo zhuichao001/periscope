@@ -8,73 +8,76 @@ class MString(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.kvs = {}
         self.timeout = random.randint(60,600)
         self.sequence = []
-        self.live = False
 
     def create(self):
-        self.val = util.RAND(30)
+        for _ in range(1, 10):
+            self.kvs[util.RAND(10)] = util.RAND(30)
         tmpl = super().create()
-        cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
+        cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
-        self.val = util.RAND(30)
+        for _ in range(1, len(self.kvs)):
+            self.kvs[random.choice(self.kvs.keys())] = util.RAND(30)
         tmpl = super().update()
-        offset = random.randint(0,len(self.val))
-        cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, offset=offset)
+        cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
+        keys = []
+        for _ in range(1, len(self.kvs)):
+            keys.append(random.choice(self.kvs.keys()))
         tmpl = super().require()
-        cmd = fmt_string(tmpl, self.key, val=self.val)
+        cmd = fmt_mstring(tmpl, keys=keys, timeout=self.timeout)
         self.sequence.append(cmd)
 
     def delete(self):
         tmpl = super().delete()
         timeout = random.randint(60,600)
-        cmd = fmt_string(tmpl, self.key, timeout=timeout)
+        key = random.choice(self.kvs.keys())
+        cmd = fmt_string(tmpl, key=key, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class MInteger(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.kvs = {}
         self.timeout = random.randint(60,600)
         self.sequence = []
-        self.live = False
 
     def create(self):
-        self.val = str(util.RAND_INT(10))
+        for _ in range(1, 10):
+            self.kvs[util.RAND(10)] = util.RAND_INT(10)
         tmpl = super().create()
-        cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
+        cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
-        self.val = str(util.RAND_INT(10))
+        for _ in range(1, len(self.kvs)):
+            self.kvs[random.choice(self.kvs.keys())] = util.RAND_INT(10)
         tmpl = super().update()
-        cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
+        cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
+        keys = []
+        for _ in range(1, len(self.kvs)):
+            keys.append(random.choice(self.kvs.keys()))
         tmpl = super().require()
-        cmd = fmt_string(tmpl, self.key)
+        cmd = fmt_mstring(tmpl, keys=keys, timeout=self.timeout)
         self.sequence.append(cmd)
 
     def delete(self):
         tmpl = super().delete()
-        timeout = random.randint(60,600)
-        cmd = fmt_string(tmpl, self.key, timeout=timeout)
+        timeout = random.randint(60, 600)
+        key = random.choice(self.kvs.keys())
+        cmd = fmt_string(tmpl, key=key, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class MHash(RedisProto):
@@ -82,45 +85,39 @@ class MHash(RedisProto):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
-        self.fields = {}
+        self.fvs = {}
         self.sequence = []
 
-    def __multi_field_cmd(self, tmpl):
-        if tmpl.endswith('+'):
-            n = random.randint(1,8)
-            cmd = tmpl[0:tmpl.find(' ')]
-            cmd += ' ' + self.key + ' ' 
-            for _ in range(0,n):
-                field = util.RAND(30)
-                val = util.RAND(30)
-                cmd += field+' '+val 
-                self.fields[field] = val
-                self.sequence.append(cmd)
-            cmd = fmt_hash(cmd, self.key)
-            self.sequence.append(cmd)
-        else:
-            field = util.RAND(30)
-            val = util.RAND(30)
-            timeout = random.randint(60,600)
-            cmd = fmt_hash(tmpl, self.key, field=field, val=val, timeout=timeout)
-            self.fields[field] = val
-            self.sequence.append(cmd)
-
     def create(self):
+        for _ in range(1, 10):
+            self.fvs[util.RAND(20)] = util.RAND(30)
         tmpl = super().create()
-        self.__multi_field_cmd(tmpl)
+        cmd = fmt_mstring(tmpl, key=self.key, fvs=self.fvs, timeout=self.timeout)
+        self.sequence.append(cmd)
 
     def update(self):
+        fvs = {}
+        for _ in range(1, len(self.fvs)):
+            self.fvs[random.choice(self.fvs.keys())] = util.RAND(30)
         tmpl = super().update()
-        self.__multi_field_cmd(tmpl)
+        cmd = fmt_mstring(tmpl, key=self.key, fvs=fvs, timeout=self.timeout)
+        self.sequence.append(cmd)
 
     def require(self):
+        fields = []
+        for _ in range(1, len(self.fvs)):
+            fields.append(random.choice(self.fvs.keys()))
         tmpl = super().require()
-        self.__multi_field_cmd(tmpl)
+        cmd = fmt_mstring(tmpl, key=self.key, fields=fields)
+        self.sequence.append(cmd)
 
     def delete(self):
+        fields = []
+        for _ in range(1, len(self.fvs)):
+            fields.append(random.choice(self.fvs.keys()))
         tmpl = super().delete()
-        self.__multi_field_cmd(tmpl)
+        cmd = fmt_mstring(tmpl, key=self.key, fields=fields)
+        self.sequence.append(cmd)
 
 
 class MList(RedisProto):
@@ -128,63 +125,74 @@ class MList(RedisProto):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
-        self.val = []
+        self.vals = []
         self.sequence = []
-        self.live = False
 
     def create(self):
-        self.val = util.RAND(30)
+        for _ in range(1, 10):
+            self.vals.append(util.RAND(10)) 
         tmpl = super().create()
-        cmd = fmt_list(tmpl, self.key, val=self.val)
+        cmd = fmt_mstring(tmpl, key=self.key, vals=self.vals)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
-        self.val = util.RAND(30)
         tmpl = super().update()
-        cmd = fmt_list(tmpl, self.key, val=self.val)
+        start = random.randint(0, len(self.vals))
+        end = random.randint(start, len(self.vals))
+        index = start
+        vals = []
+        if tmpl.find('PUSH')>0:
+            for _ in range(1, 10):
+                vals.append(util.RAND(10)) 
+            self.vals.extend(vals)
+        cmd = fmt_mstring(tmpl, key=self.key, vals=vals, start=start, end=end, index=index)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
-        cmd = fmt_list(tmpl, self.key, val=self.val)
+        val = random.choice(self.vals()))
+        start = random.randint(0, len(self.vals))
+        end = random.randint(start, len(self.vals))
+        cmd = fmt_mstring(tmpl, key=self.key, val=val, start=start, end=end)
         self.sequence.append(cmd)
 
     def delete(self):
         tmpl = super().delete()
         timeout = random.randint(60,600)
-        cmd = fmt_list(tmpl, self.key, timeout=timeout)
+        cmd = fmt_mstring(tmpl, key=self.key, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class MSet(RedisProto):
+    keys = []
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
-        self.val = []
+        MSet.keys.append(self.key)
+        self.vals = []
         self.sequence = []
-        self.live = False
 
     def create(self):
-        self.val = util.RAND(30)
+        for _ in range(1, 10):
+            self.vals.append(util.RAND(10)) 
         tmpl = super().create()
-        cmd = fmt_set(tmpl, self.key, val=self.val)
+        cmd = fmt_mstring(tmpl, key=self.key, vals=self.vals)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
-        self.val = util.RAND(30)
+        members = []
+        for _ in range(1, len(self.members)):
+            members.append(random.choice(self.members)) 
         tmpl = super().update()
-        cmd = fmt_set(tmpl, self.key, val=self.val)
+        key1 = self.key
+        key2 = random.choice(MSet.keys[:-1])
+        cmd = fmt_mstring(tmpl, key=self.key, members=members, key1=key1, key2=key2)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
-        cmd = fmt_set(tmpl, self.key, val=self.val)
+        cmd = fmt_mstring(tmpl, key=self.key, members=members)
         self.sequence.append(cmd)
 
     def delete(self):
@@ -192,7 +200,6 @@ class MSet(RedisProto):
         timeout = random.randint(60,600)
         cmd = fmt_set(tmpl, self.key, timeout=timeout)
         self.sequence.append(cmd)
-        self.live = False
 
 
 class MZset(RedisProto):
@@ -200,34 +207,35 @@ class MZset(RedisProto):
         super().__init__(cmdsmap)
         self.kind = kind
         self.key = util.RAND(10)
-        self.val = []
+        self.members = []
+        self.scores = []
         self.sequence = []
-        self.live = False
 
     def create(self):
-        self.score = random.randint(0,100)
-        self.val = util.RAND(30)
+        for _ in range(1, 10):
+            self.members.append(util.RAND(10)) 
+            self.scores.append(util.RAND_INT(10)) 
         tmpl = super().create()
-        cmd = fmt_zset(tmpl, self.key, score=self.score, val=self.val)
+        sms = flat_dict(self.scores, self.members)
+        cmd = fmt_mstring(tmpl, key=self.key, sms=sms)
         self.sequence.append(cmd)
-        self.live = True
 
     def update(self):
-        self.score = random.randint(0,100)
-        self.val = util.RAND(30)
+        score = random.randint(0,100)
+        member = util.RAND(30)
         tmpl = super().update()
-        cmd = fmt_zset(tmpl, self.key, score=self.score, val=self.val)
+        cmd = fmt_zset(tmpl, key=self.key, member=member)
         self.sequence.append(cmd)
-        self.live = True
 
     def require(self):
         tmpl = super().require()
-        cmd = fmt_zset(tmpl, self.key, val=self.val)
+        member = random.choice(self.members)
+        cmd = fmt_zset(tmpl, key=self.key, member=member)
         self.sequence.append(cmd)
 
     def delete(self):
         tmpl = super().delete()
         timeout = random.randint(60,600)
-        cmd = fmt_zset(tmpl, self.key, timeout=timeout)
+        member = random.choice(self.members)
+        cmd = fmt_zset(tmpl, self.key, timeout=timeout, member=member)
         self.sequence.append(cmd)
-        self.live = False

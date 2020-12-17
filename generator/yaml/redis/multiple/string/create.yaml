@@ -1,2 +1,2 @@
 - MSET: 'MSET ({key} {val})+'
-- MSETNX: 'MSETNX ({key})+'
+- MSETNX: 'MSETNX ({key} {val})+'

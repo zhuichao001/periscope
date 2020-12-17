@@ -1,1 +1,1 @@
-- ZADD: 'ZADD key val'
+- ZADD: 'ZADD {key} {member}'

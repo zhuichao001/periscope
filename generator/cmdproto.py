@@ -16,5 +16,4 @@ class CmdProto:
     def get(self, redtype=None):
         if not redtype:
             redtype = random.choice(list(self.hub.keys()))
-        #print(redtype, type(redtype), self.hub[redtype], type(self.hub[redtype]))
         return redtype, self.hub[redtype]

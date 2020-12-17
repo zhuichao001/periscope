@@ -10,7 +10,8 @@ from transport import Transport
 
 def main():
     opts = Options(count=10, keylen=10, vallen=20, maxduration=60)
-    fac = Factory(opts, 'single')
+    #fac = Factory(opts)
+    fac = Factory(opts)
     trans = Transport()
     while True:
         cmds = fac.produce()

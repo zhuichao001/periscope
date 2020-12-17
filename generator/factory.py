@@ -11,16 +11,18 @@ class Options:
 
 
 class Factory:
-    def __init__(self, options, mode='single'):
+    def __init__(self, options):
         self.opts = options
-        mode = 'multiple' if mode is 'multiple' else 'single'
-        self.proto = CmdProto('./yaml/redis/%s/' % (mode))
+        self.multi_proto = CmdProto('./yaml/redis/multiple/')
+        self.single_proto = CmdProto('./yaml/redis/single/')
         self.products = []
 
     def produce(self):
         batch = Batch()
         for i in range(self.opts.count):
-            redtype, cmdsmap = self.proto.get()
+            redtype, cmdsmap = self.multi_proto.get()
+            batch.add(redtype, cmdsmap)
+            redtype, cmdsmap = self.single_proto.get()
             batch.add(redtype, cmdsmap)
         batch.gen()
         batch.display() #TODO CLOSE
