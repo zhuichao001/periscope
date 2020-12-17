@@ -1,2 +1,3 @@
 - GET: 'GET {key}'
 - MGET: 'MGET {key}'
+- EXISTS: 'EXISTS {key}'

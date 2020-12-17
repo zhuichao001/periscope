@@ -9,3 +9,4 @@
 - SUNIONSTORE: 'SUNIONSTORE {key1} {key2}'
 - SDIFF: 'SDIFF {key1} {key2}'
 - SDIFFSTORE: 'SDIFFSTORE {key1} {key2}'
+- EXISTS: 'EXISTS {key}'

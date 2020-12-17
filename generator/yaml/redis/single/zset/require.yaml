@@ -4,3 +4,4 @@
 - ZREVRANGE: 'ZREVRANGE {key} 0 -1 WITHSCORES'
 - ZRANK: 'ZRANK {key} {member}'
 - ZREVRANK: 'ZREVRANK {key} {member}'
+- EXISTS: 'EXISTS {key}'

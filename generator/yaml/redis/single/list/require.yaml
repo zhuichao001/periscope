@@ -3,3 +3,4 @@
 - LLEN: 'LLEN {key}'
 - LINDEX: 'LINDEX {key} {index}'
 - LRANGE: 'LRANGE {key} {start} {end}'
+- EXISTS: 'EXISTS {key}'

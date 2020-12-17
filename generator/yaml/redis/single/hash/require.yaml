@@ -5,4 +5,5 @@
 - HKEYS: 'HKEYS {key}'
 - HVALS: 'HVALS {key}'
 - HGETALL: 'HGETALL {key}'
+- EXISTS: 'EXISTS {key}'
   #- HSCAN: 'HSCAN {key} 0 match {pattern}'

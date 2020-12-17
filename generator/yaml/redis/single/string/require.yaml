@@ -4,3 +4,11 @@
 - GETRANGE: 'GETRANGE {key} {start} {end}'
 - GETBIT: 'GETBIT {key} {index}'
 - STRLEN: 'STRLEN {key}'
+  #
+- KEYS: 'KEYS {pattern}'
+- TYPE: 'TYPE {key}'
+- DUMP: 'DUMP {key}'
+- TTL: 'TTL {key}'
+- PTTL: 'PTTL {key}'
+- RANDOMKEY: 'RANDOMKEY'
+#- SCAN: 'SCAN {key} 0 {pattern} 10'

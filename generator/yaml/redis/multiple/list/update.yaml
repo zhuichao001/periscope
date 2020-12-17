@@ -3,3 +3,6 @@
 - RPUSH: 'RPUSH {key} ({val})+'
 - RPOP: 'RPOP {key}'
 - LTRIM: 'LTRIM {key} {start} {end}'
+- SORT: 'SORT {key}'
+- SORT_DESC: 'SORT {key} DESC'
+- SORT_ALPHA: 'SORT {key} ALPHA'
