@@ -14,4 +14,5 @@
 - BITCOUNT: 'BITCOUNT {key}'
 - BITPOS: 'BITPOS {key} {start} {end}'
 - PING: 'PING'
+- PING: 'SCAN 8 MATCH *A*'
 #- SCAN: 'SCAN {key} 0 {pattern} 10'

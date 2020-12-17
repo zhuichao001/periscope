@@ -31,7 +31,8 @@ class String(RedisProto):
         index = start
         key1 = random.choice(String.keys)
         key2 = random.choice(String.keys)
-        cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end, key1=key1, key2=key2)
+        pseconds =int(time.time()+random.randint(0,60))*1000
+        cmd = fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end, key1=key1, key2=key2, pseconds=pseconds)
         self.sequence.append(cmd)
 
     def require(self):
