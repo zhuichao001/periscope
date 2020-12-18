@@ -191,8 +191,9 @@ class List(RedisProto):
         tmpl = super().update()
         val = util.RAND(30)
         self.__upmodel(tmpl, val)
+        oldval = random.choice(self.items)
         index = random.randint(0, len(self.items))
-        cmd = fmt_string(tmpl, self.key, val=val, index=index)
+        cmd = fmt_string(tmpl, self.key, val=val, index=index, oldval=oldval)
         self.sequence.append(cmd)
 
     def require(self):

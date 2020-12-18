@@ -8,3 +8,6 @@
   #- BRPOP: 'BRPOP {key}'
 - RPOPLPUSH: 'RPOPLPUSH {key} {val}'
 - LSET: 'LSET {key} {index} {val}'
+- LINSERT: '{key} BEFORE {oldval} {val}'
+- LINSERT: '{key} AFTER {oldval} {val}'
+- LREM: 'LREM {key} 0 {oldval}'
