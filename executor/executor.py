@@ -82,7 +82,7 @@ def redis_exec(red, cmd):
     elif head == b'SCARD':
         return red.scard(*params)
     elif head == b'SMEMBERS':
-        return red.smembers(*params)
+        return red.smembers(*params).sort()
     elif head == b'ZADD':  #zset
         members = params[2::2]
         scores = [int(v) for v in params[1::2]]
@@ -125,11 +125,11 @@ def redis_exec(red, cmd):
     elif head == b'RPUSHX':
         return red.rpushx(*params)
     elif head == b'SDIFF':
-        return red.sdiff(*params)
+        return red.sdiff(*params).sort()
     elif head == b'SDIFFSTORE':
         return red.sdiffstore(*params)
     elif head == b'SINTER':
-        return red.sinter(*params)
+        return red.sinter(*params).sort()
     elif head == b'SINTERSTORE':
         return red.sinterstore(*params)
     elif head == b'SISMEMBER':
@@ -141,13 +141,13 @@ def redis_exec(red, cmd):
     elif head == b'SREM':
         return red.srem(*params)
     elif head == b'SUNION':
-        return red.sunion(*params)
+        return red.sunion(*params).sort()
     elif head == b'SUNIONSTORE':
         return red.sunionstore(*params)
     elif head == b'ZCOUNT':
         return red.zcount(*params)
     elif head == b'ZRANK':
-        return red.zrank(*params)
+        return red.zrank(*params).sort()
     elif head == b'ZREM':
         return red.zrem(*params)
     elif head == b'ZREVRANGE':
@@ -156,5 +156,5 @@ def redis_exec(red, cmd):
         return red.zrevrank(*params)
     elif head == b'ZSCORE':
         return red.zscore(*params)
-    return "!"
+    return "@_@"
 
