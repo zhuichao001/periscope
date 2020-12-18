@@ -6,34 +6,44 @@ class Batch:
         self.objs = []
 
     def add_single(self, kind, cmdsmap):
-        if kind is 'string':
+        if kind == 'string':
             obj = String(kind, cmdsmap)
-        elif kind is 'integer':
+        elif kind == 'integer':
             obj = Integer(kind, cmdsmap)
-        elif kind is 'hash':
+        elif kind == 'float':
+            obj = Float(kind, cmdsmap)
+        elif kind == 'hash':
             obj = Hash(kind, cmdsmap)
-        elif kind is 'list':
+        elif kind == 'list':
             obj = List(kind, cmdsmap)
-        elif kind is 'set':
+        elif kind == 'set':
             obj = Set(kind, cmdsmap)
-        elif kind is 'zset':
+        elif kind == 'zset':
             obj = Zset(kind, cmdsmap)
+        elif kind is 'hyperloglog':
+            obj = HyperLogLog(kind, cmdsmap)
+        else:
+            print("Warning, add_sigle unrecognized kind:", kind)
+            return
         obj.create()
         self.objs.append(obj)
 
     def add_multiple(self, kind, cmdsmap):
-        if kind is 'string':
+        if kind == 'string':
             obj = MString(kind, cmdsmap)
-        elif kind is 'integer':
+        elif kind == 'integer':
             obj = MInteger(kind, cmdsmap)
-        elif kind is 'hash':
+        elif kind == 'hash':
             obj = MHash(kind, cmdsmap)
-        elif kind is 'list':
+        elif kind == 'list':
             obj = MList(kind, cmdsmap)
-        elif kind is 'set':
+        elif kind == 'set':
             obj = MSet(kind, cmdsmap)
-        elif kind is 'zset':
+        elif kind == 'zset':
             obj = MZset(kind, cmdsmap)
+        else:
+            print("Warning, add_multiple unrecognized kind:", kind)
+            return
         obj.create()
         self.objs.append(obj)
 

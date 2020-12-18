@@ -89,6 +89,45 @@ class Integer(RedisProto):
         self.sequence.append(cmd)
 
 
+class Float(RedisProto):
+    def __init__(self, kind, cmdsmap):
+        super().__init__(cmdsmap)
+        self.kind = kind
+        self.key = util.RAND(10)
+        self.timeout = random.randint(60,600)
+        self.sequence = []
+
+    def create(self):
+        self.val = str(util.RAND_INT(8)).strip('0')
+        self.fval = random.uniform(1000000, 10000000)
+        tmpl = super().create()
+        cmd = fmt_string(tmpl, self.key, val=self.val, fval=self.fval, timeout=self.timeout)
+        self.sequence.append(cmd)
+
+    def update(self):
+        val = str(util.RAND_INT(8)).strip('0')
+        self.fval = random.uniform(1000000, 10000000)
+        tmpl = super().update()
+        start = random.randint(0, len(self.val))
+        end = random.randint(start, len(self.val))
+        index = start
+        cmd = fmt_string(tmpl, key=self.key, val=self.val, fval=self.fval, timeout=self.timeout, index=index, start=start, end=end)
+        self.sequence.append(cmd)
+
+    def require(self):
+        tmpl = super().require()
+        start = random.randint(0, len(self.val))
+        end = random.randint(start, len(self.val))
+        index = start
+        cmd = fmt_string(tmpl, self.key, val=self.val, index=index, start=start, end=end)
+        self.sequence.append(cmd)
+
+    def delete(self):
+        tmpl = super().delete()
+        timeout = random.randint(60,600)
+        cmd = fmt_string(tmpl, self.key, timeout=timeout)
+        self.sequence.append(cmd)
+
 class Hash(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
@@ -172,13 +211,10 @@ class List(RedisProto):
         elif head == 'RPOPLPUSH':
             self.items = self.items[1:]
             self.items.insert(0,val)
-        elif head == 'LINSERT': #TODO
-            if cmd.find('BEFORE')>0:
-                pass
-            elif cmd.find('AFTER')>0:
-                pass
-            else:
-                return
+        elif head == 'LINSERT':
+            self.items.append(val)
+        else:
+            self.items.append(val)
 
     def create(self):
         tmpl = super().create()
@@ -191,7 +227,7 @@ class List(RedisProto):
         tmpl = super().update()
         val = util.RAND(30)
         self.__upmodel(tmpl, val)
-        oldval = random.choice(self.items)
+        oldval = random.choice(self.items) if self.items else ""
         index = random.randint(0, len(self.items))
         cmd = fmt_string(tmpl, self.key, val=val, index=index, oldval=oldval)
         self.sequence.append(cmd)
@@ -213,6 +249,7 @@ class List(RedisProto):
         index = start
         cmd = fmt_string(tmpl, self.key, timeout=timeout, index=index, start=start, end=end)
         self.sequence.append(cmd)
+
 
 class Set(RedisProto):
     keys = []
@@ -296,4 +333,41 @@ class Zset(RedisProto):
         member = random.choice(self.members) if self.members else ""
         timeout = random.randint(60, 600)
         cmd = fmt_string(tmpl, self.key, member=member, timeout=timeout)
+        self.sequence.append(cmd)
+
+
+class HyperLogLog(RedisProto):
+    keys = []
+    def __init__(self, kind, cmdsmap):
+        super().__init__(cmdsmap)
+        self.kind = kind
+        self.key = util.RAND(10)
+        self.vals = []
+        self.sequence = []
+        HyperLogLog.keys.append(self.key)
+
+    def create(self):
+        tmpl = super().update()
+        for _ in range(0, 5):
+            val = util.RAND(10)
+            self.vals.append(val)
+        cmd = fmt_string(tmpl, self.key, val=' '.join(self.vals))
+        self.sequence.append(cmd)
+
+    def update(self):
+        tmpl = super().update()
+        key1 = self.key1
+        key2 = random.choice(HyperLogLog.keys)
+        cmd = fmt_string(tmpl, self.key, key1=key1, key2=key2)
+        self.sequence.append(cmd)
+
+    def require(self):
+        tmpl = super().require()
+        cmd = fmt_string(tmpl, self.key)
+        self.sequence.append(cmd)
+
+    def delete(self):
+        tmpl = super().delete()
+        timeout = random.randint(60, 600)
+        cmd = fmt_string(tmpl, self.key, timeout=timeout)
         self.sequence.append(cmd)

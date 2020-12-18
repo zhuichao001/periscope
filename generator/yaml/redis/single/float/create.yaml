@@ -1,0 +1,3 @@
+- SET: 'SET {key} {fval}'
+- SETNX: 'SETNX {key} {fval}'
+- SETEX: 'SETEX {key} {timeout} {fval}'

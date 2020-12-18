@@ -1,11 +1,14 @@
 import random
 import yaml
+import os
 
 class CmdProto:
     def __init__(self, basedir):
         self.basedir = basedir
+        dirs = os.listdir(basedir)
+        print("basedir:", basedir, "|", dirs, type(dirs[0]))
         self.hub = {}
-        for redtype in ["string","integer","hash","list","set","zset"]:
+        for redtype in dirs: #["string","integer","hash","list","set","zset"...]
             cmdsmap = {'create':[], 'require':[], 'update':[], 'delete':[]}
             for operation in cmdsmap:
                 path = '%s/%s/%s.yaml' %(self.basedir, redtype, operation)
