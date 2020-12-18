@@ -4,6 +4,10 @@ from proto.redis.basetype import RedisProto
 from proto.redis.formater import *
 
 
+def hashtagkey():
+    hashtag = '{jimkv_test}'
+    return util.RAND(10)+hashtag
+
 class MString(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
@@ -14,7 +18,7 @@ class MString(RedisProto):
 
     def create(self):
         for _ in range(1, 10):
-            self.kvs[util.RAND(10)] = util.RAND(30)
+            self.kvs[hashtagkey()] = util.RAND(30)
         tmpl = super().create()
         cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
@@ -52,7 +56,7 @@ class MInteger(RedisProto):
 
     def create(self):
         for _ in range(1, 10):
-            self.kvs[util.RAND(10)] = util.RAND_INT(10)
+            self.kvs[hashtagkey()] = util.RAND_INT(10)
         tmpl = super().create()
         cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
@@ -84,7 +88,7 @@ class MHash(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = hashtagkey()
         self.timeout = random.randint(60,600)
         self.fvs = {}
         self.sequence = []
@@ -125,7 +129,7 @@ class MList(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = hashtagkey()
         self.vals = []
         self.sequence = []
 
@@ -169,7 +173,7 @@ class MSet(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = hashtagkey()
         MSet.keys.append(self.key)
         self.members = []
         self.sequence = []
@@ -208,7 +212,7 @@ class MZset(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = hashtagkey()
         self.members = []
         self.scores = []
         self.sequence = []
