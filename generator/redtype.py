@@ -1,8 +1,8 @@
 import random
 import util
 import time
-from proto.redis.basetype import RedisProto
-from proto.redis.formater import *
+from basetype import RedisProto
+from formater import *
 
 def get_head(cmd):
     return cmd.split(' ')[0] if cmd else ''

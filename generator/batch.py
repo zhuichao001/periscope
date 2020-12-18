@@ -1,5 +1,5 @@
-from proto.redis.redtype import *
-from proto.redis.multype import *
+from redtype import *
+from multype import *
 
 class Batch:
     def __init__(self):

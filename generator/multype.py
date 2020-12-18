@@ -1,7 +1,7 @@
 import random
 import util
-from proto.redis.basetype import RedisProto
-from proto.redis.formater import *
+from basetype import RedisProto
+from formater import *
 
 
 def hashtagkey():
