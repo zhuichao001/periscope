@@ -2,6 +2,7 @@
 - STRLEN: 'STRLEN {key}'
 - EXISTS: 'EXISTS {key}'
 - GETRANGE: 'GETRANGE {key} {start} {end}'
+- SUBSTR: 'SUBSTR {key} {start} {end}'
 - GETBIT: 'GETBIT {key} {index}'
 - STRLEN: 'STRLEN {key}'
   #
@@ -18,3 +19,6 @@
 #- SCAN: 'SCAN {key} 0 {pattern} 10'
 #
 - EVAL: 'EVAL "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second'
+- OBJECT: 'OBJECT REFCOUNT {key}'
+- OBJECT: 'OBJECT ENCODING {key}'
+- AUTH: 'AUTH 123456'

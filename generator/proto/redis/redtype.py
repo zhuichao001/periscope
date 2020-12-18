@@ -214,6 +214,9 @@ class List(RedisProto):
             self.items.insert(0,val)
         elif head == 'LINSERT':
             self.items.append(val)
+        elif head in ['BLPOP', 'BRPOP', 'BRPOPLPUSH']: #TODO: avoid blocking by asyncronized
+            self.sequence.append('LPUSH '+self.key+' '+ util.RAND(30))
+            self.items.append(val)
         else:
             self.items.append(val)
 
