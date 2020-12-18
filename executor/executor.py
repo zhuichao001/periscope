@@ -12,7 +12,8 @@ class RedisExecuter:
 class JimkvExecuter:
     def __init__(self, host, port):
         self.addr = (host,port)
-        self.red = redis.Redis(host=host, port=port, password='jimdb://2915327424068553895/1')
+        #self.red = redis.Redis(host=host, port=port, password='jimdb://2915327424068553895/1')
+        self.red = redis.Redis(host=host, port=port, password='jimdb://2913114965120297581/2')
 
     def execute(self, cmd):
         return redis_exec(self.red, cmd)

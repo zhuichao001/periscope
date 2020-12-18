@@ -7,6 +7,10 @@ from proto.redis.formater import *
 def get_head(cmd):
     return cmd.split(' ')[0] if cmd else ''
 
+def hashtagkey():
+    hashtag = '{jimkv_test}'
+    return util.RAND(10)+hashtag
+
 
 class String(RedisProto):
     keys = []
@@ -267,7 +271,7 @@ class Set(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = hashtagkey()
         self.members = []
         self.sequence = []
         Set.keys.append(self.key)
@@ -309,7 +313,7 @@ class Zset(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = hashtagkey()
         self.members = []
         self.sequence = []
         Zset.keys.append(self.key)

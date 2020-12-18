@@ -6,7 +6,8 @@ from transmitter import Transmitter
 
 def main():
     src_addr = ('127.0.0.1', 6379)
-    dst_addr = ('127.0.0.1', 6378)
+    #dst_addr = ('127.0.0.1', 6378)
+    dst_addr = ('11.3.85.38', 5363)
     disp = Dispatcher(src_addr, dst_addr)
     recver = Receiver()
     trans = Transmitter()
