@@ -9,14 +9,13 @@ from transport import Transport
 
 
 def main():
-    opts = Options(count=10, keylen=10, vallen=20, maxduration=60)
-    #fac = Factory(opts)
+    opts = Options(count=30, keylen=8, vallen=32, maxduration=60)
     fac = Factory(opts)
     trans = Transport()
     while True:
         cmds = fac.produce()
         trans.deliver(cmds)
-        time.sleep(1)
+        time.sleep(0.1)
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ def get_head(cmd):
     return cmd.split(' ')[0] if cmd else ''
 
 def hashtagkey():
-    hashtag = '{jimkv_test}'
+    hashtag = '{hashtag.default}'
     return util.RAND(10)+hashtag
 
 
@@ -225,7 +225,7 @@ class List(RedisProto):
             self.items.insert(0,val)
         elif head == 'LINSERT':
             self.items.append(val)
-        elif head in ['BLPOP', 'BRPOP', 'BRPOPLPUSH']: #TODO: avoid blocking by asyncronized
+        elif head in ['BLPOP', 'BRPOP', 'BRPOPLPUSH']: #avoid blocking
             self.sequence.append('LPUSH '+self.key+' '+ util.RAND(30))
             self.items.append(val)
         else:

@@ -5,7 +5,7 @@ class Batch:
     def __init__(self):
         self.objs = []
 
-    def add_single(self, kind, cmdsmap):
+    def add(self, kind, cmdsmap):
         if kind == 'string':
             obj = String(kind, cmdsmap)
         elif kind == 'integer':
@@ -22,33 +22,26 @@ class Batch:
             obj = Zset(kind, cmdsmap)
         elif kind is 'hyperloglog':
             obj = HyperLogLog(kind, cmdsmap)
+        elif kind == 'mstring':
+            obj = MString(kind, cmdsmap)
+        elif kind == 'minteger':
+            obj = MInteger(kind, cmdsmap)
+        elif kind == 'mhash':
+            obj = MHash(kind, cmdsmap)
+        elif kind == 'mlist':
+            obj = MList(kind, cmdsmap)
+        elif kind == 'mset':
+            obj = MSet(kind, cmdsmap)
+        elif kind == 'mzset':
+            obj = MZset(kind, cmdsmap)
         else:
             print("Warning, add_sigle unrecognized kind:", kind)
             return
         obj.create()
         self.objs.append(obj)
 
-    def add_multiple(self, kind, cmdsmap):
-        if kind == 'string':
-            obj = MString(kind, cmdsmap)
-        elif kind == 'integer':
-            obj = MInteger(kind, cmdsmap)
-        elif kind == 'hash':
-            obj = MHash(kind, cmdsmap)
-        elif kind == 'list':
-            obj = MList(kind, cmdsmap)
-        elif kind == 'set':
-            obj = MSet(kind, cmdsmap)
-        elif kind == 'zset':
-            obj = MZset(kind, cmdsmap)
-        else:
-            print("Warning, add_multiple unrecognized kind:", kind)
-            return
-        obj.create()
-        self.objs.append(obj)
-
     def gen(self):
-        for obj in self.objs:
+        for obj in self.objs: #TODO
             obj.require()
             obj.update()
             obj.require()
