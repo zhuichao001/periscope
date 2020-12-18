@@ -22,6 +22,8 @@ class String(RedisProto):
         self.val = util.RAND(30)
         tmpl = super().create()
         cmd = fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout, mtimeout=1000*self.timeout)
+        if self.key.startswith('M'):
+            self.sequence.append('MULTI')
         self.sequence.append(cmd)
 
     def update(self):
@@ -48,6 +50,8 @@ class String(RedisProto):
         tmpl = super().delete()
         timeout = random.randint(60,600)
         cmd = fmt_string(tmpl, self.key, timeout=timeout)
+        if cmd.startswith('DEL') and self.key.startswith('M'):
+            self.sequence.append('EXEC')
         self.sequence.append(cmd)
 
 

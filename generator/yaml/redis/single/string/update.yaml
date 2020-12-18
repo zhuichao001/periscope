@@ -14,3 +14,4 @@
 - RENAME: 'RENAME {key} {newkey}'
 - RENAMENX: 'RENAMENX {key} {newkey}'
 - BITOP: 'BITOP AND {key} {key1} {key2}'
+- WATCH: 'WATCH {key}'
