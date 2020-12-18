@@ -285,7 +285,9 @@ class Zset(RedisProto):
         member = random.choice(self.members) if self.members else ""
         key1 = random.choice(Zset.keys)
         key2 = random.choice(Zset.keys)
-        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2, count=3)
+        start = random.randint(0, len(self.members))
+        end = random.randint(start, len(self.members))
+        cmd = fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2, count=end-start, start=start, end=end)
         self.sequence.append(cmd)
 
     def delete(self):
