@@ -1,12 +1,39 @@
 from multikey import *
 from singlkey import *
+from cmdproto import CmdProto
 
 
 class Batch:
-    def __init__(self):
-        self.objs = []
+    proto = CmdProto('./yaml/redis/')
 
-    def add(self, kind, cmdsmap):
+    def __init__(self, num_operation):
+        self.num_operation = num_operation
+        self.obj = self._rand_redisobj()
+        self.commands = []
+
+    def build(self):
+        if not self.obj:
+            return
+        self.obj.create()
+        for _ in range(self.num_operation):
+            operation = random.choice(['u','u','u','u','u','r','r','r','r','d'])
+            if operation == 'c':
+                self.obj.create()
+                self.obj.require()
+            elif operation == 'u':
+                self.obj.update()
+                self.obj.require()
+            elif operation == 'd':
+                self.obj.delete()
+                self.obj.update()
+                self.obj.require()
+            else:
+                self.obj.require()
+        self.obj.delete()
+        self.commands = self.obj.sequence
+
+    def _rand_redisobj(self):
+        kind, cmdsmap = Batch.proto.get()
         if kind == 'string':
             obj = String(kind, cmdsmap)
         elif kind == 'integer':
@@ -21,7 +48,7 @@ class Batch:
             obj = Set(kind, cmdsmap)
         elif kind == 'zset':
             obj = Zset(kind, cmdsmap)
-        elif kind is 'hyperloglog':
+        elif kind == 'hyperloglog':
             obj = HyperLogLog(kind, cmdsmap)
         elif kind == 'mstring':
             obj = MString(kind, cmdsmap)
@@ -36,29 +63,12 @@ class Batch:
         elif kind == 'mzset':
             obj = MZset(kind, cmdsmap)
         else:
-            print("Warning, add_sigle unrecognized kind:", kind)
-            return
-        obj.create()
-        self.objs.append(obj)
-
-    def gen(self):
-        for obj in self.objs: #TODO
-            obj.require()
-            obj.update()
-            obj.require()
-            obj.delete()
-            obj.require()
-            obj.update()
-            obj.require()
+            print("Warning, unrecognized kind:", kind)
+            return None
+        return obj
 
     def display(self):
         for obj in self.objs:
             print(":::")
             for cmd in obj.sequence:
                 print("    ", cmd)
-
-    def commands(self):
-        cmds = []
-        for obj in self.objs:
-            cmds.extend(obj.sequence)
-        return cmds

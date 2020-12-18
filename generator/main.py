@@ -9,10 +9,10 @@ from transport import Transport
 
 
 def main():
-    opts = Options(count=30, keylen=8, vallen=32, maxduration=60)
-    fac = Factory(opts)
-    trans = Transport()
+    opts = Options(num_batch=1024, num_operation=32, keylen=8, vallen=32, maxduration=60)
     while True:
+        fac = Factory(opts)
+        trans = Transport()
         cmds = fac.produce()
         trans.deliver(cmds)
         time.sleep(0.1)

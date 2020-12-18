@@ -371,7 +371,7 @@ class HyperLogLog(RedisProto):
 
     def update(self):
         tmpl = super().update()
-        key1 = self.key1
+        key1 = self.key
         key2 = random.choice(HyperLogLog.keys)
         cmd = fmt_string(tmpl, self.key, key1=key1, key2=key2)
         self.sequence.append(cmd)
