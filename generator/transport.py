@@ -7,5 +7,5 @@ class Transport:
 
     def deliver(self, cmds):
         for cmd in cmds:
-            print ("sendout<<<", cmd)
+            print ("<<< ", cmd)
             self.sock.sendto(cmd.encode('utf-8'), self.addr)
