@@ -1,3 +1,4 @@
 - HSET: 'HSET {key} {field} {val}'
 - HSET_INT: 'HSET {key} {ifield} {ival}'
 - HINCRBY: 'HINCRBY {key} {ifield} {ival}'
+- HINCRBYFLOAT: 'HINCRBYFLOAT {key} {ifield} {fval}'

@@ -157,7 +157,8 @@ class Hash(RedisProto):
                 return
             field = random.choice(list(self.ifields.keys()))
             self.ifields[field] = util.RAND_INT(9)
-            cmd = fmt_string(tmpl, self.key, ifield=field, ival=self.ifields[field], timeout=timeout)
+            fval = random.uniform(1,1000000)
+            cmd = fmt_string(tmpl, self.key, ifield=field, ival=self.ifields[field], fval=fval, timeout=timeout)
             self.sequence.append(cmd)
         elif tmpl.find("{field}")>0:
             if len(self.fields)==0:
