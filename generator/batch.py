@@ -1,5 +1,6 @@
-from redtype import *
-from multype import *
+from multikey import *
+from singlkey import *
+
 
 class Batch:
     def __init__(self):
