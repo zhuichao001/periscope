@@ -1,13 +1,6 @@
 import random
 import string
 
-def cross(la, lb):
-    res = []
-    for a in la:
-        for b in lb:
-            res.append((a,b))
-    return res
-
 def RAND(n):
     chars = string.ascii_letters + string.digits
     return ''.join(random.sample(chars, n))
@@ -36,4 +29,11 @@ def flat_list(la, lb):
         items.append(str(la[i]))
         items.append(str(lb[i]))
     return ' '.join(items)
+
+def cross_list(la, lb):
+    res = []
+    for a in la:
+        for b in lb:
+            res.append((a,b))
+    return res
 
