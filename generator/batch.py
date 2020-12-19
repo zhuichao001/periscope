@@ -1,12 +1,27 @@
-from multikey import *
-from singlkey import *
-from cmdproto import CmdProto
+import random
+import cmdproto
+import redis.key as rkey
+import redis.string as rstr
+import redis.integer as rint
+import redis.float as rflo
+import redis.hash as rhas
+import redis.list as rlis
+import redis.set as rset
+import redis.zset as rzse
+import redis.hyperloglog as rhyp
+import redis.mstring as rmst
+import redis.minteger as rmin
+import redis.mhash as rmha
+import redis.mlist as rmli
+import redis.mset as rmse
+import redis.mzset as rmzs
 
 
 class Batch:
-    proto = CmdProto('./yaml/redis/')
-    types = {'key':Key, 'str':String,'int':Integer,'flo':Float,'has':Hash,'lis':List,'set':Set,'zse':Zset,'hyp':HyperLogLog,\
-            'mst':MString,'min':MInteger,'mha':MHash,'mli':MList,'mse':MSet,'mzs':MZset}
+    proto = cmdproto.CmdProto('./yaml/redis/')
+    types = {'key':rkey.Key, 'str':rstr.String,'int':rint.Integer,'flo':rflo.Float,\
+            'has':rhas.Hash,'lis':rlis.List,'set':rset.Set,'zse':rzse.Zset,'hyp':rhyp.HyperLogLog,\
+            'mst':rmst.MString,'min':rmin.MInteger,'mha':rmha.MHash,'mli':rmli.MList,'mse':rmse.MSet,'mzs':rmzs.MZset}
 
     def __init__(self, num_operation):
         self.num_operation = num_operation
