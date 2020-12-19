@@ -5,7 +5,7 @@ import basetype
 import formatter
 
 
-class Float(basetype.RedisProto):
+class Float(basetype.BaseType):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind

@@ -1,6 +1,6 @@
 import random
 
-class RedisProto:
+class BaseType:
     def __init__(self, cmdsmap):
         self.cmdsmap = cmdsmap
     def create(self):

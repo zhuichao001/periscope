@@ -5,7 +5,7 @@ import basetype
 import formatter
 
 
-class List(basetype.RedisProto):
+class List(basetype.BaseType):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind

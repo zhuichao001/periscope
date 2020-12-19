@@ -4,7 +4,7 @@ import basetype
 import formatter
 
 
-class MZset(basetype.RedisProto):
+class MZset(basetype.BaseType):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind

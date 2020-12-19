@@ -5,7 +5,7 @@ import basetype
 import formatter
 
 
-class HyperLogLog(basetype.RedisProto):
+class HyperLogLog(basetype.BaseType):
     keys = []
 
     def __init__(self, kind, cmdsmap):

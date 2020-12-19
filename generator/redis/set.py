@@ -5,7 +5,7 @@ import basetype
 import formatter
 
 
-class Set(basetype.RedisProto):
+class Set(basetype.BaseType):
     keys = []
 
     def __init__(self, kind, cmdsmap):

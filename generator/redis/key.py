@@ -4,7 +4,7 @@ import time
 import basetype
 import formatter
 
-class Key(basetype.RedisProto):
+class Key(basetype.BaseType):
     keys = []
 
     def __init__(self, kind, cmdsmap):
