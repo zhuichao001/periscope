@@ -170,6 +170,7 @@ class MList(RedisProto):
 
 class MSet(RedisProto):
     keys = ["default"]
+
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind

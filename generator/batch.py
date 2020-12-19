@@ -5,7 +5,7 @@ from cmdproto import CmdProto
 
 class Batch:
     proto = CmdProto('./yaml/redis/')
-    types = {'str':String,'int':Integer,'flo':Float,'has':Hash,'lis':List,'set':Set,'zse':Zset,'hyp':HyperLogLog,\
+    types = {'key':Key, 'str':String,'int':Integer,'flo':Float,'has':Hash,'lis':List,'set':Set,'zse':Zset,'hyp':HyperLogLog,\
             'mst':MString,'min':MInteger,'mha':MHash,'mli':MList,'mse':MSet,'mzs':MZset}
 
     def __init__(self, num_operation):
@@ -47,5 +47,4 @@ class Batch:
     def display(self):
         for obj in self.objs:
             print(":::")
-            for cmd in obj.sequence:
-                print("    ", cmd)
+            print("    ", '\n'.join(obj.sequence))
