@@ -13,7 +13,7 @@ def get_cmdhead(cmd):
     return cmd.split(' ')[0] if cmd else ''
 
 def hashtagkey():
-    hashtag = '{hashtag.default}'
+    hashtag = '.{hashtag-default}'
     return RAND(10)+hashtag
 
 def flat_dict(kvs):
