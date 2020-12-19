@@ -1,10 +1,10 @@
 import util
 
 def fmt_string(tmpl, key, **kwargs):
-    cmd = tmpl.replace('{key}', str(key))
+    tmpl = tmpl.replace('{key}', str(key))
     for var in kwargs:
-        cmd = cmd.replace('{'+str(var)+'}', str(kwargs[var]))
-    return cmd
+        tmpl = tmpl.replace('{'+str(var)+'}', str(kwargs[var]))
+    return tmpl
 
 def fmt_mstring(tmpl, **kwargs):
     if 'keys' in kwargs:
