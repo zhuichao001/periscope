@@ -4,15 +4,16 @@ import re
 import time
 import random
 import string
-from factory import Options,Factory
-from transport import Transport
+import option
+import factory
+import transport
 
 
 def main():
-    opts = Options(num_batch=128, num_operation=16, keylen=8, vallen=32, maxduration=60)
+    opt = option.Option(num_batch=128, num_operation=16, keylen=8, vallen=32, maxduration=60)
     while True:
-        fac = Factory(opts)
-        trans = Transport()
+        fac = factory.Factory(opt)
+        trans = transport.Transport()
         cmds = fac.produce()
         trans.deliver(cmds)
 

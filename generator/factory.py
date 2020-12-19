@@ -1,6 +1,6 @@
 import time
 import random
-from batch import Batch
+import batch
 
 
 class Options:
@@ -13,17 +13,17 @@ class Options:
 
 
 class Factory:
-    def __init__(self, options):
-        self.opts = options
+    def __init__(self, option):
+        self.opt = option
         self.batches = []
         self.commands = []
 
     def produce(self):
         start = time.time()
-        for _ in range(self.opts.num_batch):
-            batch = Batch(self.opts.num_operation)
-            batch.build()
-            self.batches.append(batch)
+        for _ in range(self.opt.num_batch):
+            bat = batch.Batch(self.opt.num_operation)
+            bat.build()
+            self.batches.append(bat)
         end = time.time()
         print("PRODUCE COST:::", end-start, len(self.commands))
         start = time.time()
@@ -35,10 +35,10 @@ class Factory:
     def _mixture(self):
         positions = {b:0 for b in self.batches}
         while len(self.batches)>0:
-            batch = random.choice(self.batches)
-            pos = positions[batch]
-            if pos >= len(batch.commands):
-                self.batches.remove(batch)
+            bat = random.choice(self.batches)
+            pos = positions[bat]
+            if pos >= len(bat.commands):
+                self.batches.remove(bat)
             else:
-                self.commands.append(batch.commands[pos])
-                positions[batch] += 1
+                self.commands.append(bat.commands[pos])
+                positions[bat] += 1
