@@ -5,6 +5,8 @@ from cmdproto import CmdProto
 
 class Batch:
     proto = CmdProto('./yaml/redis/')
+    types = {'str':String,'int':Integer,'flo':Float,'has':Hash,'lis':List,'set':Set,'zse':Zset,'hyp':HyperLogLog,\
+            'mst':MString,'min':MInteger,'mha':MHash,'mli':MList,'mse':MSet,'mzs':MZset}
 
     def __init__(self, num_operation):
         self.num_operation = num_operation
@@ -34,38 +36,13 @@ class Batch:
 
     def _rand_redisobj(self):
         kind, cmdsmap = Batch.proto.get()
-        if kind == 'string':
-            obj = String(kind, cmdsmap)
-        elif kind == 'integer':
-            obj = Integer(kind, cmdsmap)
-        elif kind == 'float':
-            obj = Float(kind, cmdsmap)
-        elif kind == 'hash':
-            obj = Hash(kind, cmdsmap)
-        elif kind == 'list':
-            obj = List(kind, cmdsmap)
-        elif kind == 'set':
-            obj = Set(kind, cmdsmap)
-        elif kind == 'zset':
-            obj = Zset(kind, cmdsmap)
-        elif kind == 'hyperloglog':
-            obj = HyperLogLog(kind, cmdsmap)
-        elif kind == 'mstring':
-            obj = MString(kind, cmdsmap)
-        elif kind == 'minteger':
-            obj = MInteger(kind, cmdsmap)
-        elif kind == 'mhash':
-            obj = MHash(kind, cmdsmap)
-        elif kind == 'mlist':
-            obj = MList(kind, cmdsmap)
-        elif kind == 'mset':
-            obj = MSet(kind, cmdsmap)
-        elif kind == 'mzset':
-            obj = MZset(kind, cmdsmap)
+        prefix = kind[:3]
+        RedisType = Batch.types.get(prefix)
+        if RedisType:
+            return RedisType(kind, cmdsmap)
         else:
             print("Warning, unrecognized kind:", kind)
             return None
-        return obj
 
     def display(self):
         for obj in self.objs:
