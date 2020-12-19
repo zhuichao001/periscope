@@ -4,13 +4,6 @@ import time
 from basetype import RedisProto
 from formater import *
 
-def get_head(cmd):
-    return cmd.split(' ')[0] if cmd else ''
-
-def hashtagkey():
-    hashtag = '{hashtag.default}'
-    return util.RAND(10)+hashtag
-
 class Key(RedisProto):
     keys = []
 
@@ -257,7 +250,7 @@ class List(RedisProto):
         self.sequence = []
 
     def __upmodel(self, cmd, val):
-        head = get_head(cmd)
+        head = util.get_cmdhead(cmd)
         if head == 'LPUSH':
             self.items.insert(0,val)
         elif head == 'LPUSHX':
@@ -322,7 +315,7 @@ class Set(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = hashtagkey()
+        self.key = util.hashtagkey()
         self.members = []
         self.sequence = []
         Set.keys.append(self.key)
@@ -365,7 +358,7 @@ class Zset(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = hashtagkey()
+        self.key = util.hashtagkey()
         self.members = []
         self.sequence = []
         Zset.keys.append(self.key)

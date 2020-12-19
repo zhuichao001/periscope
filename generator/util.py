@@ -16,17 +16,24 @@ def RAND_INT(n):
     chars = string.digits*8
     return ''.join(random.sample(chars, n))
 
-def get_key(key):
-    prefix = '__key__'
-    return prefix + rand_str(rand_len(key))
+def get_cmdhead(cmd):
+    return cmd.split(' ')[0] if cmd else ''
 
-def get_val(val):
-    prefix = '__val__'
-    if val.startswith('$'):
-        return prefix + rand_str(rand_len(val))
-    elif val.startswith('['):
-        kn,vn,num = value_num(val)
-        return ' '.join(['__field__'+rand_str(kn) + ' ' + prefix+rand_str(vn) for i in range(num)])
-    else:
-        return prefix + rand_str(10)
+def hashtagkey():
+    hashtag = '{hashtag.default}'
+    return RAND(10)+hashtag
+
+def flat_dict(kvs):
+    items = []
+    for k,v in kvs.items():
+        items.append(str(k))
+        items.append(str(v))
+    return ' '.join(items)
+
+def flat_list(la, lb):
+    items = []
+    for i in range(len(la)):
+        items.append(str(la[i]))
+        items.append(str(lb[i]))
+    return ' '.join(items)
 

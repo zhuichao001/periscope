@@ -4,10 +4,6 @@ from basetype import RedisProto
 from formater import *
 
 
-def hashtagkey():
-    hashtag = '{jimkv_test}'
-    return util.RAND(10)+hashtag
-
 class MString(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
@@ -18,7 +14,7 @@ class MString(RedisProto):
 
     def create(self):
         for _ in range(1, 10):
-            self.kvs[hashtagkey()] = util.RAND(30)
+            self.kvs[util.hashtagkey()] = util.RAND(30)
         tmpl = super().create()
         cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
@@ -56,7 +52,7 @@ class MInteger(RedisProto):
 
     def create(self):
         for _ in range(1, 10):
-            self.kvs[hashtagkey()] = util.RAND_INT(10)
+            self.kvs[util.hashtagkey()] = util.RAND_INT(10)
         tmpl = super().create()
         cmd = fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
         self.sequence.append(cmd)
@@ -88,7 +84,7 @@ class MHash(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = hashtagkey()
+        self.key = util.hashtagkey()
         self.timeout = random.randint(60,600)
         self.fvs = {}
         self.sequence = []
@@ -129,7 +125,7 @@ class MList(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = hashtagkey()
+        self.key = util.hashtagkey()
         self.vals = []
         self.sequence = []
 
@@ -174,7 +170,7 @@ class MSet(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = hashtagkey()
+        self.key = util.hashtagkey()
         MSet.keys.append(self.key)
         self.members = []
         self.sequence = []
@@ -213,7 +209,7 @@ class MZset(RedisProto):
     def __init__(self, kind, cmdsmap):
         super().__init__(cmdsmap)
         self.kind = kind
-        self.key = hashtagkey()
+        self.key = util.hashtagkey()
         self.members = []
         self.scores = []
         self.sequence = []
@@ -223,7 +219,7 @@ class MZset(RedisProto):
             self.members.append(util.RAND(10)) 
             self.scores.append(util.RAND_INT(10)) 
         tmpl = super().create()
-        sms = flat_list(self.scores, self.members)
+        sms = util.flat_list(self.scores, self.members)
         cmd = fmt_mstring(tmpl, key=self.key, sms=sms)
         self.sequence.append(cmd)
 
