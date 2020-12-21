@@ -19,7 +19,7 @@ def getconf():
 
 def main():
     conf = getconf()
-    opt = option.Option(conf['num_batch'], conf['num_operation'], conf['keylen'], conf['vallen'], conf['maxduration'])
+    opt = option.Option(conf['num_batch'], conf['num_operation'], conf['keylen'], conf['vallen'], conf['maxduration'], conf['mode'])
     while True:
         fac = factory.Factory(opt)
         trans = transport.Transport()

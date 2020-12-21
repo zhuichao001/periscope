@@ -4,7 +4,7 @@ import batch
 
 
 class Options:
-    def __init__(self, num_batch, num_operation, keylen, vallen, maxduration):
+    def __init__(self, num_batch, num_operation, keylen, vallen, maxduration, mod):
         self.num_batch = num_batch
         self.num_operation = num_operation
         self.keylen = keylen
@@ -27,7 +27,10 @@ class Factory:
         end = time.time()
         print("PRODUCE COST:::", end-start, len(self.commands))
         start = time.time()
-        self._mixture()
+        if self.opt.mode == 'mixture':
+            self._mixture()
+        else:
+            self._normal()
         end = time.time()
         print("MIXTURE COST:::", end-start, len(self.commands))
         return self.commands
@@ -42,3 +45,7 @@ class Factory:
             else:
                 self.commands.append(bat.commands[pos])
                 positions[bat] += 1
+
+    def _normal(self):
+        for bat in self.batches:
+            self.commands.extend(bat.commands)
