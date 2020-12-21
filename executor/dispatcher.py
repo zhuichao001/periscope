@@ -1,11 +1,10 @@
 import sys
-from executor import RedisExecuter,JimkvExecuter
 
 
 class Dispatcher:
     def __init__(self, src, dst):
-        self.src = RedisExecuter(host=src[0], port=src[1])
-        self.dst = JimkvExecuter(host=dst[0], port=dst[1])
+        self.src = src
+        self.dst = dst
 
     def emit(self, cmd):
         try:

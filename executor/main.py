@@ -2,13 +2,14 @@ import sys
 from dispatcher import Dispatcher
 from receiver import Receiver
 from transmitter import Transmitter
+from executor import RedisExecuter,JimkvExecuter
 
 
 def main():
-    src_addr = ('127.0.0.1', 6379)
-    #dst_addr = ('127.0.0.1', 6378)
-    dst_addr = ('11.3.85.38', 5363)
-    disp = Dispatcher(src_addr, dst_addr)
+    source = RedisExecuter('127.0.0.1', 6379)
+    target_dev = RedisExecuter('127.0.0.1', 6378)
+    target_ol = JimkvExecuter('11.3.85.38', 5363, password='jimdb://2913114965120297581/2')
+    disp = Dispatcher(source, target_dev)
     recver = Receiver()
     trans = Transmitter()
     while True:
