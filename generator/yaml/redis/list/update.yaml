@@ -9,6 +9,6 @@
 #- BRPOP: 'BRPOP {key}'
 #- BRPOPLPUSH: 'BRPOPLPUSH {key} {val}'
 - LSET: 'LSET {key} {index} {val}'
-- LINSERT: '{key} BEFORE {oldval} {val}'
-- LINSERT: '{key} AFTER {oldval} {val}'
+- LINSERT: 'LINSERT {key} BEFORE {oldval} {val}'
+- LINSERT: 'LINSERT {key} AFTER {oldval} {val}'
 - LREM: 'LREM {key} 0 {oldval}'
