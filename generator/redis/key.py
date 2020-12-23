@@ -26,13 +26,15 @@ class Key(basetype.BaseType):
     def update(self):
         self.val = util.RAND(30)
         tmpl = super().update()
+        newkey = util.RAND(10)
         start = random.randint(0, len(self.val))
         end = random.randint(start, len(self.val))
         index = start
         key1 = random.choice(Key.keys)
         key2 = random.choice(Key.keys)
-        pseconds =int(time.time()+random.randint(0,60))*1000
-        cmd = formatter.fmt_string(tmpl, key=self.key, val=self.val, timeout=self.timeout, index=index, start=start, end=end, key1=key1, key2=key2, pseconds=pseconds)
+        seconds = int(time.time()+random.randint(0,60))
+        pseconds = seconds*1000
+        cmd = formatter.fmt_string(tmpl, key=self.key, val=self.val, newkey=newkey, timeout=self.timeout, ptimeout=self.timeout*1000, index=index, start=start, end=end, key1=key1, key2=key2, seconds=seconds, pseconds=pseconds)
         self.sequence.append(cmd)
 
     def require(self):

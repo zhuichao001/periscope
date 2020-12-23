@@ -41,5 +41,6 @@ class MHash(basetype.BaseType):
         for _ in range(1, len(self.fvs)):
             fields.append(random.choice(list(self.fvs.keys())))
         tmpl = super().delete()
-        cmd = formatter.fmt_mstring(tmpl, key=self.key, fields=fields)
+        timeout = random.randint(60, 600)
+        cmd = formatter.fmt_mstring(tmpl, key=self.key, fields=fields, timeout=timeout)
         self.sequence.append(cmd)

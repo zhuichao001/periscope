@@ -1,4 +1,1 @@
 - DEL: 'DEL {key}'
-- EXPIRE: 'EXPIRE {key} {timeout}'
-- PERSIST: 'PERSIST {key}'
-- LTRIM: 'LSET {key} {start} {end}'

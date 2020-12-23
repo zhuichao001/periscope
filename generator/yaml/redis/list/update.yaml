@@ -12,3 +12,6 @@
 - LINSERT: 'LINSERT {key} BEFORE {oldval} {val}'
 - LINSERT: 'LINSERT {key} AFTER {oldval} {val}'
 - LREM: 'LREM {key} 0 {oldval}'
+- EXPIRE: 'EXPIRE {key} {timeout}'
+- PERSIST: 'PERSIST {key}'
+- LTRIM: 'LTRIM {key} {start} {end}'

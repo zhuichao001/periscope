@@ -3,8 +3,4 @@
 - SETEX: 'SETNX {key} {fval}'
 - SETNX: 'SETEX {key} {timeout} {fval}'
 - SETRANGE: 'SETRANGE {key} {index} {val}'
-- INCR: 'INCR {key}'
-- DECR: 'DECR {key}'
-- INCRBY: 'INCRBY {key} {val}'
-- DECRBY: 'DECRBY {key} {val}'
 - INCRBYFLOAT: 'DECRBY {INCRBYFLOAT} {fval}'

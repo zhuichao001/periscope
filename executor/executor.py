@@ -20,6 +20,17 @@ class JimkvExecuter:
     def execute(self, cmd):
         return redis_exec(self.red, cmd)
 
+def mapping(arr):
+    ks = arr[0::2]
+    vs = arr[1::2]
+    return dict(zip(ks,vs))
+
+def rmapping(arr):
+    ks = arr[1::2]
+    vs = arr[0::2]
+    return dict(zip(ks,vs))
+
+
 def redis_exec(red, cmd):
     cols = cmd.strip().split(b' ')
     head, params = cols[0], cols[1:]
@@ -42,9 +53,9 @@ def redis_exec(red, cmd):
     elif head == b'SUBSTR':
         return red.substr(*params)
     elif head == b'MSET':
-        return red.mset(params)
+        return red.mset(mapping(params))
     elif head == b'MSETNX':
-        return red.msetnx(params)
+        return red.msetnx(mapping(params))
     elif head == b'MGET':
         return red.mget(*params)
     elif head == b'STRLEN':
@@ -66,9 +77,7 @@ def redis_exec(red, cmd):
     elif head == b'HSET':  #hash
         return red.hset(*params)
     elif head == b'HMSET':
-        ks = params[1::2]
-        vs = params[2::2]
-        return red.hmset(params[0], dict(zip(ks,vs)))
+        return red.hmset(params[0], mapping(params[1:]))
     elif head == b'HINCRBY':
         return red.hincrby(*params) 
     elif head == b'HSTRLEN':
@@ -104,10 +113,7 @@ def redis_exec(red, cmd):
     elif head == b'SMEMBERS':
         return list(red.smembers(*params)).sort()
     elif head == b'ZADD':  #zset
-        members = params[2::2]
-        scores = [int(v) for v in params[1::2]]
-        smap = dict(zip(members, scores))
-        return red.zadd(params[0], smap)
+        return red.zadd(params[0], rmapping(params[1:]))
     elif head == b'ZRANGE':
         return red.zrange(*params)
     elif head == b'APPEND':
@@ -185,7 +191,7 @@ def redis_exec(red, cmd):
     elif head == b'SMOVE':
         return red.smove(*params)
     elif head == b'SSCAN':
-        return red.sscan(*params)
+        return red.sscan(params[0], cursor=int(params[1]), match=params[-1])
     elif head == b'HMGET':
         return red.hmget(*params)
     elif head == b'SETRANGE':
@@ -193,7 +199,8 @@ def redis_exec(red, cmd):
     elif head == b'GETBIT':
         return red.getbit(*params)
     elif head == b'SORT':
-        return red.sort(*params)
+        desc = True if params[-1]=='DESC' else False
+        return red.sort(params[0], desc=desc)
     elif head == b'LLEN':
         return red.llen(*params)
     elif head == b'EXPIRE':
@@ -231,7 +238,7 @@ def redis_exec(red, cmd):
     elif head == b'ZREMRANGEBYSCORE':
         return red.zremrangebyscore(*params)
     elif head == b'ZINTERSTORE':
-        return red.zinterstore(*params)
+        return red.zinterstore(params[1], params[3:])
     elif head == b'ZRANGEBYSCORE':
         return red.zrangebyscore(*params)
     elif head == b'ZREMRANGEBYLEX':
@@ -274,8 +281,6 @@ def redis_exec(red, cmd):
         return red.watch(*params)
     elif head == b'UNWATCH':
         return red.unwatch(*params)
-    elif head == b'SCRIPT':
-        return red.script(*params)
     elif head == b'SETBIT':
         return red.setbit(*params)
     elif head == b'PEXPIRE':
@@ -288,5 +293,5 @@ def redis_exec(red, cmd):
         return red.type(*params)
     elif head == b'SLOWLOG':
         return red.slowlog(*params)
-    return "@_@"
-
+    else:
+        return red.execute_command(*params)
