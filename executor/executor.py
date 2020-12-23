@@ -34,8 +34,12 @@ def redis_exec(red, cmd):
         return red.set(*params)
     elif head == b'GET':
         return red.get(*params)
+    elif head == b'SUBSTR':
+        return red.substr(*params)
     elif head == b'MSET':
         return red.mset(params)
+    elif head == b'MSETNX':
+        return red.msetnx(params)
     elif head == b'MGET':
         return red.mget(*params)
     elif head == b'STRLEN':
@@ -62,6 +66,8 @@ def redis_exec(red, cmd):
         return red.hincrby(*params) 
     elif head == b'HMSET':
         return red.hmset(*params)
+    elif head == b'HSTRLEN':
+        return red.hstrlen(*params)
     elif head == b'HDEL':
         return red.hdel(*params)
     elif head == b'LPUSH': #list
@@ -80,6 +86,8 @@ def redis_exec(red, cmd):
         return red.lindex(*params)
     elif head == b'LRANGE':
         return red.lrange(*params)
+    elif head == b'LINSERT':
+        return red.linsert(*params)
     elif head == b'LREM':
         return red.lrem(*params)
     elif head == b'SADD':  #set
@@ -149,18 +157,6 @@ def redis_exec(red, cmd):
         return list(red.sunion(*params)).sort()
     elif head == b'SUNIONSTORE':
         return red.sunionstore(*params)
-    elif head == b'ZCOUNT':
-        return red.zcount(*params)
-    elif head == b'ZRANK':
-        return list(red.zrank(*params)).sort()
-    elif head == b'ZREM':
-        return red.zrem(*params)
-    elif head == b'ZREVRANGE':
-        return red.zrevrange(*params)
-    elif head == b'ZREVRANK':
-        return red.zrevrank(*params)
-    elif head == b'ZSCORE':
-        return red.zscore(*params)
     elif head == b'BITCOUNT':
         return red.bitcount(*params)
     elif head == b'RENAMENX':
@@ -171,22 +167,18 @@ def redis_exec(red, cmd):
         return red.randomkey(*params)
     elif head == b'RANDOMKEY':
         return red.randomkey(*params)
-    elif head == b'ZCARD':
-        return red.zcard(*params)
-    elif head == b'ZCARD':
-        return red.zcard(*params)
     elif head == b'PING':
         return red.ping(*params)
     elif head == b'SETEX':
         return red.setex(*params)
     elif head == b'SMOVE':
         return red.smove(*params)
+    elif head == b'SSCAN':
+        return red.sscan(*params)
     elif head == b'HMGET':
         return red.hmget(*params)
     elif head == b'SETRANGE':
         return red.setrange(*params)
-    elif head == b'DEL':
-        return red.delete(*params)
     elif head == b'GETBIT':
         return red.getbit(*params)
     elif head == b'SORT':
@@ -211,6 +203,18 @@ def redis_exec(red, cmd):
         return red.zscan(*params)
     elif head == b'PFCOUNT':
         return red.pfcount(*params)
+    elif head == b'ZCARD':
+        return red.zcard(*params)
+    elif head == b'ZCOUNT':
+        return red.zcount(*params)
+    elif head == b'ZRANK':
+        return list(red.zrank(*params)).sort()
+    elif head == b'ZREVRANGE':
+        return red.zrevrange(*params)
+    elif head == b'ZREVRANK':
+        return red.zrevrank(*params)
+    elif head == b'ZSCORE':
+        return red.zscore(*params)
     elif head == b'PFMERGE':
         return red.pfmerge(*params)
     return "@_@"
