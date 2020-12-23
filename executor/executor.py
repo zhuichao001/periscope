@@ -237,6 +237,8 @@ def redis_exec(red, cmd):
         return red.zrangebyscore(*params)
     elif head == b'ZREMRANGEBYLEX':
         return red.zremrangebylex(*params)
+    elif head == b'ZREVRANGEBYSCORE':
+        return red.zrevrangebyscore(*params)
     elif head == b'PFMERGE':
         return red.pfmerge(*params)
     elif head == b'PSETEX':
@@ -265,6 +267,8 @@ def redis_exec(red, cmd):
         return red.rename(*params)
     elif head == b'MULTI':
         return red.multi(*params)
+    elif head == b'EXEC':
+        return red.exec(*params)
     elif head == b'WATCH':
         return red.watch(*params)
     elif head == b'UNWATCH':
