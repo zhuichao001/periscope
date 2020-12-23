@@ -28,12 +28,18 @@ def redis_exec(red, cmd):
         return red.delete(*params)
     elif head == b'EXPIRE':
         return red.expire(*params)
+    elif head == b'EXPIREAT':
+        return red.expireat(*params)
+    elif head == b'PEXPIREAT':
+        return red.pexpireat(*params)
     elif head == b'PERSIST':
         return red.persist(*params)
     elif head == b'SET':   #string
         return red.set(*params)
     elif head == b'GET':
         return red.get(*params)
+    elif head == b'SCAN':
+        return red.scan(*params)
     elif head == b'SUBSTR':
         return red.substr(*params)
     elif head == b'MSET':
@@ -80,6 +86,8 @@ def redis_exec(red, cmd):
         return red.rpop(*params)
     elif head == b'LSET':
         return red.lset(*params)
+    elif head == b'LTRIM':
+        return red.ltrim(*params)
     elif head == b'LLEN':
         return red.llen(*params)
     elif head == b'LINDEX':
@@ -159,6 +167,10 @@ def redis_exec(red, cmd):
         return red.sunionstore(*params)
     elif head == b'BITCOUNT':
         return red.bitcount(*params)
+    elif head == b'BITOP':
+        return red.bitop(*params)
+    elif head == b'BITPOS':
+        return red.bitpos(*params)
     elif head == b'RENAMENX':
         return red.renamenx(*params)
     elif head == b'GETRANGE':
@@ -215,7 +227,61 @@ def redis_exec(red, cmd):
         return red.zrevrank(*params)
     elif head == b'ZSCORE':
         return red.zscore(*params)
+    elif head == b'ZREMRANGEBYRANK':
+        return red.zremrangebyrank(*params)
+    elif head == b'ZREMRANGEBYSCORE':
+        return red.zremrangebyscore(*params)
+    elif head == b'ZINTERSTORE':
+        return red.zinterstore(*params)
+    elif head == b'ZRANGEBYSCORE':
+        return red.zrangebyscore(*params)
+    elif head == b'ZREMRANGEBYLEX':
+        return red.zremrangebylex(*params)
     elif head == b'PFMERGE':
         return red.pfmerge(*params)
+    elif head == b'PSETEX':
+        return red.psetex(*params)
+    elif head == b'AUTH':
+        return red.auth(*params)
+    elif head == b'INFO':
+        return red.info(*params)
+    elif head == b'EVALSHA':
+        return red.evalsha(*params)
+    elif head == b'REFCOUNT':
+        return red.refcount(*params)
+    elif head == b'OBJECT':
+        return red.object(*params)
+    elif head == b'DUMP':
+        return red.dump(*params)
+    elif head == b'RESTORE':
+        return red.restore(*params)
+    elif head == b'KEYS':
+        return red.keys(*params)
+    elif head == b'TTL':
+        return red.ttl(*params)
+    elif head == b'PTTL':
+        return red.pttl(*params)
+    elif head == b'RENAME':
+        return red.rename(*params)
+    elif head == b'MULTI':
+        return red.multi(*params)
+    elif head == b'WATCH':
+        return red.watch(*params)
+    elif head == b'UNWATCH':
+        return red.unwatch(*params)
+    elif head == b'SCRIPT':
+        return red.script(*params)
+    elif head == b'SETBIT':
+        return red.setbit(*params)
+    elif head == b'PEXPIRE':
+        return red.pexpire(*params)
+    elif head == b'EVAL':
+        return red.eval(*params)
+    elif head == b'BITOPS':
+        return red.bitops(*params)
+    elif head == b'TYPE':
+        return red.type(*params)
+    elif head == b'SLOWLOG':
+        return red.slowlog(*params)
     return "@_@"
 
