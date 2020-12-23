@@ -67,8 +67,8 @@ def redis_exec(red, cmd):
         return red.hset(*params)
     elif head == b'HMSET':
         ks = params[1::2]
-        vs = params[1::2]
-        return red.hmset(dict(zip(ks,vs)))
+        vs = params[2::2]
+        return red.hmset(params[0], dict(zip(ks,vs)))
     elif head == b'HINCRBY':
         return red.hincrby(*params) 
     elif head == b'HSTRLEN':
