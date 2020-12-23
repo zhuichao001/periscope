@@ -80,6 +80,8 @@ def redis_exec(red, cmd):
         return red.lindex(*params)
     elif head == b'LRANGE':
         return red.lrange(*params)
+    elif head == b'LREM':
+        return red.lrem(*params)
     elif head == b'SADD':  #set
         return red.sadd(*params)
     elif head == b'SCARD':
@@ -191,5 +193,25 @@ def redis_exec(red, cmd):
         return red.sort(*params)
     elif head == b'LLEN':
         return red.llen(*params)
+    elif head == b'EXPIRE':
+        return red.expire(*params)
+    elif head == b'ZINCRBY':
+        return red.zincrby(*params)
+    elif head == b'ZRANGEBYLEX':
+        return red.zrangebylex(*params)
+    elif head == b'ZREVRANK':
+        return red.zrevrank(*params)
+    elif head == b'ZREM':
+        return red.zrem(*params)
+    elif head == b'ZLEXCOUNT':
+        return red.zlexcount(*params)
+    elif head == b'ZUNIONSTORE':
+        return red.zunionstore(*params)
+    elif head == b'ZSCAN':
+        return red.zscan(*params)
+    elif head == b'PFCOUNT':
+        return red.pfcount(*params)
+    elif head == b'PFMERGE':
+        return red.pfmerge(*params)
     return "@_@"
 

@@ -1,4 +1,5 @@
 from socket import *
+import time
 
 class Transport:
     def __init__(self):
@@ -9,3 +10,4 @@ class Transport:
         for cmd in cmds:
             print ("<<< ", cmd)
             self.sock.sendto(cmd.encode('utf-8'), self.addr)
+            time.sleep(0.01)

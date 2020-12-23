@@ -8,7 +8,7 @@ from executor import RedisExecuter,JimkvExecuter
 def main():
     source = RedisExecuter('127.0.0.1', 6379)
     target_dev = RedisExecuter('127.0.0.1', 6378)
-    target_ol = JimkvExecuter('11.3.85.38', 5363, password='jimdb://2913114965120297581/2')
+    #target_ol = JimkvExecuter('11.3.85.38', 5363, password='jimdb://2913114965120297581/2')
     disp = Dispatcher(source, target_dev)
     recver = Receiver()
     trans = Transmitter()
