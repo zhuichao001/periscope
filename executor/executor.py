@@ -17,7 +17,13 @@ class JimkvExecuter:
         else:
             self.red = redis.Redis(host=host, port=port)
 
+    def _patch(self, cmd):
+        if cmd.startswith('SSCAN'):
+            cmd = cmd.replace('0', '""')
+        return cmd
+
     def execute(self, cmd):
+        cmd = self._patch(cmd)
         return redis_exec(self.red, cmd)
 
 def mapping(arr):
