@@ -20,7 +20,6 @@ class JimkvExecuter:
     def execute(self, cmd):
         return redis_exec(self.red, cmd)
 
-
 def redis_exec(red, cmd):
     cols = cmd.strip().split(b' ')
     head, params = cols[0], cols[1:]
@@ -67,11 +66,11 @@ def redis_exec(red, cmd):
     elif head == b'HSET':  #hash
         return red.hset(*params)
     elif head == b'HMSET':
-        return red.hmset(params)
+        ks = params[1::2]
+        vs = params[1::2]
+        return red.hmset(dict(zip(ks,vs)))
     elif head == b'HINCRBY':
         return red.hincrby(*params) 
-    elif head == b'HMSET':
-        return red.hmset(*params)
     elif head == b'HSTRLEN':
         return red.hstrlen(*params)
     elif head == b'HDEL':
@@ -269,6 +268,8 @@ def redis_exec(red, cmd):
         return red.multi(*params)
     elif head == b'EXEC':
         return red.exec(*params)
+    elif head == b'DISCARD':
+        return red.discard(*params)
     elif head == b'WATCH':
         return red.watch(*params)
     elif head == b'UNWATCH':
