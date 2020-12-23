@@ -1,4 +1,4 @@
 - DEL: 'DEL {key}'
-- ZREM: 'ZADD {key} {member}'
+- ZREM: 'ZREM {key} {member}'
 - EXPIRE: 'EXPIRE {key} {timeout}'
 - PERSIST: 'PERSIST {key}'

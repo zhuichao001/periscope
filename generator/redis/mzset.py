@@ -23,13 +23,15 @@ class MZset(basetype.BaseType):
         self.sequence.append(cmd)
 
     def update(self):
-        score = random.randint(0,100)
+        scores = []
         members = []
-        for _ in range(1, 3):
-            members.append(util.RAND(30))
-        self.members.extend(members)
+        for i in random.sample(range(len(self.members)), int(len(self.members)/3)+1):
+            members.append(self.members[i])
+            self.scores[i] = util.RAND_INT(9)
+            scores.append(util.RAND_INT(9))
         tmpl = super().update()
-        cmd = formatter.fmt_mstring(tmpl, key=self.key, members=members)
+        sms = util.flat_list(self.scores, self.members)
+        cmd = formatter.fmt_mstring(tmpl, key=self.key, sms=sms)
         self.sequence.append(cmd)
 
     def require(self):

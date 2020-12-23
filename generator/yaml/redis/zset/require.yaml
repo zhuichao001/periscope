@@ -7,7 +7,7 @@
 - EXISTS: 'EXISTS {key}'
 - ZINTERSTORE: 'ZINTERSTORE {key} {count} {key1} {key2}'
 - ZUNIONSTORE: 'ZUNIONSTORE {key} {count} {key1} {key2}'
-- ZSCAN: 'ZSCAN {key} 0 match *R*'
+- ZSCAN: 'ZSCAN {key} 0 match \"*R*\"'
 - ZLEXCOUNT: 'ZLEXCOUNT {key} - +'
 - ZLEXCOUNT: 'ZLEXCOUNT {key} [a [z'
 - ZRANGEBYLEX: 'ZRANGEBYLEX {key} [A [Z'

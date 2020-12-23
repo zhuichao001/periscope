@@ -209,7 +209,7 @@ def redis_exec(red, cmd):
     elif head == b'ZLEXCOUNT':
         return red.zlexcount(*params)
     elif head == b'ZUNIONSTORE':
-        return red.zunionstore(*params)
+        return red.zunionstore(params[1], set(params[3:]))
     elif head == b'ZSCAN':
         return red.zscan(*params)
     elif head == b'PFCOUNT':
