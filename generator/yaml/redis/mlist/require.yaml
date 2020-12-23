@@ -1,5 +1,5 @@
 - LPOP: 'LPOP {key}'
 - RPOP: 'RPOP {key}'
 - LLEN: 'LLEN {key}'
-- LINDEX: 'LINDEX {key} {val}'
+- LINDEX: 'LINDEX {key} {index}'
 - LRANGE: 'LRANGE {key} {start} {end}'

@@ -37,7 +37,8 @@ class MList(basetype.BaseType):
         val = random.choice(self.vals)
         start = random.randint(0, len(self.vals))
         end = random.randint(start, len(self.vals))
-        cmd = formatter.fmt_mstring(tmpl, key=self.key, val=val, start=start, end=end)
+        index = start
+        cmd = formatter.fmt_mstring(tmpl, key=self.key, val=val, start=start, end=end, index=index)
         self.sequence.append(cmd)
 
     def delete(self):
