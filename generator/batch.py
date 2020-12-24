@@ -1,20 +1,20 @@
 import random
 import cmdproto
-import redis.key as rkey
-import redis.string as rstr
-import redis.integer as rint
-import redis.float as rflo
-import redis.hash as rhas
-import redis.list as rlis
-import redis.set as rset
-import redis.zset as rzse
-import redis.hyperloglog as rhyp
-import redis.mstring as rmst
-import redis.minteger as rmin
-import redis.mhash as rmha
-import redis.mlist as rmli
-import redis.mset as rmse
-import redis.mzset as rmzs
+import redis.normal.key as rkey
+import redis.normal.string as rstr
+import redis.normal.integer as rint
+import redis.normal.float as rflo
+import redis.normal.hash as rhas
+import redis.normal.list as rlis
+import redis.normal.set as rset
+import redis.normal.zset as rzse
+import redis.normal.hyperloglog as rhyp
+import redis.normal.mstring as rmst
+import redis.normal.minteger as rmin
+import redis.normal.mhash as rmha
+import redis.normal.mlist as rmli
+import redis.normal.mset as rmse
+import redis.normal.mzset as rmzs
 
 
 class Batch:
