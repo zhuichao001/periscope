@@ -18,7 +18,7 @@ class JimkvExecuter:
             self.red = redis.Redis(host=host, port=port)
 
     def _patch(self, cmd):
-        if cmd.startswith('SSCAN'):
+        if cmd.startswith(b'SSCAN'):
             cmd = cmd.replace('0', '""')
         return cmd
 
