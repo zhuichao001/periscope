@@ -1,0 +1,3 @@
+- SMOVE: 'SMOVE {key1}  {member}'
+- SREM: 'SREM {key} '
+- SREM: 'SREM {key} *'

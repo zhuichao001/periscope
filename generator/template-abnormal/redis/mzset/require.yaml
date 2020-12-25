@@ -1,0 +1,2 @@
+- ZCARD: 'ZCARD '
+- ZSCORE: 'ZSCORE {member}'

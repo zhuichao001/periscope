@@ -1,0 +1,8 @@
+- LPOP: 'LPOP '
+- RPOP: 'RPOP '
+- LLEN: 'LLEN '
+- LINDEX: 'LINDEX {key} 0'
+- LINDEX: 'LINDEX {key} -9999'
+- LRANGE: 'LRANGE {key} 9999 9999'
+- EXISTS: 'EXISTS '
+- EXISTS: 'EXISTS *'

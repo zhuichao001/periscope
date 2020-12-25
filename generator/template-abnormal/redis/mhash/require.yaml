@@ -1,0 +1,4 @@
+- HGETALL: 'HGETALL +++++'
+- HKEYS: 'HKEYS '
+- HVALS: 'HVALS \"\"'
+- HMGET: 'HMGET {key} \"\"'

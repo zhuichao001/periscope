@@ -1,0 +1,8 @@
+- DEL: 'DEL '
+- DEL: 'DEL *'
+- EXPIRE: 'EXPIRE {key}'
+- EXPIRE: 'EXPIRE {key} {timeout}'
+- PERSIST: 'PERSIST *'
+- PERSIST: 'PERSIST \"\"'
+- SREM: 'SREM {key} *'
+- SREM: 'SREM {key} \"\"'

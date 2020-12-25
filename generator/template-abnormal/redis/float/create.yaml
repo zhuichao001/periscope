@@ -1,0 +1,4 @@
+- SET: 'SET {fval}'
+- SET: 'SET {key} {fval}'
+- SETNX: 'SETNX  {fval}'
+- SETEX: 'SETEX {key} -9999 {fval}'

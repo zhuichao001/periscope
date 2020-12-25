@@ -1,0 +1,2 @@
+- SET: ' SET {key} {val} '
+- SET: 'SET {key} ABCDEF'

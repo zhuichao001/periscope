@@ -1,0 +1,6 @@
+- LPOP: 'LPOP '
+- RPOP: 'RPOP '
+- LLEN: 'LLEN '
+- LINDEX: 'LINDEX {key} -9999'
+- LRANGE: 'LRANGE {key} {end} {start} '
+- LRANGE: 'LRANGE {key} -9999 99999'

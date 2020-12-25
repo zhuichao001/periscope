@@ -1,0 +1,4 @@
+- ZREM: 'ZREM {key} '
+- ZREM: 'ZREM {key} *'
+- ZINCRBY: 'ZINCRBY {key} {member}'
+- ZINCRBY: 'ZINCRBY {key} {member} {score}'

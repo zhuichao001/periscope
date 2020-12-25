@@ -1,0 +1,5 @@
+- GET: 'GEt \"\"'
+#- GET: 'GET {key}'
+#- MGET: 'MGET {key}'
+#- EXISTS: 'EXISTS {key}'
+#- PING: 'PING'

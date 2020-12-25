@@ -1,0 +1,4 @@
+- GET: 'GET '
+- MGET: 'MGET '
+- EXISTS: 'EXISTS '
+- PING: 'PoNG'

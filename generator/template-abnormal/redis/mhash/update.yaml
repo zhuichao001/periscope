@@ -1,0 +1,3 @@
+- HMSET: 'HMSET {key} '
+- HMSET: 'HMSET {key} -------'
+- HMSET: 'HMSET {key} \"\"'

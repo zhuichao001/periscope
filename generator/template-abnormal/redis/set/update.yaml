@@ -1,0 +1,2 @@
+- SADD: 'SADD {key} {member} '
+- SADD: 'SADD {key}  '

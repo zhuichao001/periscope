@@ -1,0 +1,6 @@
+- HSET: 'HSET {key} {field} {val}'
+- HSET: 'HSET {key} {val}'
+- HSET_INT: 'HSET {key} {field} 9.231131'
+- HSETNX: 'HSETNX {key}  {val}'
+- HSETNX_INT: 'HSETNX {key} {field} {ival}'
+- HSETNX_INT: 'HSETNX {key} {ifield} {val}'

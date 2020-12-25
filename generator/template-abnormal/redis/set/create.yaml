@@ -1,0 +1,4 @@
+- SADD: 'SADD {key} {member} {member}'
+- SADD: 'SADD {key} '
+- SADD: 'SADD {key} \"\"'
+- SADD: 'SADD {key} *'
