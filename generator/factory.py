@@ -1,15 +1,18 @@
 import time
 import random
 import batch
+import cmdproto
 
 
 class Options:
-    def __init__(self, num_batch, num_operation, keylen, vallen, maxduration, mod):
+    def __init__(self, num_batch, num_operation, keylen, vallen, maxduration, mode, template):
         self.num_batch = num_batch
         self.num_operation = num_operation
         self.keylen = keylen
         self.vallen = vallen
         self.maxduration = maxduration
+        self.mode = mode
+        self.template = template
 
 
 class Factory:
@@ -17,11 +20,13 @@ class Factory:
         self.opt = option
         self.batches = []
         self.commands = []
+        protodir = './template/redis/' if self.opt.template=='normal' else './template-abnormal/redis/'
+        self.proto = cmdproto.CmdProto(protodir)
 
     def produce(self):
         start = time.time()
         for _ in range(self.opt.num_batch):
-            bat = batch.Batch(self.opt.num_operation)
+            bat = batch.Batch(self.proto, self.opt.num_operation)
             bat.build()
             self.batches.append(bat)
         end = time.time()
@@ -30,7 +35,7 @@ class Factory:
         if self.opt.mode == 'mixture':
             self._mixture()
         else:
-            self._normal()
+            self._serial()
         end = time.time()
         print("MIXTURE COST:::", end-start, len(self.commands))
         return self.commands
@@ -46,6 +51,6 @@ class Factory:
                 self.commands.append(bat.commands[pos])
                 positions[bat] += 1
 
-    def _normal(self):
+    def _serial(self):
         for bat in self.batches:
             self.commands.extend(bat.commands)

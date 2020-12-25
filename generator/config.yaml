@@ -3,4 +3,5 @@ num_operation: 16
 keylen: 8
 vallen: 32
 maxduration: 60
-mode: 'normal' #mixture | normal
+mode: 'default' #mixture | default 
+template: 'abnormal' #normal | abnormal
