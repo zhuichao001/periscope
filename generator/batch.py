@@ -18,7 +18,7 @@ import redis.normal.mzset as rmzs
 
 
 class Batch:
-    proto = cmdproto.CmdProto('./yaml/redis/')
+    proto = cmdproto.CmdProto('./template/redis/')
     types = {'key':rkey.Key, 'str':rstr.String,'int':rint.Integer,'flo':rflo.Float,\
             'has':rhas.Hash,'lis':rlis.List,'set':rset.Set,'zse':rzse.Zset,'hyp':rhyp.HyperLogLog,\
             'mst':rmst.MString,'min':rmin.MInteger,'mha':rmha.MHash,'mli':rmli.MList,'mse':rmse.MSet,'mzs':rmzs.MZset}
