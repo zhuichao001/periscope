@@ -1,3 +1,0 @@
-- DEL: 'DEL 0'
-- EXPIRE: 'EXPIRE {timeout} {key} '
-- PERSIST: 'PERSIST'

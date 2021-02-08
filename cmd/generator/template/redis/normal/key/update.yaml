@@ -1,0 +1,6 @@
+- EXPIRE: 'EXPIRE {key} {timeout}'
+- EXPIREAT: 'EXPIREAT {key} {seconds}'
+- PEXPIRE: 'PEXPIRE {key} {ptimeout}'
+- PEXPIREAT: 'PEXPIREAT {key} {pseconds}'
+- PERSIST: 'PERSIST {key}'
+  #- WATCH: 'WATCH {key}'

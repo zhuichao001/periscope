@@ -1,0 +1,4 @@
+- SMOVE: 'SMOVE {key1} {key2} {member}'
+- SREM: 'SREM {key} ({member})+'
+- RENAME: 'RENAME {key1} {key2}'
+- RENAMENX: 'RENAMENX {key1} {key2}'

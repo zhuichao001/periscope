@@ -1,0 +1,8 @@
+- GET: 'GET {key}'
+- MGET: 'MGET {key}'
+- EXISTS: 'EXISTS {key}'
+- PING: 'PING'
+- BITCOUNT: 'BITCOUNT {key}'
+- BITPOS: 'BITPOS {key} 1'
+- BITPOS: 'BITPOS {key} 0'
+- GETBIT: 'GETBIT {key} {index}'

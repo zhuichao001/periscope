@@ -1,0 +1,6 @@
+- SET: 'SET {key} {val}'
+- SETEX: 'SETEX {key} {timeout} {val}'
+- SETNX: 'SETNX {key} {val}'
+- SETRANGE: 'SETRANGE {key} {index} {val}'
+- GETSET: 'GETSET {key} {val}'
+- APPEND: 'APPEND {key} {val}'

@@ -1,0 +1,8 @@
+- LPUSH: 'LPUSH {key} ({val})+'
+- LPOP: 'LPOP {key}'
+- RPUSH: 'RPUSH {key} ({val})+'
+- RPOP: 'RPOP {key}'
+- LTRIM: 'LTRIM {key} 0 -1'
+  #- SORT: 'SORT {key}'
+  #- SORT_DESC: 'SORT {key} DESC'
+  #- SORT_ALPHA: 'SORT {key} ALPHA'

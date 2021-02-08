@@ -1,0 +1,6 @@
+- DEL: 'DEL \"\"'
+- DEL: 'DEL *'
+- EXPIRE: 'EXPIRE {key} {timeout}'
+- PERSIST: 'PERSIST '
+- PERSIST: 'PERSIST *'
+- PERSIST: 'PERSIST {timeout}'

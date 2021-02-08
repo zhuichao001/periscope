@@ -1,0 +1,11 @@
+num_batch: 1
+num_operation: 16
+keylen: 8
+vallen: 32
+maxduration: 60
+sequence: 'default' #mixture | default
+mode: 'random'       #random | whole
+times: 1000
+duration: 0
+template: 'normal'  #normal | abnormal
+probe: false

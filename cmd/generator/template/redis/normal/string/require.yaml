@@ -1,0 +1,7 @@
+- GET: 'GET {key}'
+- STRLEN: 'STRLEN {key}'
+- EXISTS: 'EXISTS {key}'
+- GETRANGE: 'GETRANGE {key} {start} {end}'
+- SUBSTR: 'SUBSTR {key} {start} {end}'
+- STRLEN: 'STRLEN {key}'
+#- SCAN: 'SCAN {key} 0 {pattern} 10'

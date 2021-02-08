@@ -1,6 +1,0 @@
-- SET: 'SET {key} {fval}'
-- MSET: 'SET {key} {fval}'
-- SETEX: 'SETNX {key} {timeout} {fval}'
-- SETNX: 'SETEX {key} {fval}'
-- SETRANGE: 'SETRANGE {key} {index} {val}'
-- INCRBYFLOAT: 'DECRBY {INCRBYFLOAT} {fval}'

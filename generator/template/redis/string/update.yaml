@@ -1,7 +1,0 @@
-- SET: 'SET {key} {val}'
-- SETEX: 'SETNX {key} {val}'
-- SETNX: 'SETEX {key} {timeout} {val}'
-- SETRANGE: 'SETRANGE {key} {index} {val}'
-- GETSET: 'GETSET {key} {val}'
-- APPEND: 'APPEND {key} {val}'
-- SETBIT: 'SETBIT {key} {index} {val}'
