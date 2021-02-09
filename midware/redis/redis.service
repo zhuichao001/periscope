@@ -1,0 +1,17 @@
+
+[Unit]
+Description=Redis-server
+After=network.target
+[Service]
+ExecStart=/usr/local/bin/redis-server /etc/redis.conf --supervised systemd --daemonize no
+ExecStop=/usr/local/bin/redis-cli -h 127.0.0.1 -p 6379 shutdown
+LimitNOFILE=10032
+NoNewPrivileges=yes
+OOMScoreAdjust=-900
+Type=notify
+TimeoutStartSec=infinity
+TimeoutStopSec=infinity
+UMask=0077
+WorkingDirectory=/var/lib/redis
+[Install]
+WantedBy=multi-user.target
