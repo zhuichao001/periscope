@@ -1,7 +1,0 @@
-{
-    "service": {
-        "name": "periscope-executor", 
-	"tags": ["executors"], 
-	"port": 7581
-    }
-}
