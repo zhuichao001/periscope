@@ -1,16 +1,27 @@
 import httpio
 import json
 import localip
+import random
 
 
 class consultant:
     def __init__(self):
-        #self.host = '11.3.90.194:8500'
-        self.host = '127.0.0.1:8500'
+        self.consulhost = '127.0.0.1:8500'
+
+    def deregister(self, id):
+        uri = 'v1/agent/service/deregister/%s' % (id)
+        resp = httpio.httpio(self.consulhost).put(uri, '')
+        print("after deregister:::", resp)
+
+    def deregall(self, name):
+        ids = consul.discovery(name)
+        print("after discovery all:::", ids)
+        for id in ids:
+            consul.deregister(id)
 
     def register(self, name, svrhost):
         ip, port = svrhost.split(':')
-        id = name+'-'+localip.hostip().replace('.','_')
+        id = name+'-'+localip.hostip()
         body = {
                 'Id': id,
                 'Name': name,
@@ -24,19 +35,23 @@ class consultant:
         uri = 'v1/agent/service/register?replace-existing-checks=true'
         data = json.dumps(body)
         print(data)
-        resp = httpio.httpio(self.host).put(uri, data)
+        resp = httpio.httpio(self.consulhost).put(uri, data)
         print("after register:::", resp)
 
     def discovery(self, name):
         uri = 'v1/health/service/%s?passing=false' % (name)
-        resp = httpio.httpio(self.host).get(uri)
+        resp = httpio.httpio(self.consulhost).get(uri)
         data = json.loads(resp)
+        print("|||", data)
         hosts = [obj['Service']['Address']+':'+str(obj['Service']['Port']) for obj in data]
-        print(':::', hosts)
+        ids = [obj['Service']['ID'] for obj in data]
+        print("ids:::", ids)
+        print('hosts:::', hosts)
+        return ids
 
 
 if __name__ == '__main__':
     consul = consultant()
-    consul.register('aes', '127.0.0.2:9001')
-    consul.register('aes', '127.0.0.3:9001')
+    consul.deregister('aes')
+    consul.register('aes', '127.0.0.1:9001')
     consul.discovery('aes')

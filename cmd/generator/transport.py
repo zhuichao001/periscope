@@ -9,4 +9,4 @@ class Transport:
     def deliver(self, cmds):
         for cmd in cmds:
             print ("<<< ", cmd)
-            self.sock.sendto(cmd.encode('utf-8'), self.addr)
+            self.sock.sendto(b'CMD:'+cmd.encode('utf-8'), self.addr)
