@@ -1,6 +1,5 @@
 
 
-#TODO: fullfill
 class Disk:
     def __init__(self):
         self.write_tmpl = ""

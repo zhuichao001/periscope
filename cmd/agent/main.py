@@ -1,31 +1,26 @@
 import sys
+import cmd.agent.deploy as deploy
+import cmd.agent.hardware as hardware
+import cmd.agent.receiver as receiver
 
 
 def main():
-    netdev = NetDevice()
-    mem = Memory()
-    disk = Disck()
+    if len(sys.argv)<2 or sys.argv[1] not in['remote', 'near']:
+        print('usage:\n python3 -m main [near|remote]')
 
-    recver = Receiver()
+    device = hardware.Hardware()
+
+    recver = receiver.Receiver()
     while True:
-        #TODO: fork subprocess to deal with such cmds
         data = recver.recv()
-        prefix, val = data.split(":")
-        if prefix == 'net.delay':
-            netdev.delay(int(val))
-        elif prefix == 'net.loss':
-            netdev.loss(int(val))
-        elif prefix == 'net.clear':
-            netdev.clear()
-        elif prefix == 'mem.occupy':
-            mem.occupy(int(val))
-        elif prefix == 'mem.clear':
-            mem.clear()
-        elif prefix == 'disk.write':
-            disk.write(int(val))
-        elif prefix == 'disk.occupy':
-            disk.occupy(int(val))
-        elif prefix == 'disk.clear':
-            disk.clear()
+        if data.startswith(b'DEPLOY/GENERATOR'):
+            deploy.run_generator()
+        elif data.startswith(b'DEPLOY/EXECUTOR'):
+            deploy.run_executor()
+        elif data.startswith(b'DEPLOY/DIFFER'):
+            deploy.run_differ()
         else:
             pass
+
+if __name__ == '__main__':
+    main()

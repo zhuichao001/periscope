@@ -20,7 +20,7 @@ class Option:
                 self.transform_on = conf['transform_on']
 
                 self.duration = conf['duration']
-                self.executors = conf['executors']
-                self.agents = conf['agents']
+                self.targets = conf['executors']
+                self.consul = conf['agents']
         except: 
             os.exit(-1)

@@ -1,20 +1,20 @@
-tc_on: 1
+tc_enable: 1
 tc_delay: 16
 tc_loss: 16
 
-mem_on: 1
+mem_enable: 0
 mem_occupy: 30000 #30G
 
-disk_on: 1
+disk_enable: 1
 disk_write: 100 #100M/second
 disk_occupy: 1000000 #1T
 
-split_on: 1
-failover_on: 1
-transform_on: 1
+split_enable: 1
+failover_enable: 1
+transform_enable: 1
 
 
 duration: 3600 #1hour
-executors: ["redis/127.0.0.1:6379/", "sdk/127.0.0.1:6378/token"]
+targets: ["redis@127.0.0.1:6379", "redis@127.0.0.1:6378"]
 
-members: ['10.22.103.216:8675', '10.22.103.217:8675', '10.22.103.218:8675']
+consul: '127.0.0.1:8500'

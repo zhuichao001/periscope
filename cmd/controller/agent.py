@@ -1,4 +1,4 @@
-class Agent:
+class Hardware:
     def __init__(self, addr):
         self.addr = addr
         self.sock = socket(AF_INET, SOCK_DGRAM)
@@ -39,3 +39,5 @@ class Agent:
 
     def transform(self):
         pass
+
+

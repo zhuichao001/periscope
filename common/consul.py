@@ -1,7 +1,7 @@
-import httpio
 import json
-import localip
 import random
+import common.httpio as httpio
+import common.localip as localip
 
 
 class consultant:

@@ -27,5 +27,6 @@ def main():
         while opt.duration==0 or cost(start)>=opt.duration:
             run(opt)
 
+
 if __name__ == '__main__':
     main()
