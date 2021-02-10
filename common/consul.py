@@ -4,7 +4,7 @@ import common.httpio as httpio
 import common.localip as localip
 
 
-class consultant:
+class consul:
     def __init__(self):
         self.consulhost = '127.0.0.1:8500'
 
@@ -42,16 +42,16 @@ class consultant:
         uri = 'v1/health/service/%s?passing=false' % (name)
         resp = httpio.httpio(self.consulhost).get(uri)
         data = json.loads(resp)
-        print("|||", data)
+        print("discovery:::", name, data)
         hosts = [obj['Service']['Address']+':'+str(obj['Service']['Port']) for obj in data]
         ids = [obj['Service']['ID'] for obj in data]
         print("ids:::", ids)
         print('hosts:::', hosts)
-        return ids
+        return hosts
 
 
 if __name__ == '__main__':
-    consul = consultant()
+    consul = consul()
     consul.deregister('aes')
     consul.register('aes', '127.0.0.1:9001')
     consul.discovery('aes')

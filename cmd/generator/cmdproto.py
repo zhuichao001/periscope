@@ -6,7 +6,6 @@ class CmdProto:
     def __init__(self, basedir):
         self.basedir = basedir
         dirs = os.listdir(basedir)
-        #print("basedir:", basedir, "|", dirs, type(dirs[0]))
         self.hub = {}
         for redtype in dirs: #["string","integer","hash","list","set","zset"...]
             cmdsmap = {'create':[], 'require':[], 'update':[], 'delete':[]}

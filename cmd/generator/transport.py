@@ -1,10 +1,10 @@
-from socket import *
+import socket
 import time
 
 class Transport:
     def __init__(self):
-        self.addr = ("localhost", 7581)
-        self.sock = socket(AF_INET, SOCK_DGRAM)
+        self.addr = ("localhost", 7581) #TODO: load balancer
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def deliver(self, cmds):
         for cmd in cmds:

@@ -11,16 +11,27 @@ def main():
     device = hardware.Hardware()
 
     recver = receiver.Receiver()
+    deployer = deploy.Deploy()
+
+    subprocs = []
     while True:
         data = recver.recv()
-        if data.startswith(b'DEPLOY/GENERATOR'):
-            deploy.run_generator()
-        elif data.startswith(b'DEPLOY/EXECUTOR'):
-            deploy.run_executor()
-        elif data.startswith(b'DEPLOY/DIFFER'):
-            deploy.run_differ()
-        else:
-            pass
+        print('|||', data)
+        if data.startswith(b'deploy.generator:'):
+            subs = deployer.generator()
+            subprocs.extend(subs)
+        elif data.startswith(b'deploy.executor:'):
+            subs = deployer.executor()
+            subprocs.extend(subs)
+        elif data.startswith(b'deploy.differ:'):
+            subs = deployer.differ()
+            subprocs.extend(subs)
+        elif data.startswith(b'agent.exit'):
+            break
+
+    for p in subprocs:
+        p.join()
+
 
 if __name__ == '__main__':
     main()

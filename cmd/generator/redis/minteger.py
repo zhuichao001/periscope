@@ -1,7 +1,7 @@
 import random
-import util
-import basetype
-import formatter
+import cmd.generator.util as util
+import cmd.generator.basetype as basetype
+import cmd.generator.formatter as formatter
 
 
 class MInteger(basetype.BaseType):

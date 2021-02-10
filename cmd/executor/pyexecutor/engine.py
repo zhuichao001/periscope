@@ -7,9 +7,8 @@ import white
 
 
 class Engine:
-    def __init__(self):
+    def __init__(self, host):
         self.state = 'NOT_OK'
-        host = sys.argv[1]
         ip, port = host.split(':')
         self.recver = Receiver(ip, int(port))
         self.trans = Transport()

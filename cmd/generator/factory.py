@@ -1,22 +1,22 @@
 import time
 import random
-import batch
-import cmdproto
-import redis.key as rkey
-import redis.string as rstr
-import redis.integer as rint
-import redis.float as rflo
-import redis.hash as rhas
-import redis.list as rlis
-import redis.set as rset
-import redis.zset as rzse
-import redis.hyperloglog as rhyp
-import redis.mstring as rmst
-import redis.minteger as rmin
-import redis.mhash as rmha
-import redis.mlist as rmli
-import redis.mset as rmse
-import redis.mzset as rmzs
+import cmd.generator.batch as batch
+import cmd.generator.cmdproto as cmdproto
+import cmd.generator.redis.key as rkey
+import cmd.generator.redis.string as rstr
+import cmd.generator.redis.integer as rint
+import cmd.generator.redis.float as rflo
+import cmd.generator.redis.hash as rhas
+import cmd.generator.redis.list as rlis
+import cmd.generator.redis.set as rset
+import cmd.generator.redis.zset as rzse
+import cmd.generator.redis.hyperloglog as rhyp
+import cmd.generator.redis.mstring as rmst
+import cmd.generator.redis.minteger as rmin
+import cmd.generator.redis.mhash as rmha
+import cmd.generator.redis.mlist as rmli
+import cmd.generator.redis.mset as rmse
+import cmd.generator.redis.mzset as rmzs
 
 
 class Options:
@@ -39,7 +39,7 @@ class Factory:
         self.opt = option
         self.batches = []
         self.commands = []
-        protodir = './template/redis/normal/' if self.opt.template=='normal' else './template/redis/abnormal/'
+        protodir = './cmd/generator/template/redis/normal/' if self.opt.template=='normal' else './template/redis/abnormal/'
         self.proto = cmdproto.CmdProto(protodir)
 
     def produce(self):

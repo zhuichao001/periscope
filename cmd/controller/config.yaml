@@ -1,20 +1,27 @@
-tc_enable: 1
-tc_delay: 16
-tc_loss: 16
+#network
+net_enable: 1
+net_delay: 16
+net_loss: 16
 
+#memory
 mem_enable: 0
 mem_occupy: 30000 #30G
 
+#disk
 disk_enable: 1
 disk_write: 100 #100M/second
 disk_occupy: 1000000 #1T
 
+#data toplogy
 split_enable: 1
 failover_enable: 1
 transform_enable: 1
 
+#deployment
+generator_count: 3
+executor_count: 6
+differ_count: 3
+executor_target: ["redis@127.0.0.1:6379", "redis@127.0.0.1:6378"]
 
-duration: 3600 #1hour
-targets: ["redis@127.0.0.1:6379", "redis@127.0.0.1:6378"]
-
+#service discovery
 consul: '127.0.0.1:8500'

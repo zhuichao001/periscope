@@ -1,43 +1,40 @@
-class Hardware:
-    def __init__(self, addr):
-        self.addr = addr
-        self.sock = socket(AF_INET, SOCK_DGRAM)
+import cmd.controller.hardware as hardware
+import cmd.controller.deploy as deployer
 
-    def __deliver(self, cmd):
-        print ("<<< ", cmd)
-        self.sock.sendto(cmd.encode('utf-8'), self.addr) 
+class agent:
+    def __init__(self, addr, opt):
+        self.opt = opt
+        print(">>>", addr)
+        addr = addr.split(':')
+        self.addr = (addr[0], int(addr[1]))
+        self.device = hardware.hardware(self.addr)
+        self.deploy = deployer.deploy(self.addr, opt)
 
-    def tc_loss(self, loss):
-        self.__deliver('net.loss:%d'%(int(loss)))
+    def prepare(self):
+        if self.opt.net_enable:
+            self.device.net_delay(self.opt.net_delay)
+            self.device.net_loss(self.opt.net_loss)
+        elif self.opt.mem_enable:
+            self.device.mem_occupy(self.opt.mem_occupy)
+        elif self.opt.disk_enable:
+            self.device.disk_write(self.opt.disk_write)
+            self.device.disk_occupy(self.opt.disk_occupy)
+        elif self.opt.split_enable:
+            pass #TODO
+        elif self.opt.failover_enable:
+            pass #TODO
+        elif self.opt.transform_enable:
+            pass #TODO
 
-    def tc_delay(self, delay):
-        self.__deliver('net.delay:%d'%(int(delay)))
+    def restore(self):
+        if self.opt.net_enable:
+            self.device.net_clear()
+        elif self.opt.mem_enable:
+            self.device.mem_clear()
+        elif self.opt.disk_enable:
+            self.device.disk_clear()
 
-    def tc_clear(self):
-        self.__deliver('net.clear:')
-
-    def mem_occupy(self, occupy):
-        self.__deliver('mem.occupy:%d'%(int(occupy)) )
-
-    def mem_clear(self, ):
-        self.__deliver('mem.clear:')
-
-    def disk_write(self, rate):
-        self.__deliver('disk.write:%d'%(int(rate)))
-
-    def disk_occopy(self, occupy):
-        self.__deliver('disk.occupy:%d'%(int(occupy)))
-
-    def disk_clear(self):
-        self.__deliver('disk.clear:')
-
-    def split(self):
-        pass
-
-    def failover(self):
-        pass
-
-    def transform(self):
-        pass
-
-
+    def drive(self):
+        self.deploy.generator()
+        self.deploy.executor()
+        self.deploy.differ()

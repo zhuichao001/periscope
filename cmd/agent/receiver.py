@@ -9,7 +9,7 @@ class Receiver:
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind(self.addr)
         #regist to consul agent
-        self.consul = consul.consultant()
+        self.consul = consul.consul()
         self.regist()
 
     def regist(self):

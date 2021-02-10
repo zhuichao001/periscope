@@ -1,18 +1,24 @@
-from multiprocessing import Process
+import multiprocessing
+import cmd.generator.main
 
 
 class Deploy:
     def __init__(self):
         pass
 
-    def run_generator(self):
-        print('run generator...')
-        pass
+    def generator(self, hosts):
+        procs = []
+        for host in hosts:
+            sub = multiprocessing.Process(target=cmd.generator.main, args=(,))
+            procs.append(sub)
+            sub.start()
+            print('success deploy generator:', host)
+        return procs
 
-    def run_executor(self):
+    def executor(self):
         print('run executor...')
         pass
 
-    def run_differ(self):
+    def differ(self):
         print('run differ...')
         pass

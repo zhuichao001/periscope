@@ -1,4 +1,4 @@
-import util
+import cmd.generator.util as util
 
 def fmt_string(tmpl, key, **kwargs):
     tmpl = tmpl.replace('{key}', str(key))
