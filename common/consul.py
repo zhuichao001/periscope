@@ -21,7 +21,7 @@ class consul:
 
     def register(self, name, svrhost):
         ip, port = svrhost.split(':')
-        id = name+'-'+localip.hostip()
+        id = "%s-%s" % (name, localip.hostip())
         body = {
                 'Id': id,
                 'Name': name,
@@ -51,7 +51,7 @@ class consul:
 
 
 if __name__ == '__main__':
-    consul = consul()
-    consul.deregister('aes')
-    consul.register('aes', '127.0.0.1:9001')
-    consul.discovery('aes')
+    consultant = consul()
+    consultant.deregister('agent-near')
+    #consultant.register('aes', '127.0.0.1:9001')
+    #consultant.discovery('aes')

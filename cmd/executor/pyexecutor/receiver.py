@@ -1,8 +1,8 @@
 import socket
 
 class Receiver:
-    def __init__(self, ip, port):
-        self.addr = (ip, port)
+    def __init__(self, addr):
+        self.addr = addr #(ip, port)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind(self.addr)

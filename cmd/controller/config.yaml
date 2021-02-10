@@ -21,7 +21,7 @@ transform_enable: 1
 generator_count: 3
 executor_count: 6
 differ_count: 3
-executor_target: ["redis@127.0.0.1:6379", "redis@127.0.0.1:6378"]
+executor_target: ["redis://127.0.0.1:6379", "redis://127.0.0.1:6378"]
 
 #service discovery
 consul: '127.0.0.1:8500'

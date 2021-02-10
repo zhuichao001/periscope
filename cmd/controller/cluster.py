@@ -8,7 +8,7 @@ class cluster:
         name = const.AGENT_NEAR if kind=='near' else const.AGENT_REMOTE
         self.consul = consul.consul()
         addrs = self.consul.discovery(name)
-        print("AGENT_NEAR:", addrs)
+        print("AGENT_NEAR:", name, addrs)
         self.opt = option.option('./cmd/controller/config.yaml')
         self.agents = [agent.agent(addr, self.opt) for addr in addrs]
 

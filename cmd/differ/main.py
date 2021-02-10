@@ -1,16 +1,16 @@
-from receiver import Receiver
-from recorder import Recorder
-from differ import Differ
+import cmd.differ.receiver as receiver
+import cmd.differ.recorder as recorder
+import cmd.differ.comparer as comparer
 
 
-def main():
-    differ = Differ()
-    recver = Receiver()
-    recorder = Recorder()
+def main(addr):
+    recver = receiver.Receiver(addr)
+    differ = comparer.Comparer()
+    outer = recorder.Recorder()
     while True:
         data = recver.recv()
         if data==b'<<<DISPLAY>>>':
-            recorder.display()
+            outer.display()
             continue
 
         items = data.split(b'|')
@@ -20,8 +20,9 @@ def main():
 
         cmd, resa, resb = items
         cmdtype, ok = differ.compare(cmd, resa, resb)
-        recorder.write(cmdtype, ok)
+        outer.write(cmdtype, ok)
 
 
 if __name__ == '__main__':
-    main()
+    addr = ('127.0.0.1', 7983)
+    main(addr)

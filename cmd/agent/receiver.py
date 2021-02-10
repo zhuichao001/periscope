@@ -1,6 +1,7 @@
 import sys
 import socket
 import common.consul as consul
+import cmd.agent.const as const
 
 class Receiver:
     def __init__(self):
@@ -14,8 +15,8 @@ class Receiver:
 
     def regist(self):
         kind = sys.argv[1]
+        name = const.AGENT_NEAR if kind =='near' else const.AGENT_REMOTE
         host = self.addr[0]+':'+str(self.addr[1])
-        name = 'agent-'+kind
         self.consul.register(name, host)
         self.consul.discovery(name)
 

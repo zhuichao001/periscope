@@ -1,6 +1,6 @@
 
 
-class Differ:
+class Comparer:
     def __init__(self):
         pass
 
