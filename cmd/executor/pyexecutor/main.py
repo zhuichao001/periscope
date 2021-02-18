@@ -1,10 +1,10 @@
 import sys
-import engine
+import cmd.executor.pyexecutor.engine as engine
 
 
-def main(addr):
-    eng = engine.Engine(addr)
-    eng.bootup()
+
+def main(addr, dburls):
+    eng = engine.Engine(addr, dburls)
     eng.run()
 
 
@@ -16,4 +16,4 @@ if __name__ == '__main__':
     host = sys.argv[1]
     ip,port = host.split(':')
     port = int(port)
-    main((ip,port))
+    main((ip,port),[])

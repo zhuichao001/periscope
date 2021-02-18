@@ -1,68 +1,60 @@
 import sys
-from dispatcher import Dispatcher
-from receiver import Receiver
-from transport import Transport
-from executor import RedisExecuter,JimkvExecuter
-import white
+import cmd.executor.pyexecutor.emitter as emitter
+import cmd.executor.pyexecutor.receiver as receiver
+import cmd.executor.pyexecutor.transport as transport
+import cmd.executor.pyexecutor.executor as executor
+import cmd.executor.pyexecutor.white as white
 
 
 class Engine:
-    def __init__(self, addr):
+    def __init__(self, addr, dburls):
         self.state = 'NOT_OK'
-        self.recver = Receiver(addr)
-        self.trans = Transport()
+        self.recver = receiver.Receiver(addr)
+        self.trans = transport.Transport()
 
-    def initdisp(self, addrs):
+        self.dburls = dburls
         targets = []
-        for uri, kind in addrs.items():
-            host, pwd = uri.split('\n')
-            if kind == b'Redis':
-                target = RedisExecuter(host, password=pwd)
-            elif kind == b'Jimdb':
-                target = RedisExecuter(host, password=pwd)
-            elif kind == b'Jimkv':
+        for url in self.dburls:
+            kind, host = url.split('://')
+            host, pwd = host.split('/')
+            host = host.split(':')
+            ip, port = host[0], int(host[1])
+            if kind == 'redis':
+                print("SUCCESS init redis:::", url)
+                target = executor.RedisExecuter(ip, port, password=pwd)
+            elif kind == 'jimdb':
+                print("SUCCESS init jimdb:::", url)
+                target = executor.JimkvExecuter(ip, port, password=pwd)
+            elif kind == 'jimkv':
+                print("SUCCESS init jimkv:::", url)
                 #'jimdb://2911032239959041295/11'
-                target = JimkvExecuter(host, password=pwd)
-            elif kind == b'Jimdb-drc':
+                target = executor.JimkvExecuter(ip, port, password=pwd)
+            elif kind == 'jimdb-drc':
+                print("SUCCESS init jimdb-drc:::", url)
                 continue
             else:
-                continue
+                print("!!!!!!!!not recognized:::", url)
+                sys.exit(-1)
             targets.append(target)
-        disp = Dispatcher(targets)
+        self.disp = emitter.Emitter(targets)
         self.state = 'RUNNING'
 
-    def bootup(self):
-        print('bootup...')
-        while True:
-            data = self.recver.recv()
-            if not data.startswith(b'CTL/'):
-                continue
-
-            TARGETS = b'CTL/TARGETS:'
-            if data.startswith(TARGETS):
-                body = data[len(TARGETS):]
-                addrs = json.loads(body)
-                self.initdisp(addrs)
-                break
-            else:
-                print("CMD %s not recognized.")
-        print('bootup success')
 
     def run(self):
+        print("executor run!!!")
         while self.state=='RUNNING':
             data = self.recver.recv()
+            #print(":::", data)
             CMD_TYPE = b'CMD:'
             if not data.startswith(CMD_TYPE):
                 if data=='EMPTY_LINE:':
                     print("\n*****************\n")
                 continue
 
-            cmds = data[len(CMD_TYPE):].split(b'\n')
-            for cmd in cmds:
-                if white.ignore(cmd):
-                    continue
+            cmd = data[len(CMD_TYPE):]
+            if white.ignore(cmd):
+                continue
 
-                result = disp.emit(cmd)
-                trans.send(cmd, result)
-            trans.sendctl("<<<DISPLAY>>>")
+            result = self.disp.emit(cmd)
+            self.trans.send(cmd, result)
 

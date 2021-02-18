@@ -1,13 +1,22 @@
-from socket import *
+import socket
+import json
+import random
+import common.consul as consul
+import common.const as const
 
 class Transport:
     def __init__(self):
-        self.addr = ("localhost", 7983)
-        self.sock = socket(AF_INET, SOCK_DGRAM)
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.consul = consul.consul()
+        #TODO:adjust autoly
+        self.hosts = self.consul.discovery(const.DIFFER)
 
     def send(self, cmd, results):
-        data = "|".join((bytes.decode(cmd), json.dumps(results)))
-        self.sock.sendto(data.encode('utf-8'), self.addr)
+        host = random.choice(self.hosts)
+        addr = host.split(':')
+        addr = (addr[0], int(addr[1]))
 
-    def sendctl(self, cmd):
-        self.sock.sendto(cmd.encode('utf-8'), self.addr)
+        resultstr = json.dumps(results)
+        print("###", cmd, resultstr)
+        data = "|".join((bytes.decode(cmd), resultstr))
+        self.sock.sendto(data.encode('utf-8'), addr)

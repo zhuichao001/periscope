@@ -62,29 +62,7 @@ class Factory:
             print("invalid mode:", self.opt.mode)
             return
         end = time.time()
-        print("PRODUCE COST:::", end-start, len(self.commands))
+        #print("PRODUCE COST:::", end-start, len(self.commands))
 
-        start = time.time()
-        if self.opt.mode == 'mixture':
-            self._mixture()
-        else:
-            self._serial()
-        end = time.time()
-        print("MIXTURE COST:::", end-start, len(self.commands))
-        return self.commands
+        return self.batches
 
-    def _mixture(self):
-        positions = {b:0 for b in self.batches}
-        while len(self.batches)>0:
-            bat = random.choice(self.batches)
-            pos = positions[bat]
-            if pos >= len(bat.commands):
-                self.batches.remove(bat)
-            else:
-                self.commands.append(bat.commands[pos])
-                positions[bat] += 1
-
-    def _serial(self):
-        for bat in self.batches:
-            self.commands.extend(bat.commands)
-            self.commands.append("")

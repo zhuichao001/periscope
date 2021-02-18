@@ -13,13 +13,8 @@ def main(addr):
             outer.display()
             continue
 
-        items = data.split(b'|')
-        if len(items)<3:
-            print("Exception:", items)
-            continue
-
-        cmd, resa, resb = items
-        cmdtype, ok = differ.compare(cmd, resa, resb)
+        cmd, resultstr = data.split(b'|')
+        cmdtype, ok = differ.compare(cmd, resultstr)
         outer.write(cmdtype, ok)
 
 

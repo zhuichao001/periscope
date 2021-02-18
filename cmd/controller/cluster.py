@@ -1,7 +1,7 @@
-import cmd.controller.const as const
 import cmd.controller.agent as agent
 import cmd.controller.option as option
 import common.consul as consul
+import common.const as const
 
 class cluster:
     def __init__(self, kind):

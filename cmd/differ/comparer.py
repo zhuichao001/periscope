@@ -1,9 +1,11 @@
-
+import json
 
 class Comparer:
     def __init__(self):
         pass
 
-    def compare(self, cmd, resa, resb):
+    def compare(self, cmd, resultstr):
         cmdtype = str(cmd).split(' ')[0]
-        return str(cmdtype), str(resa)==str(resb)
+        results = json.loads(resultstr)
+        print("differ:::", results)
+        return str(cmdtype), True #TODO

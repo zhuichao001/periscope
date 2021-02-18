@@ -35,6 +35,6 @@ class agent:
             self.device.disk_clear()
 
     def drive(self):
-        self.deploy.generator()
-        self.deploy.executor()
         self.deploy.differ()
+        self.deploy.executor()
+        self.deploy.generator()

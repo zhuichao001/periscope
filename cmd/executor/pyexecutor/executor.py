@@ -1,24 +1,27 @@
 import redis
 import time
-import rediser
+import cmd.executor.pyexecutor.handler as handler
 
 
 class RedisExecuter:
-    def __init__(self, host, port):
-        self.addr = (host,port)
-        self.red = redis.Redis(host=host, port=port)
+    def __init__(self, ip, port, password=None):
+        self.addr = (ip, port)
+        self.red = redis.Redis(host=ip, port=port, password=password)
+        self.host = '%s:%d' % (ip, port)
 
     def execute(self, cmd):
         cmd = cmd[2:] if cmd.startswith(b'::') else cmd
-        return rediser.call(self.red, cmd)
+        return handler.call(self.red, cmd)
+
 
 class JimkvExecuter:
-    def __init__(self, host, port, password=None):
-        self.addr = (host,port)
+    def __init__(self, ip, port, password=None):
+        self.addr = (ip,port)
         if password:
-            self.red = redis.Redis(host=host, port=port, password=password, retry_on_timeout=True)
+            self.red = redis.Redis(host=ip, port=port, password=password, retry_on_timeout=True)
         else:
-            self.red = redis.Redis(host=host, port=port, retry_on_timeout=True)
+            self.red = redis.Redis(host=ip, port=port, retry_on_timeout=True)
+        self.host = '%s:%d' % (ip, port)
 
     def _patch(self, cmd):
         if cmd.find(b'SCAN') >= 0:
@@ -29,7 +32,8 @@ class JimkvExecuter:
     def execute(self, cmd):
         cmd = self._patch(cmd)
         cmd = cmd[2:] if cmd.startswith(b'::') else cmd
-        return rediser.call(self.red, cmd)
+        return handler.call(self.red, cmd)
+
 
 class JimdbDrcExecuter:
     def __init__(self, whost, wport, wpassword, rhost, rport, rpassword):
@@ -46,19 +50,21 @@ class JimdbDrcExecuter:
     def execute(self, cmd):
         cmd = self._patch(cmd)
         if cmd.startswith('::'):
-            wres = rediser.call(self.wred, cmd[2:])
-            rres = rediser.call(self.rred, cmd[2:])
+            wres = handler.call(self.wred, cmd[2:])
+            rres = handler.call(self.rred, cmd[2:])
             if wres==rres:
                 return wres
             else:
                 return None
         else:
-            return rediser.call(self.wred, cmd)
+            return handler.call(self.wred, cmd)
+
 
 def mapping(arr):
     ks = arr[0::2]
     vs = arr[1::2]
     return dict(zip(ks,vs))
+
 
 def rmapping(arr):
     ks = arr[1::2]

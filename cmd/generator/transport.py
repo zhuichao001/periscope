@@ -1,12 +1,23 @@
-import socket
 import time
+import socket
+import random
+import common.consul as consul
+import common.const as const
+
 
 class Transport:
     def __init__(self):
-        self.addr = ("localhost", 7581) #TODO: load balancer
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.consul = consul.consul()
+        #TODO:adjust autoly
+        self.hosts = self.consul.discovery(const.EXECUTOR)
 
     def deliver(self, cmds):
+        host = random.choice(self.hosts)
+        #print("choose host:::", host, "<from>:::", self.hosts)
+
+        addr = host.split(':')
+        addr = (addr[0], int(addr[1]))
         for cmd in cmds:
-            print ("<<< ", cmd)
-            self.sock.sendto(b'CMD:'+cmd.encode('utf-8'), self.addr)
+            #print ("<<< ", cmd, ":::", addr)
+            self.sock.sendto(b'CMD:'+cmd.encode('utf-8'), addr)
