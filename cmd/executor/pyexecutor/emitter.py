@@ -11,11 +11,8 @@ class Emitter:
         for dst in self.targets:
             try:
                 rsp = dst.execute(cmd)
-                results[dst.host] = str(rsp, encoding='utf-8')
+                results[dst.host] = rsp #str(rsp, encoding='utf-8')
             except:
-                rsp = sys.exc_info()[0:128]
                 results[dst.host] = "FAILED"
-                #print("[WARNING]:", dst.addr, cmd, sys.exc_info())
-
-        print(results)
+                print("[WARNING]:", dst.addr, cmd, sys.exc_info())
         return results

@@ -3,6 +3,7 @@ import json
 import random
 import common.consul as consul
 import common.const as const
+import common.code as code
 
 class Transport:
     def __init__(self):
@@ -16,7 +17,8 @@ class Transport:
         addr = host.split(':')
         addr = (addr[0], int(addr[1]))
 
-        resultstr = json.dumps(results)
-        print("###", cmd, resultstr)
-        data = "|".join((bytes.decode(cmd), resultstr))
+        print("---", cmd, results)
+        results = code.encode(results)
+        print("###", cmd, results)
+        data = "|".join((bytes.decode(cmd), json.dumps(results)))
         self.sock.sendto(data.encode('utf-8'), addr)

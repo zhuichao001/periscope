@@ -74,6 +74,7 @@ def rmapping(arr):
 
 if __name__ == '__main__':
     #exe = JimkvExecuter('11.3.85.38', 5363, password='jimdb://2913114965120297581/2')
-    #exe = RedisExecuter('127.0.0.1', 6379)
-    exe = JimkvExecuter('11.3.90.194', 6378, password='jimdb://2911032239959041295/11')
+    exe = RedisExecuter('127.0.0.1', 6379)
+    #exe = JimkvExecuter('11.3.90.194', 6378, password='jimdb://2911032239959041295/11')
+    print(exe.execute(b'SETEX hVLoBIFJ3k 237 QJmfyLNG2OV61RhvxeXgr5iI3s90Ek'))
     print(exe.execute(b"SET a b"))
