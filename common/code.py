@@ -11,6 +11,6 @@ def encode(obj):
         try:
             return str(obj, 'utf-8')
         except:
-            return str(obj, 'utf-16')
+            return obj.hex()
     else:
         return obj
