@@ -5,7 +5,7 @@ vallen: 32
 maxduration: 60
 sequence: 'default' #mixture | default
 mode: 'random'       #random | whole
-times: 1000
+times: 600
 duration: 0
 template: 'normal'  #normal | abnormal
 probe: false

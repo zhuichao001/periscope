@@ -62,7 +62,6 @@ class Factory:
             print("invalid mode:", self.opt.mode)
             return
         end = time.time()
-        #print("PRODUCE COST:::", end-start, len(self.commands))
+        print("PRODUCE COST:::", end-start, len(self.commands))
 
         return self.batches
-

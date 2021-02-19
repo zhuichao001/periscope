@@ -15,6 +15,7 @@ class HyperLogLog(basetype.BaseType):
         self.key = util.RAND(10)
         self.vals = []
         self.sequence = []
+        self.check = set()
         HyperLogLog.keys.append(self.key)
 
     def create(self):
@@ -49,7 +50,9 @@ class HyperLogLog(basetype.BaseType):
 
     def probe(self):
         if self.prob:
-            self.sequence.append("::GET %s" % (self.key))
+            cmd = "::GET %s" % (self.key)
+            self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

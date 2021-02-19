@@ -15,6 +15,7 @@ class Zset(basetype.BaseType):
         self.key = util.hashtagkey()
         self.members = []
         self.sequence = []
+        self.check = set()
         Zset.keys.append(self.key)
 
     def create(self):
@@ -57,6 +58,7 @@ class Zset(basetype.BaseType):
         if self.prob:
             cmd = "::ZRANGE %s 0 -1 WITHSCORES" % (self.key)
             self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

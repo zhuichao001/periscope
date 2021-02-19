@@ -15,6 +15,7 @@ class Set(basetype.BaseType):
         self.key = util.hashtagkey()
         self.members = []
         self.sequence = []
+        self.check = set()
         Set.keys.append(self.key)
 
     def create(self):
@@ -56,6 +57,7 @@ class Set(basetype.BaseType):
         if self.prob:
             cmd = "::SMEMBERS %s" % (self.key)
             self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

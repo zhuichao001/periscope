@@ -14,10 +14,7 @@ class Transport:
 
     def deliver(self, cmds):
         host = random.choice(self.hosts)
-        #print("choose host:::", host, "<from>:::", self.hosts)
-
         addr = host.split(':')
         addr = (addr[0], int(addr[1]))
         for cmd in cmds:
-            #print ("<<< ", cmd, ":::", addr)
             self.sock.sendto(b'CMD:'+cmd.encode('utf-8'), addr)

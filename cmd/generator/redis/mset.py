@@ -15,6 +15,7 @@ class MSet(basetype.BaseType):
         MSet.keys.append(self.key)
         self.members = []
         self.sequence = []
+        self.check = set()
 
     def create(self):
         for tmpl in super().create():
@@ -53,6 +54,7 @@ class MSet(basetype.BaseType):
         if self.prob:
             cmd = "::SMEMBERS %s" % (self.key)
             self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

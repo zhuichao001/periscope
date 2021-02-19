@@ -36,6 +36,9 @@ class Batch:
         self.redtype.delete()
         self.commands = self.redtype.sequence
 
+    def checklist(self):
+        return list(self.redtype.check)
+
     def display(self):
         for obj in self.redtypes:
             print(":::")

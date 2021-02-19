@@ -12,6 +12,7 @@ class MString(basetype.BaseType):
         self.kvs = {}
         self.timeout = random.randint(60,600)
         self.sequence = []
+        self.check = set()
 
     def create(self):
         for tmpl in super().create():
@@ -50,6 +51,8 @@ class MString(basetype.BaseType):
         if self.prob:
             keys = list(self.kvs.keys())
             cmd = "::GET %s" % (" ".join(keys))
+            self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         keys = list(self.kvs.keys())

@@ -15,6 +15,7 @@ class List(basetype.BaseType):
         List.keys.append(self.key)
         self.items = []
         self.sequence = []
+        self.check = set()
 
     def __upmodel(self, cmd, val):
         head = util.get_cmdhead(cmd)
@@ -86,7 +87,9 @@ class List(basetype.BaseType):
 
     def probe(self):
         if self.prob:
-            self.sequence.append("::LRANGE %s 0 -1" % (self.key))
+            cmd = "::LRANGE %s 0 -1" % (self.key)
+            self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

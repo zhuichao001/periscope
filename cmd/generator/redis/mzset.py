@@ -13,6 +13,7 @@ class MZset(basetype.BaseType):
         self.members = []
         self.scores = []
         self.sequence = []
+        self.check = set()
 
     def create(self):
         for tmpl in super().create():
@@ -56,6 +57,7 @@ class MZset(basetype.BaseType):
         if self.prob:
             cmd = "::ZRANGE %s 0 -1 WITHSCORES" % (self.key)
             self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

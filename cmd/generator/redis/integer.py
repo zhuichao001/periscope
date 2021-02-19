@@ -16,6 +16,7 @@ class Integer(basetype.BaseType):
         Integer.keys.append(self.key)
         self.timeout = random.randint(60,600)
         self.sequence = []
+        self.check = set()
 
     def create(self):
         for tmpl in super().create():
@@ -54,7 +55,9 @@ class Integer(basetype.BaseType):
 
     def probe(self):
         if self.prob:
-            self.sequence.append("::GET %s" % (self.key))
+            cmd = "::GET %s" % (self.key)
+            self.sequence.append(cmd)
+            self.check.add(cmd)
 
     def clean(self):
         cmd = "DEL %s" % (self.key)

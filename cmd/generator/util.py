@@ -36,4 +36,3 @@ def cross_list(la, lb):
         for b in lb:
             res.append((a,b))
     return res
-
