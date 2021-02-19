@@ -8,6 +8,9 @@ def encode(obj):
     elif isinstance(obj, dict):
         return {encode(k): encode(obj[k]) for k in obj}
     elif isinstance(obj, bytes):
-        str(obj, 'utf-8')
+        try:
+            return str(obj, 'utf-8')
+        except:
+            return str(obj, 'utf-16')
     else:
         return obj

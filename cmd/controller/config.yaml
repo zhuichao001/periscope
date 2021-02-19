@@ -18,9 +18,9 @@ failover_enable: 1
 transform_enable: 1
 
 #deployment
-generator_count: 1
-executor_count: 3
-differ_count: 1
+generator_count: 8
+executor_count: 4
+differ_count: 2
 executor_target: ["redis://127.0.0.1:6379/", "redis://127.0.0.1:6378/"]
 
 #service discovery
