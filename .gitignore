@@ -2,3 +2,5 @@
 executor/__pycache__
 generator/__pycache__
 differ/__pycache__
+output
+nohup*

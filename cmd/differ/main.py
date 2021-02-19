@@ -13,7 +13,10 @@ def main(addr):
             outer.display()
             continue
 
-        cmd, resultstr = data.split(b'|')
+        items = data.split(b'|')
+        if len(items)!=2:
+            continue
+        cmd, resultstr = items
         cmdtype, ok = differ.compare(cmd, resultstr)
         outer.write(cmdtype, ok)
 
