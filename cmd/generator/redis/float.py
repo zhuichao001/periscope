@@ -1,6 +1,6 @@
 import random
 import time
-import cmd.generator.util as util
+import common.randstr as randstr
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
 
@@ -10,14 +10,14 @@ class Float(basetype.BaseType):
         super().__init__(mode, cmdsmap)
         self.prob = prob
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = randstr.RAND(10)
         self.timeout = random.randint(60,600)
         self.sequence = []
         self.check = set()
 
     def create(self):
         for tmpl in super().create():
-            self.val = str(util.RAND_INT(8)).strip('0')
+            self.val = str(randstr.RAND_INT(8)).strip('0')
             self.fval = random.uniform(1, 1000)
             cmd = formatter.fmt_string(tmpl, self.key, val=self.val, fval=self.fval, timeout=self.timeout)
             self.sequence.append(cmd)
@@ -25,7 +25,7 @@ class Float(basetype.BaseType):
 
     def update(self):
         for tmpl in super().update():
-            val = str(util.RAND_INT(8)).strip('0')
+            val = str(randstr.RAND_INT(8)).strip('0')
             self.fval = random.uniform(1, 1000)
             start = random.randint(0, len(self.val))
             end = random.randint(start, len(self.val))

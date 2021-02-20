@@ -3,10 +3,10 @@ import cmd.differ.recorder as recorder
 import cmd.differ.comparer as comparer
 
 
-def main(addr):
+def main(taskid, addr, opt):
     recver = receiver.Receiver(addr)
     differ = comparer.Comparer()
-    outer = recorder.Recorder()
+    outer = recorder.Recorder(taskid)
     while True:
         data = recver.recv()
         if data==b'<<<DISPLAY>>>':
@@ -23,4 +23,5 @@ def main(addr):
 
 if __name__ == '__main__':
     addr = ('127.0.0.1', 7983)
-    main(addr)
+    import config.differ as config
+    main('unknown', addr, config.option())

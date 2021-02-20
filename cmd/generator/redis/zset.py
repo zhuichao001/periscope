@@ -1,5 +1,6 @@
 import random
 import time
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -20,7 +21,7 @@ class Zset(basetype.BaseType):
 
     def create(self):
         for tmpl in super().update():
-            member = util.RAND(30)
+            member = randstr.RAND(30)
             self.members.append(member)
             score = random.randint(0,1000)
             cmd = formatter.fmt_string(tmpl, self.key, score=score, member=member)

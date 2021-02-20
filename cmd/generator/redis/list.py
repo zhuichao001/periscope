@@ -1,5 +1,6 @@
 import random
 import time
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -37,7 +38,7 @@ class List(basetype.BaseType):
         elif head == 'LINSERT':
             self.items.append(val)
         elif head in ['BLPOP', 'BRPOP', 'BRPOPLPUSH']: #avoid blocking
-            self.sequence.append('LPUSH '+self.key+' '+ util.RAND(30))
+            self.sequence.append('LPUSH '+self.key+' '+ randstr.RAND(30))
             self.probe()
             self.items.append(val)
         else:
@@ -45,7 +46,7 @@ class List(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            val = util.RAND(30)
+            val = randstr.RAND(30)
             self.__upmodel(tmpl, val)
             cmd = formatter.fmt_string(tmpl, self.key, val=val)
             self.sequence.append(cmd)
@@ -53,7 +54,7 @@ class List(basetype.BaseType):
 
     def update(self):
         for tmpl in super().update():
-            val = util.RAND(30)
+            val = randstr.RAND(30)
             self.__upmodel(tmpl, val)
             oldval = random.choice(self.items) if self.items else ""
             index = random.randint(0, len(self.items))
@@ -67,7 +68,7 @@ class List(basetype.BaseType):
 
     def require(self):
         for tmpl in super().require():
-            val = util.RAND(30)
+            val = randstr.RAND(30)
             start = random.randint(0, len(self.items))
             end = random.randint(start, len(self.items))
             index = start

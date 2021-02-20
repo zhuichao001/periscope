@@ -1,5 +1,5 @@
 import random
-import cmd.generator.util as util
+import common.randstr as randstr
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
 
@@ -18,8 +18,8 @@ class MZset(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             for _ in range(1, 10):
-                self.members.append(util.RAND(10)) 
-                self.scores.append(util.RAND_INT(10)) 
+                self.members.append(randstr.RAND(10)) 
+                self.scores.append(randstr.RAND_INT(10)) 
             sms = util.flat_list(self.scores, self.members)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, sms=sms)
             self.sequence.append(cmd)
@@ -31,8 +31,8 @@ class MZset(basetype.BaseType):
             members = []
             for i in random.sample(range(len(self.members)), int(len(self.members)/3)+1):
                 members.append(self.members[i])
-                self.scores[i] = util.RAND_INT(9)
-                scores.append(util.RAND_INT(9))
+                self.scores[i] = randstr.RAND_INT(9)
+                scores.append(randstr.RAND_INT(9))
             sms = util.flat_list(self.scores, self.members)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, sms=sms)
             self.sequence.append(cmd)

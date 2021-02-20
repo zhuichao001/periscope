@@ -4,10 +4,12 @@ import common.consul as consul
 import common.const as const
 import cmd.generator.receiver as receiver
 
-class Dispatcher(threading.Thread):
+
+class Reactor(threading.Thread):
     def __init__(self, addr):
         threading.Thread.__init__(self)
         self.addr = addr
+
         self.receiver = receiver.Receiver(addr)
 
         #regist to consul agent
@@ -18,8 +20,7 @@ class Dispatcher(threading.Thread):
         self.consul.register(id, name, host)
         self.consul.discovery(const.GENERATOR)
 
-
     def run(self):
         while True:
             data = self.receiver.recv()
-            print(":::", data)
+            print(">>>", data)

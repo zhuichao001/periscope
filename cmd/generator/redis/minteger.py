@@ -1,4 +1,5 @@
 import random
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -17,7 +18,7 @@ class MInteger(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             for _ in range(1, 10):
-                self.kvs[util.hashtagkey()] = util.RAND_INT(10)
+                self.kvs[util.hashtagkey()] = randstr.RAND_INT(10)
             cmd = formatter.fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
             self.sequence.append(cmd)
             self.probe()
@@ -25,7 +26,7 @@ class MInteger(basetype.BaseType):
     def update(self):
         for tmpl in super().update():
             for _ in range(1, len(self.kvs)):
-                self.kvs[random.choice(list(self.kvs.keys()))] = util.RAND_INT(10)
+                self.kvs[random.choice(list(self.kvs.keys()))] = randstr.RAND_INT(10)
             cmd = formatter.fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
             self.sequence.append(cmd)
             self.probe()

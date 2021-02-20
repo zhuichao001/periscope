@@ -3,8 +3,8 @@ import cmd.executor.pyexecutor.engine as engine
 
 
 
-def main(addr, dburls):
-    eng = engine.Engine(addr, dburls)
+def main(taskid, addr, opt):
+    eng = engine.Engine(addr, opt.targets)
     eng.run()
 
 
@@ -16,4 +16,6 @@ if __name__ == '__main__':
     host = sys.argv[1]
     ip,port = host.split(':')
     port = int(port)
-    main((ip,port),[])
+
+    import config.executor as config
+    main('', (ip,port), config.option())

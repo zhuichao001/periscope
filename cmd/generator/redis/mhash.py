@@ -1,4 +1,5 @@
 import random
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -18,7 +19,7 @@ class MHash(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             for _ in range(1, 10):
-                self.fvs[util.RAND(20)] = util.RAND(30)
+                self.fvs[randstr.RAND(20)] = randstr.RAND(30)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, fvs=self.fvs, timeout=self.timeout)
             self.sequence.append(cmd)
             self.probe()
@@ -26,7 +27,7 @@ class MHash(basetype.BaseType):
     def update(self):
         for tmpl in super().update():
             for _ in range(1, len(self.fvs)):
-                self.fvs[random.choice(list(self.fvs.keys()))] = util.RAND(30)
+                self.fvs[random.choice(list(self.fvs.keys()))] = randstr.RAND(30)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, fvs=self.fvs, timeout=self.timeout)
             self.sequence.append(cmd)
             self.probe()

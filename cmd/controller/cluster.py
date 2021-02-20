@@ -1,5 +1,4 @@
 import cmd.controller.agent as agent
-import cmd.controller.option as option
 import common.consul as consul
 import common.const as const
 
@@ -9,8 +8,7 @@ class cluster:
         self.consul = consul.consul()
         addrs = self.consul.discovery(name)
         print("AGENT_NEAR:", name, addrs)
-        self.opt = option.option('./cmd/controller/config.yaml')
-        self.agents = [agent.agent(addr, self.opt) for addr in addrs]
+        self.agents = [agent.agent(addr) for addr in addrs]
 
     def prepare(self):
         for agent in self.agents:

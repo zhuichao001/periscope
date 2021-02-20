@@ -1,6 +1,7 @@
 import common.sqlite as sqlite
 
-class checkcmd:
+
+class fullcheck:
     def __init__(self, taskid):
         taskname = 'task-%s.db' % (taskid)
         self.db = sqlite.sqlitedb(taskname)

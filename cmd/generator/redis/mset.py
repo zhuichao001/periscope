@@ -1,4 +1,5 @@
 import random
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -20,7 +21,7 @@ class MSet(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             for _ in range(1, 10):
-                self.members.append(util.RAND(10)) 
+                self.members.append(randstr.RAND(10)) 
             cmd = formatter.fmt_mstring(tmpl, key=self.key, members=self.members)
             self.sequence.append(cmd)
             self.probe()

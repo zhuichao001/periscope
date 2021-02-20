@@ -1,6 +1,6 @@
 import random
 import time
-import cmd.generator.util as util
+import common.randstr as randstr
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
 
@@ -11,7 +11,7 @@ class Key(basetype.BaseType):
         super().__init__(mode, cmdsmap)
         self.prob = prob
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = randstr.RAND(10)
         Key.keys.append(self.key)
         self.timeout = random.randint(60,600)
         self.sequence = []
@@ -19,14 +19,14 @@ class Key(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            self.val = util.RAND(30)
+            self.val = randstr.RAND(30)
             cmd = formatter.fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout, mtimeout=1000*self.timeout)
             self.sequence.append(cmd)
             self.probe()
 
     def update(self):
         for tmpl in  super().update():
-            self.val = util.RAND(30)
+            self.val = randstr.RAND(30)
             start = random.randint(0, len(self.val))
             end = random.randint(start, len(self.val))
             index = start

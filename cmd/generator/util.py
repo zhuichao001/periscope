@@ -1,20 +1,11 @@
-import random
-import string
-
-def RAND(n):
-    chars = string.ascii_letters + string.digits
-    return ''.join(random.sample(chars, n))
-
-def RAND_INT(n):
-    chars = string.digits*8
-    return ''.join(random.sample(chars, n))
+import common.randstr as randstr
 
 def get_cmdhead(cmd):
     return cmd.split(' ')[0] if cmd else ''
 
 def hashtagkey():
     hashtag = '.{htag.0}'
-    return RAND(10)+hashtag
+    return randstr.RAND(10)+hashtag
 
 def flat_dict(kvs):
     items = []

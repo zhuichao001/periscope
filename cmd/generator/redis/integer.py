@@ -1,5 +1,6 @@
 import random
 import time
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -20,14 +21,14 @@ class Integer(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            self.val = str(util.RAND_INT(8)).strip('0')
+            self.val = str(randstr.RAND_INT(8)).strip('0')
             cmd = formatter.fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout)
             self.sequence.append(cmd)
             self.probe()
 
     def update(self):
         for tmpl in super().update():
-            val = str(util.RAND_INT(8)).strip('0')
+            val = str(randstr.RAND_INT(8)).strip('0')
             start = random.randint(0, len(self.val))
             end = random.randint(start, len(self.val))
             index = start

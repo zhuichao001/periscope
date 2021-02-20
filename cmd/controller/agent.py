@@ -1,14 +1,15 @@
 import cmd.controller.hardware as hardware
 import cmd.controller.deploy as deployer
+import cmd.controller.config.agent as config
 
 class agent:
-    def __init__(self, addr, opt):
-        self.opt = opt
+    def __init__(self, addr):
+        self.opt = config.option()
         print(">>>", addr)
         addr = addr.split(':')
         self.addr = (addr[0], int(addr[1]))
         self.device = hardware.hardware(self.addr)
-        self.deploy = deployer.deploy(self.addr, opt)
+        self.deploy = deployer.deploy(self.addr, self.opt)
 
     def prepare(self):
         if self.opt.net_enable:

@@ -1,6 +1,6 @@
 import random
 import time
-import cmd.generator.util as util
+import common.randstr as randstr
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
 
@@ -12,7 +12,7 @@ class HyperLogLog(basetype.BaseType):
         super().__init__(mode ,cmdsmap)
         self.prob = prob
         self.kind = kind
-        self.key = util.RAND(10)
+        self.key = randstr.RAND(10)
         self.vals = []
         self.sequence = []
         self.check = set()
@@ -21,7 +21,7 @@ class HyperLogLog(basetype.BaseType):
     def create(self):
         for tmpl in super().update():
             for _ in range(0, 5):
-                val = util.RAND(10)
+                val = randstr.RAND(10)
                 self.vals.append(val)
             cmd = formatter.fmt_string(tmpl, self.key, val=' '.join(self.vals))
             self.sequence.append(cmd)

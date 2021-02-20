@@ -1,5 +1,6 @@
 import random
 import time
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -20,7 +21,7 @@ class Set(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            member = util.RAND(30)
+            member = randstr.RAND(30)
             cmd = formatter.fmt_string(tmpl, self.key, member=member)
             self.members.append(member)
             self.sequence.append(cmd)
@@ -28,7 +29,7 @@ class Set(basetype.BaseType):
 
     def update(self):
         for tmpl in super().update():
-            member = util.RAND(30)
+            member = randstr.RAND(30)
             key1 = random.choice(Set.keys)
             key2 = random.choice(Set.keys)
             cmd = formatter.fmt_string(tmpl, self.key, member=member, key1=key1, key2=key2)

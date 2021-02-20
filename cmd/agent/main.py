@@ -1,5 +1,5 @@
 import sys
-import cmd.agent.dispatcher as dispatcher
+import cmd.agent.reactor as reactor
 import common.localip as localip
 
 
@@ -8,9 +8,9 @@ def main():
         print('usage:\n python3 -m main [near|remote]')
 
     ip = localip.hostip()
-    disp = dispatcher.Dispatcher((ip, 7585))
-    disp.start()
-    disp.join()
+    reac = reactor.Reactor((ip, 7585))
+    reac.start()
+    reac.join()
 
 
 if __name__ == '__main__':

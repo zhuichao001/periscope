@@ -1,1 +1,1 @@
-python3 -m cmd.controller.main
+python3 -m cmd.controller.main $1

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 import sqlite3
 import time
 
@@ -43,12 +44,12 @@ if __name__ == '__main__':
 
     '''
     for _ in range(10):
-        db.execute('INSERT INTO cmd(val,type) VALUES("abcd","list")')
+        db.execute('INSERT INTO cmd(val,type) VALUES("lpush q 123","list")')
         db.flush()
         time.sleep(1)
     '''
 
-    rows = db.query('''select id,val,type from cmd''')
+    rows = db.query('''select id,val from cmd''')
     for row in rows:
         print(row)
 

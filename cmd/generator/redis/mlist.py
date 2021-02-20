@@ -1,4 +1,5 @@
 import random
+import common.randstr as randstr
 import cmd.generator.util as util
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
@@ -17,7 +18,7 @@ class MList(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             for _ in range(1, 10):
-                self.vals.append(util.RAND(10)) 
+                self.vals.append(randstr.RAND(10)) 
             cmd = formatter.fmt_mstring(tmpl, key=self.key, vals=self.vals)
             self.sequence.append(cmd)
             self.probe()
@@ -30,7 +31,7 @@ class MList(basetype.BaseType):
             vals = []
             if tmpl.find('PUSH')>0:
                 for _ in range(1, 10):
-                    vals.append(util.RAND(10)) 
+                    vals.append(randstr.RAND(10)) 
                 self.vals.extend(vals)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, vals=vals, start=start, end=end, index=index)
             self.sequence.append(cmd)

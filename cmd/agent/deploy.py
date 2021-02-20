@@ -11,34 +11,34 @@ class Deploy:
     def __init__(self):
         pass
 
-    def generator(self, hosts): #TODO: hosts unused
+    def generator(self, taskid, hosts, opt):
         procs = []
         print('Deploy.generator:::', hosts)
         for host in hosts:
             addr = str2addr(host)
-            sub = multiprocessing.Process(target=generator.main, args=(addr,))
+            sub = multiprocessing.Process(target=generator.main, args=(taskid, addr, opt))
             procs.append(sub)
             sub.start()
             print('success deploy generator:', host)
         return procs
 
-    def executor(self, hosts, targets):
+    def executor(self, taskid, hosts, opt):
         procs = []
-        print('Deploy.executor:::', hosts, targets)
+        print('Deploy.executor:::', hosts, opt)
         for host in hosts:
             addr = str2addr(host)
-            sub = multiprocessing.Process(target=executor.main, args=(addr,targets,))
+            sub = multiprocessing.Process(target=executor.main, args=(taskid, addr, opt))
             procs.append(sub)
             sub.start()
             print('success deploy executor:', host)
         return procs
 
-    def differ(self, hosts):
+    def differ(self, taskid, hosts, opt):
         procs = []
         print('Deploy.differ:::', hosts)
         for host in hosts:
             addr = str2addr(host)
-            sub = multiprocessing.Process(target=differ.main, args=(addr,))
+            sub = multiprocessing.Process(target=differ.main, args=(taskid, addr,opt))
             procs.append(sub)
             sub.start()
             print('success deploy differ:', host)
