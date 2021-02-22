@@ -2,6 +2,7 @@ import random
 import common.randstr as randstr
 import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
+import cmd.generator.util as util
 
 
 class MZset(basetype.BaseType):

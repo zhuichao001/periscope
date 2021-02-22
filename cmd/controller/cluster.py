@@ -11,13 +11,17 @@ class cluster:
         self.agents = [agent.agent(addr) for addr in addrs]
 
     def prepare(self):
+        '''
         for agent in self.agents:
             agent.prepare()
+        '''
 
     def restore(self):
+        '''
         for agent in self.agents:
             agent.restore()
+        '''
 
-    def drive(self):
+    def drive(self, act):
         for agent in self.agents:
-            agent.drive()
+            agent.drive(act)

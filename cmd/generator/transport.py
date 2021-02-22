@@ -18,3 +18,4 @@ class Transport:
         addr = (addr[0], int(addr[1]))
         for cmd in cmds:
             self.sock.sendto(b'CMD:'+cmd.encode('utf-8'), addr)
+            time.sleep(1)

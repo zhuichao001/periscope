@@ -47,43 +47,46 @@ class Reactor(threading.Thread):
             print(':::', data)
             if data.startswith(const.GENERATOR):
                 _, action, taskid, rawports, optstr = data.split('|')
-                if action == 'STOP':
-                    stop(gene_procs)
+                if action.upper() == 'STOP':
+                    self.stop(gene_procs)
                     gene_procs.clear()
                     continue
                 ports = json.loads(rawports)
                 hosts = [ip+':'+str(port) for port in ports]
-                opt = config_gene().__dict__.update(json.loads(optstr))
+                opt = config_gene.option()
+                opt.__dict__.update(json.loads(optstr))
                 print("generator hosts:::", hosts)
                 subs = deploy.generator(taskid, hosts, opt)
-                subprocs.extend(subs)
+                gene_procs.extend(subs)
             elif data.startswith(const.EXECUTOR):
                 _, action, taskid, rawports, optstr = data.split('|')
-                if action == 'STOP':
-                    stop(exec_procs)
+                if action.upper() == 'STOP':
+                    self.stop(exec_procs)
                     exec_procs.clear()
                     continue
                 ports = json.loads(rawports)
-                opt = config_exec().__dict__.update(json.loads(optstr))
+                opt = config_exec.option()
+                opt.__dict__.update(json.loads(optstr))
                 hosts = [ip+':'+str(port) for port in ports]
-                print("executor hosts:::", hosts, "  targets:::", targets)
+                print("executor hosts:::", hosts, "  targets:::", opt.targets)
                 subs = deploy.executor(taskid, hosts, opt)
-                subprocs.extend(subs)
+                exec_procs.extend(subs)
             elif data.startswith(const.DIFFER):
                 _, action, taskid, rawports, optstr = data.split('|')
-                if action == 'STOP':
-                    stop(diff_procs)
+                if action.upper() == 'STOP':
+                    self.stop(diff_procs)
                     diff_procs.clear()
                     continue
                 ports = json.loads(rawports)
                 hosts = [ip+':'+str(port) for port in ports]
-                opt = config_diff().__dict__.update(json.loads(optstr))
+                opt = config_diff.option()
+                opt.__dict__.update(json.loads(optstr))
                 print("differ hosts:::", hosts)
                 subs = deploy.differ(taskid, hosts, opt)
-                subprocs.extend(subs)
+                diff_procs.extend(subs)
             elif data.startswith(const.AGENT_EXIT):
                 print("agent exit:::", data)
-                stop(gene_procs)
-                stop(exec_procs)
-                stop(diff_procs)
+                self.stop(gene_procs)
+                self.stop(exec_procs)
+                self.stop(diff_procs)
                 break

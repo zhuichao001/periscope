@@ -1,3 +1,4 @@
+import cmd.executor.pyexecutor.util as util
 
 def call(red, cmd):
     cols = cmd.strip().split(b' ')
@@ -21,9 +22,9 @@ def call(red, cmd):
     elif head == b'SUBSTR':
         return red.substr(*params)
     elif head == b'MSET':
-        return red.mset(mapping(params))
+        return red.mset(util.mapping(params))
     elif head == b'MSETNX':
-        return red.msetnx(mapping(params))
+        return red.msetnx(util.mapping(params))
     elif head == b'MGET':
         return red.mget(*params)
     elif head == b'STRLEN':
@@ -45,7 +46,7 @@ def call(red, cmd):
     elif head == b'HSET':  #hash
         return red.hset(*params)
     elif head == b'HMSET':
-        return red.hmset(params[0], mapping(params[1:]))
+        return red.hmset(params[0], util.mapping(params[1:]))
     elif head == b'HINCRBY':
         return red.hincrby(*params) 
     elif head == b'HSTRLEN':
@@ -81,7 +82,7 @@ def call(red, cmd):
     elif head == b'SMEMBERS':
         return list(red.smembers(*params)).sort()
     elif head == b'ZADD':  #zset
-        return red.zadd(params[0], rmapping(params[1:]))
+        return red.zadd(params[0], util.rmapping(params[1:]))
     elif head == b'ZRANGE':
         return red.zrange(*params)
     elif head == b'APPEND':

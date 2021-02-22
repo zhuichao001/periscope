@@ -60,18 +60,6 @@ class JimdbDrcExecuter:
             return handler.call(self.wred, cmd)
 
 
-def mapping(arr):
-    ks = arr[0::2]
-    vs = arr[1::2]
-    return dict(zip(ks,vs))
-
-
-def rmapping(arr):
-    ks = arr[1::2]
-    vs = arr[0::2]
-    return dict(zip(ks,vs))
-
-
 if __name__ == '__main__':
     #exe = JimkvExecuter('11.3.85.38', 5363, password='jimdb://2913114965120297581/2')
     exe = RedisExecuter('127.0.0.1', 6379)

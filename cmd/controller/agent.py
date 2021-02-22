@@ -1,6 +1,7 @@
 import cmd.controller.hardware as hardware
 import cmd.controller.deploy as deployer
-import cmd.controller.config.agent as config
+import config.agent as config
+
 
 class agent:
     def __init__(self, addr):
@@ -35,7 +36,13 @@ class agent:
         elif self.opt.disk_enable:
             self.device.disk_clear()
 
-    def drive(self):
-        self.deploy.differ()
-        self.deploy.executor()
-        self.deploy.generator()
+    def drive(self, act):
+        if act == 'start':
+            self.deploy.differ(act)
+            self.deploy.executor(act)
+            self.deploy.generator(act)
+        elif act == 'stop':
+            self.deploy.differ(act)
+            self.deploy.executor(act)
+            self.deploy.generator(act)
+

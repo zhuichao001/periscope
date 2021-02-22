@@ -11,7 +11,7 @@ class option:
         self.probe = True
 
         #['whole', 'random', 'fullcheck']
-        self.mode = 'random'
+        self.mode = 'fullcheck'
 
         #['default', 'mixture']
         self.sequence = 'default' 
