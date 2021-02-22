@@ -4,13 +4,13 @@ import config.agent as config
 
 
 class agent:
-    def __init__(self, addr):
+    def __init__(self, addr, opt):
         self.opt = config.option()
         print(">>>", addr)
         addr = addr.split(':')
         self.addr = (addr[0], int(addr[1]))
         self.device = hardware.hardware(self.addr)
-        self.deploy = deployer.deploy(self.addr, self.opt)
+        self.deploy = deployer.deploy(self.addr, opt)
 
     def prepare(self):
         if self.opt.net_enable:
@@ -38,7 +38,7 @@ class agent:
 
     def drive(self, act):
         if act == 'start':
-            self.deploy.differ(act)
+            self.deploy.differ()
             self.deploy.executor(act)
             self.deploy.generator(act)
         elif act == 'stop':
