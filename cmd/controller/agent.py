@@ -38,7 +38,7 @@ class agent:
 
     def drive(self, act):
         if act == 'start':
-            self.deploy.differ()
+            self.deploy.differ(act)
             self.deploy.executor(act)
             self.deploy.generator(act)
         elif act == 'stop':

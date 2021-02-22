@@ -2,7 +2,7 @@
 class Recorder:
     def __init__(self, taskid):
         self.taskid = taskid
-        #TODO write out to log file
+
         self.same = {}
         self.diff = {}
         self.total = {}

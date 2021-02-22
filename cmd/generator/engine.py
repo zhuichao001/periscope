@@ -21,7 +21,7 @@ class Engine(threading.Thread):
         self.checks = check.fullcheck(self.taskid, 'a+')
         n = opt.times
         while n > 0:
-            self.round()
+            self.__round()
             n -= 1
 
     def random(self):

@@ -7,5 +7,5 @@ class Comparer:
     def compare(self, cmd, resultstr):
         cmdtype = str(cmd).split(' ')[0]
         results = json.loads(resultstr)
-        print("differ:::", results)
+        print("[differ]:::", results, flush=True)
         return str(cmdtype), True #TODO

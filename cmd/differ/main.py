@@ -1,3 +1,4 @@
+import sys
 import cmd.differ.receiver as receiver
 import cmd.differ.recorder as recorder
 import cmd.differ.comparer as comparer

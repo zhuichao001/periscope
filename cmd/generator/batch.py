@@ -40,6 +40,5 @@ class Batch:
         return list(self.redtype.check)
 
     def display(self):
-        for obj in self.redtypes:
-            print(":::")
-            print("    ", '\n'.join(obj.sequence))
+        for cmd in self.commands:
+            print("::::\n    ", cmd, flush=True)
