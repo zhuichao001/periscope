@@ -9,9 +9,9 @@ def main(taskid, addr, opt):
     eng = engine.Engine(taskid, opt)
     reac = reactor.Reactor(addr)
     reac.start()
-    print('engine start.')
+    print('generator start.')
     eng.start()
-    print('engine stop.')
+    print('generator stop.')
     eng.join()
     reac.join()
 

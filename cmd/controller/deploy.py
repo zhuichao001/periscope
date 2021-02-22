@@ -22,23 +22,23 @@ class deploy:
         self.sock.sendto(cmd.encode('utf-8'), self.addr) 
 
     #TODO: node assign
-    def generator(self):
+    def generator(self, act):
         count = int(self.opt.generator_count)
         ports = [7500+i for i in range(count)]
         optstr = json.dumps(self.opt_gene.__dict__)
-        cmd = '%s|%s|%s|%s|%s' % (const.GENERATOR, self.opt.action, self.opt.taskid, json.dumps(ports), optstr)
+        cmd = '%s|%s|%s|%s|%s' % (const.GENERATOR, act, self.opt.taskid, json.dumps(ports), optstr)
         self.__deliver(cmd)
 
-    def executor(self):
+    def executor(self, act):
         count = int(self.opt.executor_count)
         ports = [7600+i for i in range(count)]
         optstr = json.dumps(self.opt_exec.__dict__)
-        cmd = '%s|%s|%s|%s|%s' % (const.EXECUTOR, self.opt.action, self.opt.taskid, json.dumps(ports), optstr)
+        cmd = '%s|%s|%s|%s|%s' % (const.EXECUTOR, act, self.opt.taskid, json.dumps(ports), optstr)
         self.__deliver(cmd)
 
-    def differ(self):
+    def differ(self, act):
         count = int(self.opt.differ_count)
         ports = [7700+i for i in range(count)]
         optstr = json.dumps(self.opt_diff.__dict__)
-        cmd = '%s|%s|%s|%s|%s' % (const.DIFFER, self.opt.action, self.opt.taskid, json.dumps(ports), optstr)
+        cmd = '%s|%s|%s|%s|%s' % (const.DIFFER, act, self.opt.taskid, json.dumps(ports), optstr)
         self.__deliver(cmd)

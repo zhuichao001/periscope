@@ -2,23 +2,16 @@ import common.sqlite as sqlite
 
 
 class fullcheck:
-    def __init__(self, taskid):
+    def __init__(self, taskid, mode):
         taskname = 'task-%s.db' % (taskid)
-        self.db = sqlite.sqlitedb(taskname)
-
-        self.db.execute('''CREATE TABLE IF NOT EXISTS cmds(
-            `id`     INTEGER PRIMARY KEY   AUTOINCREMENT,
-            `val`    TEXT              NOT NULL
-        ) ''')
-        self.db.flush()
+        path = 'output/%s' % (taskname)
+        self.file = open(path, mode)
 
     def income(self, cmds):
         for cmd in cmds:
-            self.db.execute('INSERT INTO cmds(val) VALUES("%s"' % (cmd))
-        self.db.flush()
+            self.file.write(cmd+'\n')
+        self.file.flush()
 
     def outcome(self):
-        self.db.query('SELECT val from cmds')
-        return self.db
-
-
+        for line in self.file:
+            yield line

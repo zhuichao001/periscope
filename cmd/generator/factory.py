@@ -19,17 +19,6 @@ import cmd.generator.redis.mset as rmse
 import cmd.generator.redis.mzset as rmzs
 
 
-class Options:
-    def __init__(self, num_batch, num_operation, keylen, vallen, maxduration, mode, template):
-        self.num_batch = num_batch
-        self.num_operation = num_operation
-        self.keylen = keylen
-        self.vallen = vallen
-        self.maxduration = maxduration
-        self.mode = mode
-        self.template = template
-
-
 class Factory:
     types = {'key':rkey.Key, 'string':rstr.String,'integer':rint.Integer,'float':rflo.Float,\
             'hash':rhas.Hash,'list':rlis.List,'set':rset.Set,'zset':rzse.Zset,\
