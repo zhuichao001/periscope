@@ -11,14 +11,14 @@ def main(taskid, addr, opt):
     eng = engine.Engine(taskid, opt)
     reac = reactor.Reactor(addr)
     reac.start()
-    print('generator start.')
+    print('***GENERATOR START.')
     eng.start()
-    print('generator stop.')
+
     eng.join()
+    print('***GENERATOR STOP.')
     reac.join()
 
 
 if __name__ == '__main__':
     import config.generator as config
-    taskid = 'ADE9'
-    main('unknown', ('127.0.0.1',7501), taskid, config.option())
+    main('unknown', ('127.0.0.1',7501), config.option())

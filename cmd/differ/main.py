@@ -1,26 +1,11 @@
 import sys
-import cmd.differ.receiver as receiver
-import cmd.differ.recorder as recorder
-import cmd.differ.comparer as comparer
+import cmd.differ.reactor as reactor
 
 
 def main(taskid, addr, opt):
-    recver = receiver.Receiver(addr)
-    differ = comparer.Comparer()
-    outer = recorder.Recorder(taskid)
-    while True:
-        data = recver.recv()
-        if data==b'<<<DISPLAY>>>':
-            outer.display()
-            continue
-
-        items = data.split(b'|')
-        if len(items)!=2:
-            continue
-        cmd, resultstr = items
-        cmdtype, ok = differ.compare(cmd, resultstr)
-        outer.write(cmdtype, ok)
-
+    reac = reactor.Reactor(taskid, addr)
+    reac.start()
+    reac.join()
 
 if __name__ == '__main__':
     addr = ('127.0.0.1', 7983)

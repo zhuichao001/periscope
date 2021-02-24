@@ -4,8 +4,13 @@ class Comparer:
     def __init__(self):
         pass
 
-    def compare(self, cmd, resultstr):
-        cmdtype = str(cmd).split(' ')[0]
-        results = json.loads(resultstr)
-        print("[differ]:::", results, flush=True)
-        return str(cmdtype), True #TODO
+    def __issame(self, results):
+        values = [str(v) for v in results.values()]
+        for v in values[1:]:
+            if v != values[0]:
+                return False
+        return True
+
+    def compare(self, cmd, results):
+        print("[differ]:::", results, cmd, flush=True)
+        return self.__issame(results)

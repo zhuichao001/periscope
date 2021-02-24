@@ -1,2 +1,1 @@
 - DEL: 'DEL {key}'
-- EXPIRE: 'EXPIRE {key} {timeout}'

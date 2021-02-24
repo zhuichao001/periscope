@@ -14,5 +14,5 @@
 #- BRPOP: 'BRPOP {key}'
 #- BRPOPLPUSH: 'BRPOPLPUSH {key} {val}'
 - LREM: 'LREM {key} 0 {oldval}'
-- PERSIST: 'PERSIST {key}'
+#- PERSIST: 'PERSIST {key}'
 - LTRIM: 'LTRIM {key} 0 -1'

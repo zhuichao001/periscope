@@ -6,10 +6,12 @@ import cmd.generator.formatter as formatter
 
 
 class MInteger(basetype.BaseType):
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'minteger'
         self.prob = prob
-        self.kind = kind
+        self.klen = klen
+        self.vlen = vlen
         self.kvs = {}
         self.timeout = random.randint(60,600)
         self.sequence = []
@@ -17,7 +19,7 @@ class MInteger(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            for _ in range(1, 10):
+            for _ in range(0, random.randint(1,32)):
                 self.kvs[util.hashtagkey()] = randstr.RAND_INT(10)
             cmd = formatter.fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
             self.sequence.append(cmd)
@@ -25,7 +27,7 @@ class MInteger(basetype.BaseType):
 
     def update(self):
         for tmpl in super().update():
-            for _ in range(1, len(self.kvs)):
+            for _ in range(0, len(self.kvs)):
                 self.kvs[random.choice(list(self.kvs.keys()))] = randstr.RAND_INT(10)
             cmd = formatter.fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
             self.sequence.append(cmd)
@@ -34,7 +36,7 @@ class MInteger(basetype.BaseType):
     def require(self):
         for tmpl in super().require():
             keys = []
-            for _ in range(1, len(self.kvs)):
+            for _ in range(0, len(self.kvs)):
                 keys.append(random.choice(list(self.kvs.keys())))
             cmd = formatter.fmt_mstring(tmpl, keys=keys, timeout=self.timeout)
             self.sequence.append(cmd)
@@ -51,7 +53,7 @@ class MInteger(basetype.BaseType):
     def probe(self):
         if self.prob:
             keys = list(self.kvs.keys())
-            cmd = "::GET %s" % (" ".join(keys))
+            cmd = "::MGET %s" % (" ".join(keys))
             self.sequence.append(cmd)
             self.check.add(cmd)
 

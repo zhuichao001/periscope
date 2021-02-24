@@ -8,10 +8,12 @@ import cmd.generator.formatter as formatter
 
 class List(basetype.BaseType):
     keys = []
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'list'
         self.prob = prob
-        self.kind = kind
+        self.klen = klen
+        self.vlen = vlen
         self.key = util.hashtagkey()
         List.keys.append(self.key)
         self.items = []
@@ -46,7 +48,7 @@ class List(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            val = randstr.RAND(30)
+            val = randstr.RAND(random.randint(*self.vlen))
             self.__upmodel(tmpl, val)
             cmd = formatter.fmt_string(tmpl, self.key, val=val)
             self.sequence.append(cmd)
@@ -54,7 +56,7 @@ class List(basetype.BaseType):
 
     def update(self):
         for tmpl in super().update():
-            val = randstr.RAND(30)
+            val = randstr.RAND(random.randint(*self.vlen))
             self.__upmodel(tmpl, val)
             oldval = random.choice(self.items) if self.items else ""
             index = random.randint(0, len(self.items))
@@ -68,7 +70,7 @@ class List(basetype.BaseType):
 
     def require(self):
         for tmpl in super().require():
-            val = randstr.RAND(30)
+            val = randstr.RAND(random.randint(*self.vlen))
             start = random.randint(0, len(self.items))
             end = random.randint(start, len(self.items))
             index = start

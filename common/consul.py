@@ -3,24 +3,22 @@ import random
 import common.httpio as httpio
 import common.localip as localip
 import common.const as const
+import config.consul as config
 
 
 class consul:
     def __init__(self):
-        self.consulhost = '127.0.0.1:8500'
+        self.enable = True
+        self.consulhost = config.option().consul
 
-    def deregister(self, name):
-        for id in self.ids(name):
-            print("deregister id:::", id)
-            uri = 'v1/agent/service/deregister/%s' % (id)
-            resp = httpio.httpio(self.consulhost).put(uri, '')
-            print("after deregister:::", resp)
+    def deregister(self, id):
+        uri = 'v1/agent/service/deregister/%s' % (id)
+        resp = httpio.httpio(self.consulhost).put(uri, '')
 
     def deregall(self, name):
-        ids = consul.discovery(name)
-        print("after discovery all:::", ids)
+        ids = self.ids(name)
         for id in ids:
-            consul.deregister(id)
+            self.deregister(id)
 
     def register(self, id, name, svrhost):
         ip, port = svrhost.split(':')
@@ -47,23 +45,31 @@ class consul:
         print("discovery:::", name, data)
         hosts = [obj['Service']['Address']+':'+str(obj['Service']['Port']) for obj in data]
         ids = [obj['Service']['ID'] for obj in data]
-        print("ids:::", ids)
         return ids
 
     def discovery(self, name):
         uri = 'v1/health/service/%s?passing=false' % (name)
         resp = httpio.httpio(self.consulhost).get(uri)
         data = json.loads(resp)
-        #print("discovery:::", name, data)
         hosts = [obj['Service']['Address']+':'+str(obj['Service']['Port']) for obj in data]
-        ids = [obj['Service']['ID'] for obj in data]
-        #print("ids:::", ids)
-        #print('hosts:::', hosts)
         return hosts
 
 
 if __name__ == '__main__':
     consultant = consul()
-    consultant.deregister(const.AGENT_NEAR)
-    #consultant.register('aes', '127.0.0.1:9001')
-    #consultant.discovery('aes')
+    print("AGENT_NEAR:::", consultant.discovery(const.AGENT_NEAR))
+    print("GENERATOR:::", consultant.discovery(const.GENERATOR))
+    print("EXECUTOR:::", consultant.discovery(const.EXECUTOR))
+    print("DIFFER:::", consultant.discovery(const.DIFFER))
+
+    consultant.deregall(const.AGENT_NEAR)
+    consultant.deregall(const.GENERATOR)
+    consultant.deregall(const.EXECUTOR)
+    consultant.deregall(const.DIFFER)
+
+    print('=================================')
+
+    print("AGENT_NEAR:::", consultant.discovery(const.AGENT_NEAR))
+    print("GENERATOR:::", consultant.discovery(const.GENERATOR))
+    print("EXECUTOR:::", consultant.discovery(const.EXECUTOR))
+    print("DIFFER:::", consultant.discovery(const.DIFFER))

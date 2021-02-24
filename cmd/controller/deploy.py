@@ -21,21 +21,22 @@ class deploy:
 
     def generator(self, act):
         count = self.opt.generator_count
-        ports = [7500+i for i in range(count)]
+        ports = [int(7500+i) for i in range(count)]
         optstr = json.dumps(self.opt_gene.__dict__)
         cmd = '%s|%s|%s|%s|%s' % (const.GENERATOR, act, self.opt.taskid, json.dumps(ports), optstr)
         self.__deliver(cmd)
 
     def executor(self, act):
         count = self.opt.executor_count
-        ports = [7600+i for i in range(count)]
+        ports = [int(7600+i) for i in range(count)]
         optstr = json.dumps(self.opt_exec.__dict__)
         cmd = '%s|%s|%s|%s|%s' % (const.EXECUTOR, act, self.opt.taskid, json.dumps(ports), optstr)
         self.__deliver(cmd)
 
     def differ(self, act):
         count = self.opt.differ_count
-        ports = [7700+i for i in range(count)]
+        print('count:', count)
+        ports = [int(7700+i) for i in range(count)]
         optstr = json.dumps(self.opt_diff.__dict__)
         cmd = '%s|%s|%s|%s|%s' % (const.DIFFER, act, self.opt.taskid, json.dumps(ports), optstr)
         self.__deliver(cmd)

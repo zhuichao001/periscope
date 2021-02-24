@@ -9,10 +9,12 @@ import cmd.generator.formatter as formatter
 class Zset(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'zset'
         self.prob = prob
-        self.kind = kind
+        self.klen = klen
+        self.vlen = vlen
         self.key = util.hashtagkey()
         self.members = []
         self.sequence = []
@@ -21,7 +23,7 @@ class Zset(basetype.BaseType):
 
     def create(self):
         for tmpl in super().update():
-            member = randstr.RAND(30)
+            member = randstr.RAND(random.randint(*self.klen))
             self.members.append(member)
             score = random.randint(0,1000)
             cmd = formatter.fmt_string(tmpl, self.key, score=score, member=member)

@@ -8,10 +8,12 @@ import cmd.generator.formatter as formatter
 class MSet(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'mset'
         self.prob = prob
-        self.kind = kind
+        self.klen = klen
+        self.vlen = vlen
         self.key = util.hashtagkey()
         MSet.keys.append(self.key)
         self.members = []
@@ -20,8 +22,8 @@ class MSet(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            for _ in range(1, 10):
-                self.members.append(randstr.RAND(10)) 
+            for _ in range(0, random.randint(1,32)):
+                self.members.append(randstr.RAND(random.randint(*self.klen))) 
             cmd = formatter.fmt_mstring(tmpl, key=self.key, members=self.members)
             self.sequence.append(cmd)
             self.probe()
@@ -29,7 +31,7 @@ class MSet(basetype.BaseType):
     def update(self):
         for tmpl in super().update():
             members = []
-            for _ in range(1, len(self.members)):
+            for _ in range(0, len(self.members)):
                 members.append(random.choice(list(self.members))) 
             member = random.choice(members)
             key1 = self.key

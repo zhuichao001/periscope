@@ -1,0 +1,22 @@
+
+syntax = "proto3";
+
+package com.jd.jim.testframework.executor.grpc.differ;
+option java_multiple_files = false;
+option java_outer_classname = "DifferGrpcService";
+
+// The greeting service definition.
+service Differ {
+  // Sends a greeting
+  rpc SendToDiffer (SendReq) returns (Resp) {}
+}
+
+// The request message containing the user's name.
+message SendReq {
+  string data = 1;
+}
+
+// The response message containing the greetings
+message Resp {
+  string message = 1;
+}

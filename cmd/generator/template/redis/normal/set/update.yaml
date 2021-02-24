@@ -1,1 +1,2 @@
 - SADD: 'SADD {key} {member}'
+- SREM: 'SREM {key} {member}'

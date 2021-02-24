@@ -11,7 +11,7 @@ class Engine(threading.Thread):
         threading.Thread.__init__(self)
         self.taskid = taskid
         self.opt = option
-
+        self.fact = factory.Factory(self.opt)
         self.trans = transport.Transport()
 
     def __cost(self, start):
@@ -19,16 +19,18 @@ class Engine(threading.Thread):
 
     def whole(self):
         self.checks = check.fullcheck(self.taskid, 'a+')
-        n = opt.times
+        n = self.opt.times
         while n > 0:
             self.__round()
             n -= 1
+        self.checks.close()
 
     def random(self):
         self.checks = check.fullcheck(self.taskid, 'a+')
         start = time.time()
         while self.opt.duration==0 or self.__cost(start)<=self.opt.duration:
             self.__round()
+        self.checks.close()
 
     def fullcheck(self):
         self.checks = check.fullcheck(self.taskid, 'r')
@@ -36,14 +38,14 @@ class Engine(threading.Thread):
             self.trans.deliver((cmd,))
 
     def __round(self):
-        fact = factory.Factory(self.opt)
-        bats = fact.produce()
-        for bat in bats:
+        batches = self.fact.produce()
+        for bat in batches:
+            #bat.display()
             self.trans.deliver(bat.commands)
             self.checks.income(bat.checklist())
 
     def run(self):
-        print("opt.mode=", self.opt.mode)
+        print("[GENERATOR] engine mode=", self.opt.mode)
         if self.opt.mode == 'whole':
             self.whole()
         elif self.opt.mode == 'random':

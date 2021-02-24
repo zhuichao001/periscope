@@ -1,12 +1,11 @@
 import sys
-import cmd.executor.pyexecutor.engine as engine
-
+import cmd.executor.pyexecutor.reactor as reactor
 
 
 def main(taskid, addr, opt):
-    eng = engine.Engine(addr, opt.targets)
-    eng.run()
-
+    reac = reactor.Reactor(addr, opt.targets)
+    reac.start()
+    reac.join()
 
 if __name__ == '__main__':
     if len(sys.argv)<2:

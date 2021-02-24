@@ -6,10 +6,12 @@ import cmd.generator.util as util
 
 
 class MZset(basetype.BaseType):
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'mzset'
         self.prob = prob
-        self.kind = kind
+        self.klen = klen
+        self.vlen = vlen
         self.key = util.hashtagkey()
         self.members = []
         self.scores = []
@@ -18,9 +20,9 @@ class MZset(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            for _ in range(1, 10):
-                self.members.append(randstr.RAND(10)) 
-                self.scores.append(randstr.RAND_INT(10)) 
+            for _ in range(0, random.randint(1,32)):
+                self.members.append(randstr.RAND(random.randint(*self.klen))) 
+                self.scores.append(randstr.RAND_INT(4)) 
             sms = util.flat_list(self.scores, self.members)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, sms=sms)
             self.sequence.append(cmd)
@@ -33,7 +35,7 @@ class MZset(basetype.BaseType):
             for i in random.sample(range(len(self.members)), int(len(self.members)/3)+1):
                 members.append(self.members[i])
                 self.scores[i] = randstr.RAND_INT(9)
-                scores.append(randstr.RAND_INT(9))
+                scores.append(randstr.RAND_INT(4))
             sms = util.flat_list(self.scores, self.members)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, sms=sms)
             self.sequence.append(cmd)

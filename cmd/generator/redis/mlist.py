@@ -6,10 +6,12 @@ import cmd.generator.formatter as formatter
 
 
 class MList(basetype.BaseType):
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'mlist'
         self.prob = prob
-        self.kind = kind
+        self.klen = klen
+        self.vlen = vlen
         self.key = util.hashtagkey()
         self.vals = []
         self.sequence = []
@@ -17,8 +19,8 @@ class MList(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            for _ in range(1, 10):
-                self.vals.append(randstr.RAND(10)) 
+            for _ in range(0, random.randint(1,32)):
+                self.vals.append(randstr.RAND(random.randint(*self.vlen))) 
             cmd = formatter.fmt_mstring(tmpl, key=self.key, vals=self.vals)
             self.sequence.append(cmd)
             self.probe()
@@ -30,8 +32,8 @@ class MList(basetype.BaseType):
             index = start
             vals = []
             if tmpl.find('PUSH')>0:
-                for _ in range(1, 10):
-                    vals.append(randstr.RAND(10)) 
+                for _ in range(0, random.randint(1,32)):
+                    vals.append(randstr.RAND(random.randint(*self.vlen))) 
                 self.vals.extend(vals)
             cmd = formatter.fmt_mstring(tmpl, key=self.key, vals=vals, start=start, end=end, index=index)
             self.sequence.append(cmd)

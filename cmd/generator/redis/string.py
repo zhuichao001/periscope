@@ -8,11 +8,13 @@ import cmd.generator.formatter as formatter
 class String(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'string'
         self.prob = prob
-        self.kind = kind
-        self.key = randstr.RAND(10)
+        self.klen = klen
+        self.vlen = vlen
+        self.key = randstr.RAND(random.randint(*self.klen))
         String.keys.append(self.key)
         self.timeout = random.randint(60,600)
         self.sequence = []
@@ -20,14 +22,14 @@ class String(basetype.BaseType):
 
     def create(self):
         for tmpl in super().create():
-            self.val = randstr.RAND(30)
+            self.val = randstr.RAND(random.randint(*self.vlen))
             cmd = formatter.fmt_string(tmpl, self.key, val=self.val, timeout=self.timeout, mtimeout=1000*self.timeout)
             self.sequence.append(cmd)
             self.probe()
 
     def update(self):
         for tmpl in super().update():
-            self.val = randstr.RAND(30)
+            self.val = randstr.RAND(random.randint(*self.vlen))
             start = random.randint(0, len(self.val))
             end = random.randint(start, len(self.val))
             index = start

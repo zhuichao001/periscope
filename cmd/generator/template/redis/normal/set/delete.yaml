@@ -1,4 +1,1 @@
 - DEL: 'DEL {key}'
-- EXPIRE: 'EXPIRE {key} {timeout}'
-- PERSIST: 'PERSIST {key}'
-- SREM: 'SREM {key} {member}'

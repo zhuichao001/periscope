@@ -1,13 +1,11 @@
-
-#build redis
-yum install systemd-devel
-
 #rebuild redis-server and install
 
-#prepare systemd.service
-#path: /etc/systemd/system/redis.service
+yum install systemd-devel
 
-systemctl deamon-reload
+#build redis
+cp redis.service redis2.service /usr/lib/systemd/system/
+systemctl daemon-reload
+systemctl start redis
+systemctl start redis2
 systemctl enable redis
-systemctl restart redis
-systemctl status redis
+systemctl enable redis2

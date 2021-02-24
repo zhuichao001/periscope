@@ -3,12 +3,15 @@ class option:
     def __init__(self):
         self.num_batch = 1
         self.num_operation = 16
-        self.keylen = 8
-        self.vallen = 32
+        self.probe = True
+
+        #len range between tuple-left and tuple-right
+        self.keylen = (16,64)
+        self.vallen = (64,256)
+
         self.maxduration = 60
         self.times = 1
-        self.duration = 600
-        self.probe = True
+        self.duration = 60
 
         #['whole', 'random', 'fullcheck']
         self.mode = 'random'

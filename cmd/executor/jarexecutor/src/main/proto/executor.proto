@@ -1,0 +1,24 @@
+
+syntax = "proto3";
+
+package com.jd.jim.testframework.executor.grpc.executor;
+option java_multiple_files = false;
+option java_outer_classname = "ExecutorGrpcService";
+
+// The greeting service definition.
+service Executor {
+  // Sends a greeting
+  rpc SendToExecutor (SendReq) returns (Resp) {}
+}
+
+// The request message containing the user's name.
+message SendReq {
+  string id = 1;
+  string all_cmds = 2;
+
+}
+
+// The response message containing the greetings
+message Resp {
+  string message = 1;
+}

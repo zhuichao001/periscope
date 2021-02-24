@@ -8,11 +8,13 @@ import cmd.generator.formatter as formatter
 class HyperLogLog(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode ,cmdsmap)
+        self.kind = 'hyperloglog'
         self.prob = prob
-        self.kind = kind
-        self.key = randstr.RAND(10)
+        self.klen = klen
+        self.vlen = vlen
+        self.key = randstr.RAND(random.randint(*self.klen))
         self.vals = []
         self.sequence = []
         self.check = set()
@@ -20,8 +22,8 @@ class HyperLogLog(basetype.BaseType):
 
     def create(self):
         for tmpl in super().update():
-            for _ in range(0, 5):
-                val = randstr.RAND(10)
+            for _ in range(0, 8):
+                val = randstr.RAND(random.randint(*self.vlen))
                 self.vals.append(val)
             cmd = formatter.fmt_string(tmpl, self.key, val=' '.join(self.vals))
             self.sequence.append(cmd)

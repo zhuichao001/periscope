@@ -1,4 +1,2 @@
 - DEL: 'DEL {key}'
-- EXPIRE: 'EXPIRE {key} {timeout}'
-- PERSIST: 'PERSIST {key}'
 - HDEL: 'HDEL key ({field})+'

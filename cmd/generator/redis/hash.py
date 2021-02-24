@@ -6,11 +6,13 @@ import cmd.generator.formatter as formatter
 
 
 class Hash(basetype.BaseType):
-    def __init__(self, mode, prob, kind, cmdsmap):
+    def __init__(self, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
+        self.kind = 'hash'
         self.prob = prob
-        self.kind = kind
-        self.key = randstr.RAND(10)
+        self.klen = klen
+        self.vlen = vlen
+        self.key = randstr.RAND(random.randint(*self.klen))
         self.fields = {}
         self.ifields = {}
         self.sequence = []
@@ -19,12 +21,12 @@ class Hash(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             timeout = random.randint(60, 600)
-            field = randstr.RAND(30)
+            field = randstr.RAND(random.randint(*self.vlen))
             if tmpl.find("{ifield}")>0:
                 self.ifields[field] = randstr.RAND_INT(9)
                 cmd = formatter.fmt_string(tmpl, self.key, ifield=field, ival=self.ifields[field], timeout=timeout)
             else:
-                self.fields[field] = randstr.RAND(30)
+                self.fields[field] = randstr.RAND(random.randint(*self.vlen))
                 cmd = formatter.fmt_string(tmpl, self.key, field=field, val=self.fields[field], timeout=timeout)
             self.sequence.append(cmd)
             self.probe()
@@ -45,15 +47,15 @@ class Hash(basetype.BaseType):
                 if len(self.fields)==0:
                     return
                 field = random.choice(list(self.fields.keys()))
-                self.fields[field] = randstr.RAND(30)
+                self.fields[field] = randstr.RAND(random.randint(*self.vlen))
                 cmd = formatter.fmt_string(tmpl, self.key, field=field, val=self.fields[field], timeout=timeout)
                 self.sequence.append(cmd)
                 self.probe()
 
     def require(self):
         for tmpl in super().require():
-            field = randstr.RAND(30)
-            val = randstr.RAND(30)
+            field = randstr.RAND(random.randint(*self.klen))
+            val = randstr.RAND(random.randint(*self.vlen))
             timeout = random.randint(60, 600)
             cmd = formatter.fmt_string(tmpl, self.key, field=field, val=val, timeout=timeout)
             self.fields[field] = val
@@ -62,8 +64,8 @@ class Hash(basetype.BaseType):
 
     def delete(self):
         for tmpl in super().delete():
-            field = randstr.RAND(30)
-            val = randstr.RAND(30)
+            field = randstr.RAND(random.randint(*self.klen))
+            val = randstr.RAND(random.randint(*self.vlen))
             timeout = random.randint(60, 600)
             cmd = formatter.fmt_string(tmpl, self.key, field=field, val=val, timeout=timeout)
             self.fields[field] = val

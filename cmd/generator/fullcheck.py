@@ -8,10 +8,12 @@ class fullcheck:
         self.file = open(path, mode)
 
     def income(self, cmds):
-        for cmd in cmds:
-            self.file.write(cmd+'\n')
+        self.file.write('\n'.join(cmds)+'\n')
         self.file.flush()
 
     def outcome(self):
         for line in self.file:
             yield line
+
+    def close(self):
+        self.file.close()

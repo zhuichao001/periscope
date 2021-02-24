@@ -12,13 +12,13 @@ class Transport:
         #TODO:adjust autoly
         self.hosts = self.consul.discovery(const.DIFFER)
 
+        print('differ hosts|||', self.hosts)
+
     def send(self, cmd, results):
         host = random.choice(self.hosts)
         addr = host.split(':')
         addr = (addr[0], int(addr[1]))
-
-        print("---", cmd, results)
         results = code.encode(results)
-        print("###", cmd, results)
+        print("exexutor deliver:::", cmd, results)
         data = "|".join((bytes.decode(cmd), json.dumps(results)))
         self.sock.sendto(data.encode('utf-8'), addr)

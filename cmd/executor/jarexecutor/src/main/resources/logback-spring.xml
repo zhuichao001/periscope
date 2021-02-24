@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="false" scanPeriod="3 seconds" debug="false">
+
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+    <include resource="org/springframework/boot/logging/logback/default.xml"/>
+
+    <logger name="org.springframework.web" level="INFO"/>
+
+    <property name="LOG_PATH" value="./export/Logs/executor-java"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{"yyy-MM-dd HH:mm:ss,SSS"} [%thread] %-5level %logger{36} - %X{PFTID} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE-ALL"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%date{"yyy-MM-dd HH:mm:ss,SSS"} [%thread] %-5level %logger{36} - %X{PFTID} - %msg%n</pattern>
+        </encoder>
+        <file>${LOG_PATH}/file-all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/file-all.log.%d{yyyy-MM-dd.HH}</fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <!-- 生产环境 console不打日志
+        <appender-ref ref="CONSOLE"/>
+        -->
+        <appender-ref ref="FILE-ALL"/>
+    </root>
+
+</configuration>

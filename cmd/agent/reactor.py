@@ -5,9 +5,9 @@ import threading
 import common.localip as localip
 import common.consul as consul
 import common.const as const
+import common.receiver as receiver
 import cmd.agent.deploy as deployer
 import cmd.agent.hardware as hardware
-import cmd.agent.receiver as receiver
 
 import config.generator as config_gene
 import config.executor as config_exec
@@ -18,20 +18,34 @@ class Reactor(threading.Thread):
     def __init__(self, addr):
         threading.Thread.__init__(self)
         self.addr = addr
-        self.receiver = receiver.Receiver(addr)
-
-        #regist to consul agent
+        self.receiver = receiver.UdpReceiver(addr)
+    
         self.consul = consul.consul()
+        self.register()
+
+    def register(self):
+        if not self.consul.enable:
+            return
+        #regist to consul agent
         kind = sys.argv[1]
         host = self.addr[0]+':'+str(self.addr[1])
         name = const.AGENT_NEAR if kind =='near' else const.AGENT_REMOTE
-        id = "%s-%s-%d" % (name, self.addr[0], self.addr[1])
-        self.consul.register(id, name, host)
+        self.id = "%s-%s-%d" % (name, self.addr[0], self.addr[1])
+        self.consul.register(self.id, name, host)
         self.consul.discovery(name)
 
-    def stop(self, procs):
+
+    def deregister(self):
+        if not self.consul.enable:
+            return
+        self.consul.deregister(self.id)
+
+    def stop(self, name, procs):
+        self.consul.deregall(name)
         for p in procs:
+            print('AGENT STOP ', name)
             p.terminate()
+            print('SUCCESS AGENT STOP ', name)
             p.join()
 
     def run(self):
@@ -44,11 +58,11 @@ class Reactor(threading.Thread):
         diff_procs = []
         while True:
             data = self.receiver.recv().decode()
-            print(':::', data)
+            print('[agent receive]:::', data)
             if data.startswith(const.GENERATOR):
                 _, action, taskid, rawports, optstr = data.split('|')
                 if action.upper() == 'STOP':
-                    self.stop(gene_procs)
+                    self.stop(const.GENERATOR, gene_procs)
                     gene_procs.clear()
                     continue
                 ports = json.loads(rawports)
@@ -61,7 +75,7 @@ class Reactor(threading.Thread):
             elif data.startswith(const.EXECUTOR):
                 _, action, taskid, rawports, optstr = data.split('|')
                 if action.upper() == 'STOP':
-                    self.stop(exec_procs)
+                    self.stop(const.EXECUTOR, exec_procs)
                     exec_procs.clear()
                     continue
                 ports = json.loads(rawports)
@@ -74,7 +88,7 @@ class Reactor(threading.Thread):
             elif data.startswith(const.DIFFER):
                 _, action, taskid, rawports, optstr = data.split('|')
                 if action.upper() == 'STOP':
-                    self.stop(diff_procs)
+                    self.stop(const.DIFFER, diff_procs)
                     diff_procs.clear()
                     continue
                 ports = json.loads(rawports)

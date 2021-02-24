@@ -14,13 +14,9 @@ class Batch:
         self.redtype.clean()
         self.redtype.create()
         for _ in range(self.num_operation):
-            operation = random.choice(['u','u','u','u','u','r','r','r','r','d'])
-            if operation == 'c':
-                self.redtype.create()
-            elif operation == 'u':
+            op = random.randint(1,10)
+            if op<=6:
                 self.redtype.update()
-            elif operation == 'd':
-                self.redtype.delete()
             else:
                 self.redtype.require()
         self.redtype.delete()
@@ -41,4 +37,4 @@ class Batch:
 
     def display(self):
         for cmd in self.commands:
-            print("::::\n    ", cmd, flush=True)
+            print("::::  ", cmd)
