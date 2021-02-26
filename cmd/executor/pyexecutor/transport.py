@@ -11,7 +11,6 @@ class Transport:
         self.consul = consul.consul()
         #TODO:adjust autoly
         self.hosts = self.consul.discovery(const.DIFFER)
-
         print('differ hosts|||', self.hosts)
 
     def send(self, cmd, results):

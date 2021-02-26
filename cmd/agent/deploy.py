@@ -1,7 +1,8 @@
 import multiprocessing
 import cmd.generator.main as generator
 import cmd.differ.main as differ
-import cmd.executor.pyexecutor.main as executor
+import cmd.executor.pyexecutor.pymain as pyexecutor
+import cmd.executor.pyexecutor.jarmain as jarexecutor
 
 def str2addr(host):
     addr = host.split(':')
@@ -27,10 +28,11 @@ class Deploy:
         print('Deploy.executor:::', hosts, opt)
         for host in hosts:
             addr = str2addr(host)
-            sub = multiprocessing.Process(target=executor.main, args=(taskid, addr, opt))
+            main_func = jarexecutor.jarmain if opt.env == 'java' else pyexecutor.pymain
+            sub = multiprocessing.Process(target=main_func, args=(taskid, addr, opt))
             procs.append(sub)
             sub.start()
-            print('success deploy executor:', host)
+            print('success deploy executor:', host, opt.env)
         return procs
 
     def differ(self, taskid, hosts, opt):

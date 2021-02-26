@@ -6,6 +6,7 @@ import cmd.executor.pyexecutor.handler as handler
 class RedisExecuter:
     def __init__(self, ip, port, password=None):
         self.addr = (ip, port)
+        #self.pool = redis.ConnectionPool(host=ip, port=port, password=password, max_connections=8)
         self.red = redis.Redis(host=ip, port=port, password=password)
         self.host = '%s:%d' % (ip, port)
 

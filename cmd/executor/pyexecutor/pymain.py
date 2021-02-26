@@ -1,8 +1,10 @@
+import os
 import sys
+import config.consul as consul
 import cmd.executor.pyexecutor.reactor as reactor
 
 
-def main(taskid, addr, opt):
+def pymain(taskid, addr, opt):
     reac = reactor.Reactor(addr, opt.targets)
     reac.start()
     reac.join()
@@ -17,4 +19,4 @@ if __name__ == '__main__':
     port = int(port)
 
     import config.executor as config
-    main('', (ip,port), config.option())
+    pymain('unknown', (ip,port), config.option())

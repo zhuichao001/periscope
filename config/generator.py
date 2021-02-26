@@ -7,9 +7,9 @@ class option:
 
         #len range between tuple-left and tuple-right
         self.keylen = (16,64)
-        self.vallen = (64,256)
+        self.vallen = (32,128)
 
-        self.maxduration = 60
+        self.maxduration = 120
         self.times = 1
         self.duration = 60
 
