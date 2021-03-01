@@ -6,9 +6,9 @@ import cmd.generator.formatter as formatter
 
 
 class MString(basetype.BaseType):
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'mstring'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
@@ -20,7 +20,9 @@ class MString(basetype.BaseType):
     def create(self):
         for tmpl in super().create():
             for _ in range(0, random.randint(2,32)):
-                self.kvs[util.hashtagkey()] = randstr.RAND(random.randint(*self.vlen))
+                key = self.taskid+'/'+util.hashtagkey()
+                val = randstr.RAND(random.randint(*self.vlen))
+                self.kvs[key] = val
             cmd = formatter.fmt_mstring(tmpl, kvs=self.kvs, timeout=self.timeout)
             self.sequence.append(cmd)
             self.probe()

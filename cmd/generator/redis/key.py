@@ -7,13 +7,13 @@ import cmd.generator.formatter as formatter
 class Key(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'key'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
-        self.key = randstr.RAND(random.randint(*self.klen))
+        self.key = taskid+'/'+randstr.RAND(random.randint(*self.klen))
         Key.keys.append(self.key)
         self.timeout = random.randint(60,600)
         self.sequence = []

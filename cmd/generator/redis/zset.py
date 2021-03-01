@@ -9,13 +9,13 @@ import cmd.generator.formatter as formatter
 class Zset(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'zset'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
-        self.key = util.hashtagkey()
+        self.key = taskid+'/'+util.hashtagkey()
         self.members = []
         self.sequence = []
         self.check = set()

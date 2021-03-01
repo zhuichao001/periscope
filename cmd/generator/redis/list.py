@@ -8,13 +8,13 @@ import cmd.generator.formatter as formatter
 
 class List(basetype.BaseType):
     keys = []
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'list'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
-        self.key = util.hashtagkey()
+        self.key = taskid+'/'+util.hashtagkey()
         List.keys.append(self.key)
         self.items = []
         self.sequence = []

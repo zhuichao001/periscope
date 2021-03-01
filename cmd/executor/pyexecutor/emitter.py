@@ -34,7 +34,11 @@ class Emitter:
         self.pool = futures.ThreadPoolExecutor(32)
         self.usepool = True
 
-    def __deal(self, cmd):
+    def __deal_batch(self, cmds):
+        for cmd in cmds:
+            self.__deal_cmd(cmd)
+
+    def __deal_cmd(self, cmd):
         results = {t.host:'' for t in self.targets}
         for dst in self.targets:
             try:
@@ -45,8 +49,8 @@ class Emitter:
                 print("[WARNING]:", dst.addr, cmd, sys.exc_info())
         self.trans.send(cmd, results)
 
-    def emit(self, cmd):
+    def emit(self, cmds):
         if self.usepool:
-            self.pool.submit(self.__deal, cmd)
+            self.pool.submit(self.__deal_batch, cmds)
         else:
-            self.__deal(cmd)
+            self.__deal_batch(cmds)

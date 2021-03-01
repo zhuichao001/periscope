@@ -6,13 +6,13 @@ import cmd.generator.formatter as formatter
 
 
 class MList(basetype.BaseType):
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'mlist'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
-        self.key = util.hashtagkey()
+        self.key = taskid+'/'+util.hashtagkey()
         self.vals = []
         self.sequence = []
         self.check = set()

@@ -11,7 +11,7 @@ class Engine(threading.Thread):
         threading.Thread.__init__(self)
         self.taskid = taskid
         self.opt = option
-        self.fact = factory.Factory(self.opt)
+        self.fact = factory.Factory(taskid, self.opt)
         self.trans = transport.Transport()
 
     def __cost(self, start):
@@ -40,7 +40,7 @@ class Engine(threading.Thread):
     def __round(self):
         batches = self.fact.produce()
         for bat in batches:
-            #bat.display()
+            bat.display()
             self.trans.deliver(bat.commands)
             self.checks.income(bat.checklist())
 

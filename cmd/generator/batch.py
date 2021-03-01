@@ -10,6 +10,7 @@ class Batch:
 
     def random(self):
         if not self.redtype:
+            print('Warning, redtype is None')
             return
         self.redtype.clean()
         self.redtype.create()
@@ -24,6 +25,7 @@ class Batch:
 
     def whole(self):
         if not self.redtype:
+            print('Warning, redtype is None')
             return
         self.redtype.clean()
         self.redtype.create()

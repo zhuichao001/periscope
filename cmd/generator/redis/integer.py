@@ -9,13 +9,13 @@ import cmd.generator.formatter as formatter
 class Integer(basetype.BaseType):
     keys = []
 
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'integer'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
-        self.key = util.hashtagkey()
+        self.key = taskid+'/'+util.hashtagkey()
         Integer.keys.append(self.key)
         self.timeout = random.randint(60,600)
         self.sequence = []

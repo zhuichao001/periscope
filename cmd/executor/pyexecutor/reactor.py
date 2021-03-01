@@ -36,18 +36,23 @@ class Reactor(threading.Thread):
 
     def run(self):
         self.state = 'RUNNING'
+        cmds = []
         while self.state=='RUNNING':
             data = self.receiver.recv()
             print('EXECUTOR:::', data)
 
             CMD_TYPE = b'CMD:'
-            if not data.startswith(CMD_TYPE):
+            BATCH_TYPE = b'BATCH:'
+            if data.startswith(CMD_TYPE):
+                cmd = data[len(CMD_TYPE):]
+                if white.ignore(cmd):
+                    continue
+                cmds.append(cmd)
+            elif data.startswith(BATCH_TYPE):
+                result = self.disp.emit(cmds)
+                cmds = []
+            else:
                 if data=='EMPTY_LINE:':
                     print("\n*****************\n")
-                continue
-
-            cmd = data[len(CMD_TYPE):]
-            if white.ignore(cmd):
-                continue
-
-            result = self.disp.emit(cmd)
+                else:
+                    print("PYEXECUTOR UNKNOWN LINE:::", data)

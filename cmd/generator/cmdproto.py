@@ -6,10 +6,10 @@ import cmd.generator.redis.string as rstr
 import cmd.generator.redis.integer as rint
 import cmd.generator.redis.float as rflo
 import cmd.generator.redis.hash as rhas
+import cmd.generator.redis.ihash as rihas
 import cmd.generator.redis.list as rlis
 import cmd.generator.redis.set as rset
 import cmd.generator.redis.zset as rzse
-import cmd.generator.redis.hyperloglog as rhyp
 import cmd.generator.redis.mstring as rmst
 import cmd.generator.redis.minteger as rmin
 import cmd.generator.redis.mhash as rmha
@@ -20,7 +20,7 @@ import cmd.generator.redis.mzset as rmzs
 
 class CmdProto:
     Types = {'key':rkey.Key, 'string':rstr.String, 'integer':rint.Integer, 'float':rflo.Float,\
-            'hash':rhas.Hash, 'list':rlis.List, 'set':rset.Set, 'zset':rzse.Zset,\
+            'hash':rhas.Hash, 'ihash':rihas.IHash,'list':rlis.List, 'set':rset.Set, 'zset':rzse.Zset,\
             'mstring':rmst.MString, 'minteger':rmin.MInteger,\
             'mhash':rmha.MHash, 'mlist':rmli.MList, 'mset':rmse.MSet, 'mzset':rmzs.MZset}
     Names = list(Types.keys())
@@ -32,6 +32,7 @@ class CmdProto:
         normal = './cmd/generator/template/redis/normal/'
         abnormal = './cmd/generator/template/redis/abnormal/'
         basedir = normal if template=='normal' else abnormal
+
         #dirs:["string","integer","hash","list","set","zset"...]
         dirs = os.listdir(basedir)
         for redtype in dirs: 
@@ -42,6 +43,7 @@ class CmdProto:
                     cmdsmap[operation] = yaml.safe_load(f.read())
             CmdProto.Hub[redtype] = cmdsmap
         print('CmdProto.Hub:::', CmdProto.Hub.keys())
+        print('CmdProto.Names:::', CmdProto.Names)
 
     def rand(self):
         name = random.choice(CmdProto.Names)

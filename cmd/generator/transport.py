@@ -19,9 +19,12 @@ class Transport:
 
     def deliver(self, cmds):
         self.__refresh()
+        if not self.hosts:
+            return
         host = random.choice(self.hosts)
         addr = host.split(':')
         addr = (addr[0], int(addr[1]))
         for cmd in cmds:
             #time.sleep(3)
             self.sock.sendto(b'CMD:'+cmd.encode('utf-8'), addr)
+        self.sock.sendto(b'BATCH:FLUSH', addr)

@@ -1,0 +1,2 @@
+- HSET_INT: 'HSET {key} {ifield} {ival}'
+- HSETNX_INT: 'HSETNX {key} {ifield} {ival}'

@@ -1,0 +1,6 @@
+- HSET: 'HSET {key} {ifield}'
+- HSET_INT: 'HSET {key} {ifield} 02'
+- HINCRBY: 'HINCRBY {key} {ifield}'
+- HINCRBY: 'HINCRBY {key} {field} abcd'
+- HINCRBYFLOAT: 'HINCRBYFLOAT {key} {ifield} '
+- HINCRBYFLOAT: 'HINCRBYFLOAT {key} {ifield} aaa'

@@ -5,7 +5,7 @@ import cmd.generator.basetype as basetype
 import cmd.generator.formatter as formatter
 
 
-class Hash(basetype.BaseType):
+class IHash(basetype.BaseType):
     def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
         self.taskid = taskid
@@ -13,7 +13,7 @@ class Hash(basetype.BaseType):
         self.klen = klen
         self.vlen = vlen
         self.key = taskid+'/'+randstr.RAND(random.randint(*self.klen))
-        self.fields = {}
+        self.ifields = {}
         self.sequence = []
         self.check = set()
 
@@ -21,28 +21,30 @@ class Hash(basetype.BaseType):
         for tmpl in super().create():
             timeout = random.randint(60, 600)
             field = randstr.RAND(random.randint(*self.vlen))
-            self.fields[field] = randstr.RAND(random.randint(*self.vlen))
-            cmd = formatter.fmt_string(tmpl, self.key, field=field, val=self.fields[field], timeout=timeout)
+            self.ifields[field] = randstr.RAND_INT(9)
+            cmd = formatter.fmt_string(tmpl, self.key, ifield=field, ival=self.ifields[field], timeout=timeout)
             self.sequence.append(cmd)
             self.probe()
 
     def update(self):
-        if len(self.fields) == 0:
-            return
         for tmpl in super().update():
+            if len(self.ifields)==0:
+                print('Warning: IHash.ifields is empty')
+                return
             timeout = random.randint(60, 600)
-            field = random.choice(list(self.fields.keys()))
-            self.fields[field] = randstr.RAND(random.randint(*self.vlen))
-            cmd = formatter.fmt_string(tmpl, self.key, field=field, val=self.fields[field], timeout=timeout)
+            field = random.choice(list(self.ifields.keys()))
+            self.ifields[field] = randstr.RAND_INT(9)
+            fval = random.uniform(1,1000)
+            cmd = formatter.fmt_string(tmpl, self.key, ifield=field, ival=self.ifields[field], fval=fval, timeout=timeout)
             self.sequence.append(cmd)
             self.probe()
 
     def require(self):
         for tmpl in super().require():
-            field = random.choice(list(self.fields.keys()))
+            field = random.choice(list(self.ifields.keys()))
             val = randstr.RAND(random.randint(*self.vlen))
             timeout = random.randint(60, 600)
-            cmd = formatter.fmt_string(tmpl, self.key, field=field, val=val, timeout=timeout)
+            cmd = formatter.fmt_string(tmpl, self.key, ifield=field, val=val, timeout=timeout)
             self.sequence.append(cmd)
             self.probe()
 

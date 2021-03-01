@@ -6,13 +6,13 @@ import cmd.generator.formatter as formatter
 
 
 class Float(basetype.BaseType):
-    def __init__(self, mode, prob, klen, vlen, cmdsmap):
+    def __init__(self, taskid, mode, prob, klen, vlen, cmdsmap):
         super().__init__(mode, cmdsmap)
-        self.kind = 'float'
+        self.taskid = taskid
         self.prob = prob
         self.klen = klen
         self.vlen = vlen
-        self.key = randstr.RAND(random.randint(*self.klen))
+        self.key = taskid+'/'+randstr.RAND(random.randint(*self.klen))
         self.timeout = random.randint(60,600)
         self.sequence = []
         self.check = set()
