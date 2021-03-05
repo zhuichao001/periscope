@@ -1,0 +1,4 @@
+- DEL: ' DEL {key} '
+- DEL: 'DEL '
+- DEL: 'DEL \"\"'
+- DEL: 'DEL *'

@@ -1,0 +1,2 @@
+- GEOADD: 'GEOADD {key} {longitude} {latitude} {member}'
+- GEOADD: 'GEOADD {key}'

@@ -4,6 +4,6 @@ class option:
         self.taskid = 'A2F1'
 
         #deployment
-        self.generator_count = 24
-        self.executor_count = 16
-        self.differ_count = 8
+        self.generator_count = 4
+        self.executor_count = 2
+        self.differ_count = 1

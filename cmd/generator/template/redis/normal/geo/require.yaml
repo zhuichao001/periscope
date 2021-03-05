@@ -1,0 +1,5 @@
+- GEOPOS: 'GEOPOS {key} {member}'
+- GEODIST: 'GEODIST {key} {member1} {member2}'
+- GEORADIUS: 'GEORADIUS {key} {longitude} {latitude} {radius} km'
+- GEORADIUSBYMEMBER: 'GEORADIUSBYMEMBER {key} {member} {radius} km'
+- GEOHASH: 'GEOHASH {key} {member}'

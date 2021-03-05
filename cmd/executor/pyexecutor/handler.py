@@ -268,5 +268,17 @@ def call(red, cmd):
         return red.slowlog(*params)
     elif head == b'INCRBYFLOAT':
         return red.incrbyfloat(*params)
+    elif head == b'GEOADD':
+        return red.geoadd(*params)
+    elif head == b'GEOPOS':
+        return red.geopos(*params)
+    elif head == b'GEODIST':
+        return red.geodist(*params)
+    elif head == b'GEORADIUS':
+        return red.georadius(*params)
+    elif head == b'GEORADIUSBYMEMBER':
+        return red.georadiusbymember(*params)
+    elif head == b'GEOHASH':
+        return red.geohash(*params)
     else:
         return red.execute_command(*params)

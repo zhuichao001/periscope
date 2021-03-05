@@ -28,6 +28,8 @@ def fmt_mstring(tmpl, **kwargs):
     if 'members' in kwargs:
         tmpl = tmpl.replace('({member})+', ' '.join(kwargs['members']))
         #del kwargs['members']
+    if 'places' in kwargs:
+        tmpl = tmpl.replace('({longitude} {latitude} {member})+', kwargs['places'])
     for var in kwargs:
         tmpl = tmpl.replace('{'+str(var)+'}', str(kwargs[var]))
     return tmpl

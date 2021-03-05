@@ -12,8 +12,10 @@ def jarmain(taskid, addr, opt):
     if src and dest:
         consul_addr = consul.option().consul
         logfile = './output/jar-executor-%s.log' % (str(taskid))
-        #cmd = 'java -jar ./cmd/executor/jarexecutor/jar/periscope-executor.jar --taskid %s --src %s --dest %s --listen %s --consul %s > %s' % (taskid, src, dest, addr, consul_addr, logfile)
-        cmd = 'echo "hello periscope" > %s' % (logfile)
+        addr = ':'.join([str(s) for s in addr])
+        cmd = 'java -jar ./cmd/executor/jarexecutor/jar/periscope-executor.jar --taskid=%s --src="%s" --dest="%s" --bind="%s" --consul="%s" > %s' % (taskid, src, dest, addr, consul_addr, logfile)
+        #cmd = 'echo "%s" > %s' % (cmd, logfile)
+        print('jarmain cmd:::', cmd)
         os.system(cmd)
     else:
         print('Error: java-drc target invalid:', opt.targets)
