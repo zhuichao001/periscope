@@ -1,7 +1,7 @@
-
+import time
 class option:
     def __init__(self):
-        self.taskid = 'A2F1'
+        self.taskid = 'A2F1_%d' % time.time()
 
         #deployment
         self.generator_count = 4
